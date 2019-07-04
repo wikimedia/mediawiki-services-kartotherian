@@ -6,13 +6,20 @@ module.exports = function Gruntfile(grunt) {
 
   grunt.initConfig({
     eslint: {
-      code: {
+      lib: {
+        options: {
+          configFile: '.eslintrc.js',
+        },
         src: [
-          '**/*.js',
-          '!node_modules/**',
-          '!vendor/**',
-          '!tests/externals/**',
-          '!static/lib/**',
+          'lib/*.js',
+        ],
+      },
+      static: {
+        options: {
+          configFile: 'static/.eslintrc.js',
+        },
+        src: [
+          'static/main.js',
         ],
       },
     },

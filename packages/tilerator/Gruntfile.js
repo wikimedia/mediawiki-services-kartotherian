@@ -13,9 +13,23 @@ module.exports = function Gruntfile(grunt) {
     },
     eslint: {
       code: {
+        options: {
+          configFile: '.eslintrc.js',
+        },
         src: [
-          '**/*.js',
-          '!node_modules/**',
+          'lib/*.js',
+          'routes/*.js',
+          'scripts/*.js',
+          'app.js',
+          'server.js',
+        ],
+      },
+      test: {
+        options: {
+          configFile: 'test/.eslintrc.js',
+        },
+        src: [
+          'test/**/*.js',
         ],
       },
     },

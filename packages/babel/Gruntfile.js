@@ -15,8 +15,8 @@ module.exports = function Gruntfile(grunt) {
     eslint: {
       code: {
         src: [
-          '**/*.js',
-          '!node_modules/**',
+          'lib/*.js',
+          'test/*.js',
         ],
       },
     },
@@ -25,8 +25,8 @@ module.exports = function Gruntfile(grunt) {
         typos: '.typos.json',
       },
       src: [
-        '**/*.js',
-        '!node_modules/**',
+        'lib/*.js',
+        'test/*.js',
       ],
     },
     mochaTest: {
