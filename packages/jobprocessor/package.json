@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/kartotherian/jobprocessor",
   "dependencies": {
-    "@kartotherian/core": "^0.0.26",
-    "@kartotherian/err": "^0.0.3",
+    "@kartotherian/core": "^1.0.0-wmf",
+    "@kartotherian/err": "^1.0.0-wmf",
     "@kartotherian/input-validator": "^0.0.8-alpha.0",
     "bluebird": "^3.5.0",
     "event-stream": "^3.3.4",

@@ -19,7 +19,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@kartotherian/err": "^0.0.6-alpha.0",
+    "@kartotherian/err": "^1.0.0-wmf",
     "@kartotherian/input-validator": "^0.0.8-alpha.0",
     "bluebird": "^3.5.0",
     "tilelive-promise": "^2.0.0"

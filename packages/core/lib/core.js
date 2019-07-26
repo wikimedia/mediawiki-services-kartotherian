@@ -353,9 +353,14 @@ core.reportRequestError = function reportRequestError(err, res) {
       .header('Cache-Control', 'public, s-maxage=30, max-age=30')
       .json(err.message || 'error/unknown');
     // Any error that has metrics setting does not need to go into the error log
-    core.log(err.metrics ? 'info' : 'error', err);
-    core.metrics.increment(err.metrics || 'err.unknown');
+    core.log(core.areMetricsValid(err.metrics) ? 'info' : 'error', err);
+    core.metrics.increment((core.areMetricsValid(err.metrics) && err.metrics) || 'err.unknown');
   }, err);
+};
+
+// Prevent metrics to be sent if it's a function (T212303)
+core.areMetricsValid = function areMetricsValid(metrics) {
+  return typeof metrics === 'string';
 };
 
 core.getAppConfiguration = function getAppConfiguration() {

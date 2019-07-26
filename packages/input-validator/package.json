@@ -20,7 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@kartotherian/err": "^0.0.3",
+    "@kartotherian/err": "^1.0.0-wmf",
     "quadtile-index": "^0.0.6",
     "underscore": "^1.8.3"
   },
