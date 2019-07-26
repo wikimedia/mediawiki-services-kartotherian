@@ -35,7 +35,7 @@
     "@kartotherian/babel": "^0.3.3-alpha.0",
     "@kartotherian/cassandra": "^0.2.3-alpha.0",
     "@kartotherian/core": "^0.3.2-alpha.0",
-    "@kartotherian/geoshapes": "^1.0.4",
+    "@kartotherian/geoshapes": "^1.1.0-wmf",
     "@kartotherian/layermixer": "^0.0.10-alpha.0",
     "@kartotherian/maki": "^1.0.2-alpha.0",
     "@kartotherian/mapnik": "~3.7.3",
