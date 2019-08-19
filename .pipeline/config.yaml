@@ -1,0 +1,7 @@
+pipelines:
+  kartotherian:
+    blubberfile: blubber.yaml
+    execution:
+      - test
+      - prep
+      - production-kartotherian

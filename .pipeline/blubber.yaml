@@ -1,0 +1,54 @@
+version: v4
+base: docker-registry.wikimedia.org/nodejs10-slim
+lives:
+  in: /srv/service
+
+variants:
+  build:
+    base: docker-registry.wikimedia.org/nodejs10-devel
+    apt: { packages: [
+      git,
+      build-essential,
+      python-dev,
+      fonts-dejavu,
+      libboost-filesystem-dev,
+      libboost-regex-dev,
+      libboost-system-dev,
+      libcairo2-dev,
+      libfreetype6-dev,
+      libgdal-dev,
+      libharfbuzz-dev,
+      libjpeg-dev,
+      libpng-dev,
+      libpq-dev,
+      libproj-dev,
+      libtiff-dev,
+      libwebp-dev,
+      libxml2-dev,
+      libmapbox-variant-dev,
+      libboost-program-options-dev,
+      libboost-thread-dev,
+      libmapnik-dev,
+      mapnik-utils,
+      mapnik-doc,
+      libmapnik3.0
+      ] }
+    node: { requirements: [.] }
+    runs: { environment: { LINK: g++ } }
+  development:
+    includes: [build]
+    entrypoint: [node, packages/kartotherian/server.js]
+  test:
+    includes: [build]
+    entrypoint: [npm, test]
+  prep:
+    includes: [build]
+    node: { env: production }
+  production-kartotherian:
+    copies: [prep]
+    node: { env: production }
+    entrypoint: [node, packages/kartotherian/server.js]
+  production-tilerator:
+    copies: [prep]
+    node: { env: production }
+    entrypoint: [node, packages/tilerator/server.js]
