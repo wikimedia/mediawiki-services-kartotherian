@@ -135,7 +135,25 @@ paths:
       produces:
         - application/vnd.geo+json
       x-amples:
-        - title: Moscow
+        - title: get Moscow geojson
+          response:
+            status: 200
+            headers:
+              content-type: application/vnd.geo+json; charset=utf-8
+  # geoshape service
+  # /geoshape?getgeojson=1&ids={ids}:
+  /geoshape?getgeojson=1&ids=Q6414:
+    get:
+      tags:
+        - kartotherian
+        - maps
+        - geojson
+      description: Returns a json representation of a given shape
+      x-monitor: false
+      produces:
+        - application/vnd.geo+json
+      x-amples:
+        - title: get Lake Garda geojson
           response:
             status: 200
             headers:
