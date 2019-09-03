@@ -64,6 +64,21 @@ paths:
             status: 200
             headers:
               content-type: application/json
+  # Private source info
+  # /{src}/info.json:
+  /private-info/info.json:
+    get:
+      tags:
+        - tileinfo
+      description: Returns error describing that given tile source is private
+      produces:
+        - application/json
+      x-amples:
+        - title: private tile service info for osm-intl
+          response:
+            status: 400
+            headers:
+              content-type: application/json
   # Maki icon markers (pushpins)
   # /v4/marker/{base}-{size}-{symbol}+{color}@{scale}x.png:
   /v4/marker/pin-m-fuel+ffffff@2x.png:

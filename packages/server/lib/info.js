@@ -1,5 +1,6 @@
 const infoHeaders = {};
 const util = require('util');
+const Err = require('@kartotherian/err');
 const Promise = require('bluebird');
 
 let core;
@@ -16,6 +17,10 @@ function requestHandler(req, res, next) {
 
   return Promise.try(() => {
     source = core.getPublicSource(req.params.src);
+    // check for optional parameter publicinfo
+    if (source.publicinfo === false) {
+      throw new Err('Source info is not public').metrics('err.req.sourceinfo');
+    }
     return source.getHandler().getInfoAsync().then(info => [info, infoHeaders]);
   }).spread((data, dataHeaders) => {
     core.setResponseHeaders(res, source, dataHeaders);
