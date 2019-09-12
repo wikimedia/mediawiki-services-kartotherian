@@ -1,6 +1,6 @@
 {
   "name": "@kartotherian/geoshapes",
-  "version": "1.1.0-wmf",
+  "version": "1.1.2-wmf.0",
   "description": "Kartotherian service to generate geometric shapes from PostgreSQL data",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@kartotherian/err": "^1.0.0-wmf",
+    "@kartotherian/err": "^1.0.2-wmf.0",
     "bluebird": "^3.5.0",
     "js-yaml": "^3.12.2",
     "pg-promise": "^5.6.4",
