@@ -1,6 +1,6 @@
 {
   "name": "@kartotherian/core",
-  "version": "1.0.0-wmf",
+  "version": "1.0.1-wmf.0",
   "description": "The core components of the Kartotherian maps tile service",
   "main": "index.js",
   "scripts": {
@@ -14,9 +14,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@kartotherian/err": "^1.0.0-wmf",
-    "@kartotherian/input-validator": "^0.0.8-alpha.0",
-    "@kartotherian/module-loader": "^0.1.4-alpha.0",
+    "@kartotherian/err": "^1.0.1-wmf.0",
+    "@kartotherian/input-validator": "^1.0.0-wmf.0",
+    "@kartotherian/module-loader": "^1.0.0-wmf.0",
     "bluebird": "^3.5.0",
     "js-yaml": "^3.8.2",
     "quadtile-index": "^0.0.6",

@@ -1,6 +1,6 @@
 {
   "name": "@kartotherian/server",
-  "version": "1.0.2-alpha.0",
+  "version": "1.0.0-wmf.0",
   "description": "Serves Kartotherian maps",
   "main": "lib/server.js",
   "scripts": {
@@ -19,8 +19,8 @@
   },
   "homepage": "https://github.com/kartotherian/server",
   "dependencies": {
-    "@kartotherian/err": "^1.0.0-wmf",
-    "@kartotherian/input-validator": "^0.0.8-alpha.0",
+    "@kartotherian/err": "^1.0.1-wmf.0",
+    "@kartotherian/input-validator": "^1.0.0-wmf.0",
     "bluebird": "^3.5.0",
     "browserify": "^16.2.2",
     "compression": "^1.6.2",
