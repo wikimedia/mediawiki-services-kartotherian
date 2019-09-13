@@ -15,7 +15,7 @@ let _ = require('underscore'),
  * @param {string|string[]} groupIds
  * @returns {Promise}
  */
-module.exports = function downloadMapdata(protocol, domain, title, groupIds) {
+module.exports = function downloadMapdata(req, protocol, domain, title, groupIds) {
     let dm = new DataManager({
         createPromise: createPromise,
         whenAllPromises: Promise.all,
@@ -50,7 +50,7 @@ module.exports = function downloadMapdata(protocol, domain, title, groupIds) {
         let mapdata = [];
 
         if (!dataGroups.length) {
-            throw new Error('GroupId not available');
+            req.logger.log( 'warn', `groupIds not available: ${groupIds}; domain: ${domain}; title: ${title}; req url: ${req.url}` );
         }
 
         for (let i = 0; i < dataGroups.length; i++ ) {

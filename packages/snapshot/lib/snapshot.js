@@ -184,7 +184,7 @@ function requestHandler(req, res, next) {
         let baseMapHdrs = {};
 
         return mapdataLoader(
-            protocol, qparams.domain, qparams.title, qparams.groups
+            req, protocol, qparams.domain, qparams.title, qparams.groups
         ).then(geojson => {
             let mapPosition;
 
