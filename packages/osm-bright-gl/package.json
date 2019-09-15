@@ -1,0 +1,11 @@
+{
+  "name": "@kartotherian/osm-bright-gl",
+  "version": "1.0.0",
+  "description": "osmbright.tm2 converted to mapbox-gl-styles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "author": "",
+  "license": "ISC"
+}

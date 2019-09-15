@@ -8,7 +8,7 @@ const fs = require('fs');
 const Err = require('@kartotherian/err');
 const checkType = require('@kartotherian/input-validator');
 const core = require('./core');
-const { XmlLoader, YamlLoader } = require('@kartotherian/module-loader');
+const { JSONLoader, XmlLoader, YamlLoader } = require('@kartotherian/module-loader');
 
 Promise.promisifyAll(fs);
 
@@ -232,6 +232,10 @@ Sources.prototype._loadSourceAsync = function _loadSourceAsync(src, sourceId) {
     if (src.yaml) {
       const yamlLoader = new YamlLoader(src, self._resolveValue.bind(self), core.log);
       return yamlLoader.load(uri.protocol);
+    }
+    if (src.json) {
+      const jsonLoader = new JSONLoader(src, self._resolveValue.bind(self), core.log);
+      return jsonLoader.load(uri.protocol);
     }
     return uri;
   }).then(uri => core.loadSource(uri)).then((handler) => {

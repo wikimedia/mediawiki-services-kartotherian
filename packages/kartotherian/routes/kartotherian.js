@@ -21,6 +21,7 @@ function startup(app) {
 
 startup.bootstrap = function bootstrap(app) {
   return Promise.try(() => {
+    console.log(info.kartotherian);
     core.init(
       app, info.kartotherian, pathLib.resolve(__dirname, '..'),
       // eslint-disable-next-line global-require,import/no-dynamic-require
