@@ -5,3 +5,23 @@ pipelines:
       - test
       - prep
       - production-kartotherian
+    stages:
+      - name: test
+      - name: prep
+      - name: production-kartotherian
+        publish:
+          type: image
+          tags: [kartotherian]
+  tilerator:
+    blubberfile: blubber.yaml
+    execution:
+      - test
+      - prep
+      - production-tilerator
+    stages:
+      - name: test
+      - name: prep
+      - name: production-tilerator
+        publish:
+          type: image
+          tags: [tilerator]
