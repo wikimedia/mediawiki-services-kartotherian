@@ -1,10 +1,6 @@
 pipelines:
   kartotherian:
     blubberfile: blubber.yaml
-    execution:
-      - test
-      - prep
-      - production-kartotherian
     stages:
       - name: test
       - name: prep
@@ -14,10 +10,6 @@ pipelines:
           tags: [kartotherian]
   tilerator:
     blubberfile: blubber.yaml
-    execution:
-      - test
-      - prep
-      - production-tilerator
     stages:
       - name: test
       - name: prep
