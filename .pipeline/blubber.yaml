@@ -36,20 +36,14 @@ variants:
     node: { requirements: [.] }
     copies: [local]
     runs: { environment: { LINK: g++ } }
-  development:
-    includes: [build]
-    entrypoint: [node, packages/kartotherian/server.js]
   test:
     includes: [build]
     entrypoint: [npm, test]
   prep:
     includes: [build]
-    node: { env: production }
   production-kartotherian:
     copies: [prep]
-    node: { env: production }
     entrypoint: [node, packages/kartotherian/server.js]
   production-tilerator:
     copies: [prep]
-    node: { env: production }
     entrypoint: [node, packages/tilerator/server.js]

@@ -3,7 +3,6 @@ pipelines:
     blubberfile: blubber.yaml
     stages:
       - name: test
-      - name: prep
       - name: production-kartotherian
         publish:
           type: image
@@ -12,7 +11,6 @@ pipelines:
     blubberfile: blubber.yaml
     stages:
       - name: test
-      - name: prep
       - name: production-tilerator
         publish:
           type: image
