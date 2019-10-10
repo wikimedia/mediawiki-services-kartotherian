@@ -4,6 +4,7 @@ pipelines:
     stages:
       - name: test
       - name: production-kartotherian
+        build: production-kartotherian
         publish:
           type: image
           tags: [kartotherian]
@@ -12,6 +13,7 @@ pipelines:
     stages:
       - name: test
       - name: production-tilerator
+        build: production-tilerator
         publish:
           type: image
           tags: [tilerator]
