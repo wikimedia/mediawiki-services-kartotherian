@@ -1,6 +1,6 @@
 {
   "name": "kartotherian",
-  "version": "1.1.4-wmf.0",
+  "version": "1.1.5-wmf.0",
   "description": "Renders map tiles",
   "main": "./app.js",
   "scripts": {
