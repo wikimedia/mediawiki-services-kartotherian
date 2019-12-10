@@ -32,5 +32,6 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "^20.1.0",
     "mocha": "^3.2.0"
-  }
+  },
+  "gitHead": "3baf4e16daefd18e7e7f7f652d0b5f7dbff50dd2"
 }

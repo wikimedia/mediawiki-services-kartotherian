@@ -1,6 +1,6 @@
 {
   "name": "@kartotherian/tilerator",
-  "version": "1.1.4-wmf.0",
+  "version": "1.1.5-wmf.0",
   "description": "Map tiles pre-generation service",
   "main": "./app.js",
   "scripts": {
@@ -132,5 +132,6 @@
         }
       ]
     }
-  }
+  },
+  "gitHead": "3baf4e16daefd18e7e7f7f652d0b5f7dbff50dd2"
 }

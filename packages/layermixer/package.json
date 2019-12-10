@@ -21,5 +21,6 @@
     "@kartotherian/input-validator": "^1.0.1-wmf.0",
     "bluebird": "^3.5.0",
     "underscore": "^1.8.3"
-  }
+  },
+  "gitHead": "3baf4e16daefd18e7e7f7f652d0b5f7dbff50dd2"
 }

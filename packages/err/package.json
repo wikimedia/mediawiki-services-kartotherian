@@ -16,5 +16,6 @@
   },
   "devDependencies": {
     "mocha": "^3.4.2"
-  }
+  },
+  "gitHead": "3baf4e16daefd18e7e7f7f652d0b5f7dbff50dd2"
 }

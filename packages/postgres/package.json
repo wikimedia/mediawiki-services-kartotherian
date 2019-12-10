@@ -26,5 +26,6 @@
     "pg.js": "^4.1.1",
     "promistreamus": "^0.1.14",
     "quadtile-index": "^0.0.6"
-  }
+  },
+  "gitHead": "3baf4e16daefd18e7e7f7f652d0b5f7dbff50dd2"
 }
