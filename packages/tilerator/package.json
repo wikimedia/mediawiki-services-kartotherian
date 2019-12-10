@@ -37,7 +37,7 @@
     "@kartotherian/jobprocessor": "^1.0.4-wmf.0",
     "@kartotherian/layermixer": "^1.0.1-wmf.0",
     "@kartotherian/mapnik": "~3.7.3",
-    "@kartotherian/osm-bright-source": "^1.0.4",
+    "@kartotherian/osm-bright-source": "^1.0.5",
     "@kartotherian/osm-bright-style": "^4.0.1",
     "@kartotherian/overzoom": "^1.0.1-wmf.0",
     "@kartotherian/postgres": "^1.0.1-wmf.0",
