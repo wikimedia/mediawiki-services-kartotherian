@@ -6,8 +6,8 @@ let util = require('util'),
     Promise = require('bluebird'),
     yaml = require('js-yaml'),
     fs = require("fs"),
-    Err = require('@kartotherian/err'),
-    checkType = require('@kartotherian/input-validator'),
+    Err = require('@wikimedia/err'),
+    checkType = require('@wikimedia/kartotherian-input-validator'),
     libxmljs = require('libxmljs');
 
 Promise.promisifyAll(fs);

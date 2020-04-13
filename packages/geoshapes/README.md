@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/kartotherian/geoshapes.svg?branch=master)](https://travis-ci.org/kartotherian/geoshapes)
 
-# @kartotherian/geoshapes
+# @wikimedia/kartotherian-geoshapes
 Kartotherian service to generate geometric shapes from PostgreSQL data
 
 See https://github.com/kartotherian/kartotherian

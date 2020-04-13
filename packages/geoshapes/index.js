@@ -2,7 +2,7 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const info = require('./package.json');
 const BBPromise = require('bluebird');
-const Err = require('@kartotherian/err');
+const Err = require('@wikimedia/err');
 const postgres = require('pg-promise')({ promiseLib: BBPromise });
 const GeoShapes = require('./lib/geoshapes');
 

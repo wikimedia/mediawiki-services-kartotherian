@@ -10,7 +10,7 @@ const babel = Promise.promisify(require('..'));
 const tileCodec = require('../lib/tileCodec');
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-const core = require('@kartotherian/core');
+const core = require('@wikimedia/kartotherian-core');
 
 const fauxSource = class {
   static getAsync(o) {

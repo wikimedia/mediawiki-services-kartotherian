@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/kartotherian/core.svg?branch=master)](https://travis-ci.org/kartotherian/core)
 
-# @kartotherian/core
+# @wikimedia/kartotherian-core
 
 The core components of the [Kartotherian](https://github.com/kartotherian/kartotherian) maps tile service
 

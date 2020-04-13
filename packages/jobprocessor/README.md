@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/kartotherian/jobprocessor.svg?branch=master)](https://travis-ci.org/kartotherian/jobprocessor)
 
-# @kartotherian/jobprocessor
+# @wikimedia/kartotherian-jobprocessor
 
 The job processing components of the Tilerator maps tile generation service
 

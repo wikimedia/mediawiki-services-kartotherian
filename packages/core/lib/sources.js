@@ -5,10 +5,10 @@ const _ = require('underscore');
 const Promise = require('bluebird');
 const yaml = require('js-yaml');
 const fs = require('fs');
-const Err = require('@kartotherian/err');
-const checkType = require('@kartotherian/input-validator');
+const Err = require('@wikimedia/err');
+const checkType = require('@wikimedia/kartotherian-input-validator');
 const core = require('./core');
-const { XmlLoader, YamlLoader } = require('@kartotherian/module-loader');
+const { XmlLoader, YamlLoader } = require('@wikimedia/module-loader');
 
 Promise.promisifyAll(fs);
 

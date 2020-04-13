@@ -12,8 +12,8 @@ const cassandra = require('cassandra-driver');
 const multistream = require('multistream');
 const promistreamus = require('promistreamus');
 const qidx = require('quadtile-index');
-const checkType = require('@kartotherian/input-validator');
-const Err = require('@kartotherian/err');
+const checkType = require('@wikimedia/kartotherian-input-validator');
+const Err = require('@wikimedia/err');
 const pckg = require('./package.json');
 
 const prepared = {prepare: true};

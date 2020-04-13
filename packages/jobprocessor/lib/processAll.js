@@ -9,8 +9,8 @@ let Promise = require('bluebird'),
     /** @namespace fs.writeFileAsync */
     /** @namespace fs.readdirAsync */
     fs = Promise.promisifyAll(require('fs')),
-    Err = require('@kartotherian/err'),
-    core = require('@kartotherian/core'),
+    Err = require('@wikimedia/err'),
+    core = require('@wikimedia/kartotherian-core'),
     fileParser = require('./fileParser');
 
 

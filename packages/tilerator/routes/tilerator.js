@@ -6,12 +6,12 @@ const yaml = require('js-yaml');
 const Queue = require('../lib/Queue');
 const EventService = require('../lib/EventService');
 const common = require('../lib/common');
-const checkType = require('@kartotherian/input-validator');
-const Err = require('@kartotherian/err');
-const core = require('@kartotherian/core');
-const server = require('@kartotherian/server');
+const checkType = require('@wikimedia/kartotherian-input-validator');
+const Err = require('@wikimedia/err');
+const core = require('@wikimedia/kartotherian-core');
+const server = require('@wikimedia/kartotherian-server');
 const info = require('../package.json');
-const { JobProcessor } = require('@kartotherian/jobprocessor');
+const { JobProcessor } = require('@wikimedia/kartotherian-jobprocessor');
 const bodyParser = require('body-parser');
 
 let jobProcessor;

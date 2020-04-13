@@ -1,12 +1,12 @@
 'use strict';
 
 let util = require('util'),
-    Err = require('@kartotherian/err'),
+    Err = require('@wikimedia/err'),
     Promise = require('bluebird'),
     abaculus = Promise.promisify(require('@kartotherian/abaculus'), {multiArgs: true}),
     Overlay = require('@kartotherian/tilelive-overlay'),
     _ = require('underscore'),
-    checkType = require('@kartotherian/input-validator'),
+    checkType = require('@wikimedia/kartotherian-input-validator'),
     makeDomainValidator = require('domain-validator'),
     autoPosition = require('./autoPosition');
 

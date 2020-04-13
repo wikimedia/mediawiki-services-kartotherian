@@ -1,7 +1,7 @@
 
 
 const topojson = require('topojson');
-const Err = require('@kartotherian/err');
+const Err = require('@wikimedia/err');
 const preq = require('preq');
 const BBPromise = require('bluebird');
 const parseWikidataValue = require('wd-type-parser');

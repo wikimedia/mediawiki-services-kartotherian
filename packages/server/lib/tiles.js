@@ -2,8 +2,8 @@ const util = require('util');
 const Promise = require('bluebird');
 const _ = require('underscore');
 const qidx = require('quadtile-index');
-const checkType = require('@kartotherian/input-validator');
-const Err = require('@kartotherian/err');
+const checkType = require('@wikimedia/kartotherian-input-validator');
+const Err = require('@wikimedia/err');
 
 const langCodeRe = /^[-_a-zA-Z]+$/;
 

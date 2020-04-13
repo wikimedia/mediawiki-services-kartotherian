@@ -1,6 +1,6 @@
 const _ = require('underscore');
-const Err = require('@kartotherian/err');
-const jplib = require('@kartotherian/jobprocessor');
+const Err = require('@wikimedia/err');
+const jplib = require('@wikimedia/kartotherian-jobprocessor');
 
 const { fileParser } = jplib;
 const { processAll } = jplib;

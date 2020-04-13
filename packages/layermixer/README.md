@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/kartotherian/layermixer.svg?branch=master)](https://travis-ci.org/kartotherian/layermixer)
 
-# @kartotherian/layermixer
+# @wikimedia/kartotherian-layermixer
 Vector tile mixing source, allowing layers from multiple vector tile to be merged into one tile
 
 ## Usage examples

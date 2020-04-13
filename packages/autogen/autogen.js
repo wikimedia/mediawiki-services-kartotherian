@@ -1,7 +1,7 @@
 'use strict';
 
 let Promise = require('bluebird'),
-    checkType = require('@kartotherian/input-validator'),
+    checkType = require('@wikimedia/kartotherian-input-validator'),
     core;
 
 function Autogen(uri, callback) {

@@ -8,8 +8,8 @@
 const util = require('util');
 const Promise = require('bluebird');
 const qidx = require('quadtile-index');
-const Err = require('@kartotherian/err');
-const checkType = require('@kartotherian/input-validator');
+const Err = require('@wikimedia/err');
+const checkType = require('@wikimedia/kartotherian-input-validator');
 const postgres = require('pg-promise')({promiseLib: Promise});
 const promistreamus = require('promistreamus');
 const QueryStream = require('pg-query-stream');

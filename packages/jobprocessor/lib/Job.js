@@ -4,9 +4,9 @@ let _ = require('underscore'),
     util = require('util'),
     numeral = require('numeral'),
     qidx = require('quadtile-index'),
-    checkType = require('@kartotherian/input-validator'),
-    core = require('@kartotherian/core'),
-    Err = require('@kartotherian/err'),
+    checkType = require('@wikimedia/kartotherian-input-validator'),
+    core = require('@wikimedia/kartotherian-core'),
+    Err = require('@wikimedia/err'),
     allowedProps = [
         'zoom', 'x', 'y', 'idxFrom', 'idxBefore', 'fromZoom', 'beforeZoom', 'parts', 'sources', 'storageId',
         'generatorId', 'deleteEmpty', 'keepJob', 'filters', 'priority', 'tiles', '_encodedTiles'
