@@ -1,11 +1,10 @@
 {
   "name": "@wikimedia/err",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A generic exception with parameter formatting and an optional metrics param",
   "main": "Err.js",
   "scripts": {
-    "test": "mocha",
-    "preversion": "npm test"
+    "test": "mocha"
   },
   "repository": "kartotherian/err",
   "author": "Yuri Astrakhan <YuriAstrakhan@gmail.com>",

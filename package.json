@@ -7,6 +7,10 @@
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
     "test": "lerna run test",
+    "changed": "lerna changed",
+    "version:patch": "lerna version --no-push",
+    "diff": "lerna diff",
+    "publish": "lerna publish",
     "clean": "./clean_node_modules.sh"
   },
   "description": "Kartotherian - a suite of map tile rendering and map serving software",
@@ -31,7 +35,7 @@
     "Stephane Bisson <sbisson@wikimedia.org>"
   ],
   "devDependencies": {
-    "lerna": "3.15.0",
+    "lerna": "3.22.1",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-config-kartotherian": "0.0.5",
     "grunt": "1.0.4",

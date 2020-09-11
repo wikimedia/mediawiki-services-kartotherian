@@ -1,11 +1,10 @@
 {
   "name": "@wikimedia/module-loader",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Kartotherian loader that instantiates tilelive and Kartotherian modules",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha",
-    "preversion": "npm test"
+    "test": "mocha"
   },
   "repository": "kartotherian/module-loader",
   "keywords": [
@@ -20,8 +19,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@wikimedia/err": "^1.0.2",
-    "@wikimedia/kartotherian-input-validator": "^1.0.1",
+    "@wikimedia/err": "^1.0.3",
+    "@wikimedia/kartotherian-input-validator": "^1.0.2",
     "bluebird": "^3.5.0",
     "js-yaml": "^3.8.2",
     "libxmljs": "0.19.5",

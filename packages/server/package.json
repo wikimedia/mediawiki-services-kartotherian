@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-server",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Serves Kartotherian maps",
   "main": "lib/server.js",
   "scripts": {
@@ -19,8 +19,8 @@
   },
   "homepage": "https://github.com/kartotherian/server",
   "dependencies": {
-    "@wikimedia/err": "^1.0.2",
-    "@wikimedia/kartotherian-input-validator": "^1.0.1",
+    "@wikimedia/err": "^1.0.3",
+    "@wikimedia/kartotherian-input-validator": "^1.0.2",
     "bluebird": "^3.5.0",
     "browserify": "^16.2.2",
     "compression": "^1.6.2",

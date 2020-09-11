@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-snapshot",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Serves Kartotherian snapshot images",
   "main": "lib/snapshot.js",
   "scripts": {
@@ -19,10 +19,10 @@
   "homepage": "https://github.com/kartotherian/snapshot",
   "dependencies": {
     "@kartotherian/abaculus": "^3.0.3-alpha.0",
-    "@wikimedia/err": "^1.0.2",
     "@kartotherian/geojson-mapnikify": "^2.1.1",
-    "@wikimedia/kartotherian-input-validator": "^1.0.1",
     "@kartotherian/tilelive-overlay": "^2.1.1",
+    "@wikimedia/err": "^1.0.3",
+    "@wikimedia/kartotherian-input-validator": "^1.0.2",
     "@wikimedia/mapdata": "^0.5.0",
     "bluebird": "^3.5.0",
     "domain-validator": "^0.0.5",
