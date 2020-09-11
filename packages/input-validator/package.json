@@ -1,11 +1,10 @@
 {
   "name": "@wikimedia/kartotherian-input-validator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Functions to assert input correctness for Kartotherian",
   "main": "validator.js",
   "scripts": {
-    "test": "mocha",
-    "preversion": "npm test"
+    "test": "mocha"
   },
   "repository": "kartotherian/input-validator",
   "keywords": [
@@ -20,7 +19,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@wikimedia/err": "^1.0.2",
+    "@wikimedia/err": "^1.0.3",
     "quadtile-index": "^0.0.6",
     "underscore": "^1.8.3"
   },

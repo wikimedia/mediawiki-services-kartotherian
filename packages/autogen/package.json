@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-autogen",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tile source to dynamically create tiles if its missing in the storage",
   "main": "autogen.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@wikimedia/kartotherian-input-validator": "^1.0.1",
+    "@wikimedia/kartotherian-input-validator": "^1.0.2",
     "bluebird": "^3.5.0",
     "underscore": "^1.8.3"
   },

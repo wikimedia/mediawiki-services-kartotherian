@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The core components of the Kartotherian maps tile service",
   "main": "index.js",
   "scripts": {
@@ -14,9 +14,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@wikimedia/err": "^1.0.2",
-    "@wikimedia/kartotherian-input-validator": "^1.0.1",
-    "@wikimedia/module-loader": "^1.0.1",
+    "@wikimedia/err": "^1.0.3",
+    "@wikimedia/kartotherian-input-validator": "^1.0.2",
+    "@wikimedia/module-loader": "^1.0.2",
     "bluebird": "^3.5.0",
     "js-yaml": "^3.8.2",
     "quadtile-index": "^0.0.6",

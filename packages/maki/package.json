@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-maki",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Serves Kartotherian maki markers",
   "main": "maki.js",
   "scripts": {
@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/kartotherian/maki",
   "dependencies": {
-    "@wikimedia/err": "^1.0.2",
     "@kartotherian/makizushi": "~3.0.1",
+    "@wikimedia/err": "^1.0.3",
     "bluebird": "^3.5.0"
   },
   "devDependencies": {
