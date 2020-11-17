@@ -1,0 +1,34 @@
+@startuml
+
+() tiles
+() "geolines\ngeoshapes" as geoshapes
+() "static maps" as staticmaps
+
+package mediawiki {
+
+  [Kartographer]
+  [Visual Editor]
+  component JSON  [
+    JsonConfig (Data Namespace)
+  ]
+
+}
+
+package browser {
+
+    component ext.kartographer.frame {
+        component leaflet
+        component mapdata
+    }
+    ext.kartographer.frame ..> Kartographer: <<served by>>
+    leaflet ..> tiles: <<uses>>
+    leaflet ..> geoshapes: <<uses>>
+    [ext.kartographer.staticframe] ..> Kartographer: <<served by>>
+    [ext.kartographer.staticframe] ..> staticmaps: <<uses>>
+
+}
+
+Kartographer --> JSON : get GeoJSON\nfrom Data\nnamespace
+kartotherian ..> Kartographer : get GeoJSON\nfrom Data\nnamespace
+mapdata ..> Kartographer : get GeoJSON\nfrom Data\nnamespace
+@enduml

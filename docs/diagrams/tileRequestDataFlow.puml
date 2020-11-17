@@ -1,0 +1,34 @@
+@startuml
+|User|
+start
+:WebBrowser requests tile at
+maps.wikimedia.org/osm-intl/z/x/y.png;
+|#AntiqueWhite|kartotherian|
+:Receives tile request;
+:fetch data from Cassandra;
+|Cassandra DB|
+:retrieve vector-tile
+pre-generated;
+|kartotherian|
+:identify language;
+|#AntiqueWhite|kartotherian(babel)|
+:edits the vector-tile
+metadata
+to use the proper
+fallback language
+during renderering;
+|kartotherian|
+:invokes mapnik with
+vector-tile and style
+configuration;
+|mapnik|
+:loads settings;
+:render tile image;
+:returns to kartotherian;
+|kartotherian|
+:receives image;
+:returns requested tile;
+|User|
+:WebBrowser receives tile image;
+end
+@enduml

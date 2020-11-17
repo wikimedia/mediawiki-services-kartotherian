@@ -1,0 +1,49 @@
+@startuml
+|maps::master cron|
+start
+repeat
+:invoke
+replication
+script;
+|#AntiqueWhite|replication script (osm2pgsql)|
+:pulls data from OSM using
+osm2pgsql with hourly strategy;
+:osm2pgsql stores
+data into the DB;
+|PostgreSQL DB|
+:receives data from
+osm2pgsql;
+|replication script (osm2pgsql)|
+:script runs custom
+SQL function for
+indexes and to
+populate the admin
+table;
+:script creates a
+list of affected
+tiles to pass
+to Tilerator
+through a nodejs
+script;
+:triggers
+tile generation;
+fork
+|replication script (osm2pgsql)|
+:returns to
+script after
+Tilerator is
+triggered;
+fork again
+|Tilerator|
+:start tile
+generation
+data flow;
+(T)
+detach
+|replication script (osm2pgsql)|
+end fork
+|maps::master cron|
+repeatwhile (<b>repeat every 12 hours)
+:SIGTERM;
+end
+@enduml

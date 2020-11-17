@@ -1,0 +1,55 @@
+@startuml
+|User|
+start
+:WebBrowser requests
+https://maps.wikimedia.org/img
+/osm-intl,15,44.102,4.756,300x300@2x.png?lang=en;
+|#AntiqueWhite|kartotherian(snapshot)|
+:Receives request;
+fork
+:parse params for overlaymap layer
+and request them through mapdata;
+|mapdata|
+:get GeoJSON data and return;
+|kartotherian(snapshot)|
+fork again
+:parse params for basemap layer
+and pass a callback for abaculus
+to get the tiles needed for render;
+|abaculus|
+:identify number of tiles needed
+for the rendering;
+|#AntiqueWhite|kartotherian(getTile)|
+:execute callback to fetch
+all needed vector-tiles from Cassandra;
+|Cassandra DB|
+:retrieve vector-tiles
+pre-generated;
+|kartotherian(getTile)|
+:identify language;
+|#AntiqueWhite|kartotherian(babel)|
+:edits the vector-tile
+metadata
+to use the proper
+fallback language
+during renderering;
+|kartotherian(getTile)|
+:returns from callback;
+|abaculus|
+:stitch tiles to create basemap layer;
+|kartotherian(snapshot)|
+end fork
+:invokes mapnik with
+basemap and overlaymap
+configuration;
+|mapnik|
+:loads settings;
+:render map image;
+:returns to kartotherian;
+|kartotherian(snapshot)|
+:receives image;
+:returns requested tile;
+|User|
+:WebBrowser receives tile image;
+end
+@enduml

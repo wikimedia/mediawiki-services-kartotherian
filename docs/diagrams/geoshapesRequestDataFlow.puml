@@ -1,0 +1,33 @@
+@startuml
+|User|
+start
+:Browser requests
+maps.wikimedia.org/geoshape?getgeojson=1&(ids|query);
+|#AntiqueWhite|kartotherian(geoshapes)|
+:Receives request;
+if (req contains a SPARQL query) then (yes)
+    :request SPARQL query;
+    |WDQS|
+    :process SPARQL query;
+    |kartotherian(geoshapes)|
+endif
+if (req contains an array of Wikidata ids) then (yes)
+  :query OSM DB for OSM
+  relations that have wikidata
+  tag for the requested ids;
+  |PostgreSQL (OSM)|
+  :execute SQL query;
+  |kartotherian(geoshapes)|
+
+endif
+:combine data request and
+transform it in GeoJSON;
+:request MWAPI with `sanitize-mapdata` action;
+|MediaWiki(Kartographer)|
+:sanitize GeoJSON;
+|kartotherian(geoshapes)|
+:prepare response for client;
+|User|
+:Browser receives JSON;
+end
+@enduml

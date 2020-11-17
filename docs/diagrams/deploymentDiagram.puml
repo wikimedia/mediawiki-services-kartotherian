@@ -1,0 +1,136 @@
+@startuml
+
+() "Maps\n(public)" as mapsP
+
+database OpenStreetMap as osm
+
+package codfw {
+
+  package "Maps cache cluster" as cache {
+    node cp20XX {
+      [varnish-frontend] as vfe2003
+      [varnish-backend] as vbe2003
+    }
+  }
+
+  () "Maps\n(internal)" as mapsI
+
+  node "maps2004\n(main)" as maps2004 {
+    [Kartotherian] as Kartotherian2001
+    [Tilerator] as Tilerator2001
+    [TileratorUI] as TileratorUI2001
+    [Osmosis] as Osmosis2001
+    [osm2pgsql] as osm2pgsql2001
+    [shp2pgsql] as shp2pgsql2001
+    database Cassandra as Cassandra2001
+    database Redis as Redis2001
+    database "Postgres\nmain" as Postgres2001
+
+    () TileratorUI as TileratorUI_endpoint2001
+
+    Tilerator2001 -left-> Redis2001: get tile\nto generate
+    Tilerator2001 --> Postgres2001
+    Tilerator2001 -> Cassandra2001
+
+    TileratorUI2001 --> Redis2001: submit list\nof tiles\nto generate
+
+    Kartotherian2001 --> Cassandra2001
+
+    Osmosis2001 --> osm: import diffs
+    Osmosis2001 --> osm2pgsql2001
+    osm2pgsql2001 --> Postgres2001
+    shp2pgsql2001 --> osm
+    shp2pgsql2001 --> Postgres2001
+
+    TileratorUI_endpoint2001 -- TileratorUI2001
+
+    note left of TileratorUI_endpoint2001
+      TileratorUI is only
+      accessed over SSH
+    end note
+
+    note right of Osmosis2001
+      Osmosis is run daily
+      from cron
+    end note
+
+    note right of shp2pgsql2001
+      shp2pgsql is run
+      monthly from cron
+    end note
+  }
+  node "maps20xx\n(replicas)" as maps20xx {
+    [Kartotherian] as Kartotherian20xx
+    [Tilerator] as Tilerator20xx
+    database Cassandra as Cassandra20xx
+    database "Postgres\nreplicas" as Postgres20xx
+
+    Tilerator20xx -left-> Redis2001: get tile\nto generate
+    Tilerator20xx --> Postgres20xx
+    Tilerator20xx --> Cassandra20xx
+
+    Kartotherian20xx --> Cassandra20xx
+  }
+
+  mapsI - Kartotherian2001
+  mapsI - Kartotherian20xx
+
+  vbe2003 -> mapsI
+
+  vfe2003 --> vbe2003
+
+' un comment the block below to have the mostly complete Varnish connections
+'  vfe2003 --> vbe2003
+'  vfe2003 --> vbe2009
+'  vfe2003 --> vbe2015
+'  vfe2003 --> vbe2021
+'
+'  vfe2009 --> vbe2003
+'  vfe2009 --> vbe2009
+'  vfe2009 --> vbe2015
+'  vfe2009 --> vbe2021
+'
+'  vfe2015 --> vbe2003
+'  vfe2015 --> vbe2009
+'  vfe2015 --> vbe2015
+'  vfe2015 --> vbe2021
+'
+'  vfe2021 --> vbe2003
+'  vfe2021 --> vbe2009
+'  vfe2021 --> vbe2015
+'  vfe2021 --> vbe2021
+
+  mapsP -- vfe2003
+
+  Postgres20xx <. Postgres2001
+  Cassandra20xx <.> Cassandra2001
+
+  note right of cache
+    interconnections between
+    Varnish frontend and backend
+    are more complex, not showing
+    all this here.
+  end note
+
+  note right of mapsI
+    Kartotherian is a
+    LVS service
+  end note
+}
+
+note as n1
+ - Between maps nodes:
+    - Firewall access between hosts
+     is opened to facilitate the storage
+     mechanisms.
+    - Cassandra handles gossiping writes
+     and cluster comms
+    - OSM primary/replica stuff is statically
+     configured via the relations we maintain
+     in puppet.
+ - tileratorui runs on all nodes but
+   should be used only on only one
+   instance.
+end note
+
+@enduml
