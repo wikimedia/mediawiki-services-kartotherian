@@ -2,7 +2,8 @@
 
 let Promise = require('bluebird'),
     assert = require('assert'),
-    processAllLib = require('../lib/processAll'),
+    processAllLib = require('../lib/processAll').processAll,
+    filterFilesForProcessing = require('../lib/processAll').filterFilesForProcessing,
     fileParserLib = require('../lib/fileParser'),
     pathLib = require('path'),
     util = require('util'),
@@ -144,3 +145,47 @@ describe('processAll', () => {
     }));
 
 });
+
+describe('filterFilesForProcessing', () => {
+    const mask = '(expire\.list\.*)|(\.tiles)';
+    const expDirPath = '/srv/expiretiles'
+
+    it('imposm3 expiry tile files are supported', async () => {
+        const files = [
+            `${expDirPath}/20201208/113411.586.tiles`,
+            `${expDirPath}/20201208/113442.064.tiles`,
+            `${expDirPath}/20201208/113512.231.tiles`,
+            `${expDirPath}/20201208/113543.916.tiles`,
+            `${expDirPath}/20201208/113614.043.tiles`,
+        ];
+
+        const expected = [
+            `${expDirPath}/20201208/113512.231.tiles`,
+            `${expDirPath}/20201208/113543.916.tiles`,
+            `${expDirPath}/20201208/113614.043.tiles`,
+        ];
+
+        const filteredFiles = await filterFilesForProcessing(files, expDirPath, '20201208/113442.064.tiles', mask);
+        assert.deepEqual(filteredFiles, expected);
+    });
+
+    it('osm2pgsql expiry tile files are supported', async () => {
+
+        const files = [
+            `${expDirPath}/expire.list.202101011200`,
+            `${expDirPath}/expire.list.202101050000`,
+            `${expDirPath}/expire.list.202101081200`,
+            `${expDirPath}/expire.list.202101120000`,
+            `${expDirPath}/expire.list.202101151200`,
+        ];
+
+        const expected = [
+            `${expDirPath}/expire.list.202101081200`,
+            `${expDirPath}/expire.list.202101120000`,
+            `${expDirPath}/expire.list.202101151200`,
+        ];
+
+        const filteredFiles = await filterFilesForProcessing(files, expDirPath, 'expire.list.202101050000', mask);
+        assert.deepEqual(filteredFiles, expected);
+    })
+})

@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/tilerator",
-  "version": "1.1.6",
+  "version": "1.1.7-beta.1",
   "description": "Map tiles pre-generation service",
   "main": "./app.js",
   "scripts": {
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/kartotherian/tilerator",
   "dependencies": {
     "@kartotherian/mapnik": "~3.7.3",
-    "@kartotherian/osm-bright-source": "^1.0.5",
+    "@kartotherian/osm-bright-source": "^1.0.6-wmf.0",
     "@kartotherian/osm-bright-style": "^4.0.1",
     "@kartotherian/tilelive-bridge": "~3.1.0",
     "@kartotherian/tilelive-tmsource": "^1.0.2-alpha.0",
@@ -41,7 +41,7 @@
     "@wikimedia/kartotherian-cassandra": "^1.0.2",
     "@wikimedia/kartotherian-core": "^1.0.3",
     "@wikimedia/kartotherian-input-validator": "^1.0.2",
-    "@wikimedia/kartotherian-jobprocessor": "^1.0.5",
+    "@wikimedia/kartotherian-jobprocessor": "^1.0.6",
     "@wikimedia/kartotherian-layermixer": "^1.0.2",
     "@wikimedia/kartotherian-overzoom": "^1.0.2",
     "@wikimedia/kartotherian-postgres": "^1.0.2",

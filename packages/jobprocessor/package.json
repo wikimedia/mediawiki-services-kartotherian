@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-jobprocessor",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Processes tile generation jobs",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "@wikimedia/kartotherian-input-validator": "^1.0.2",
     "bluebird": "^3.5.0",
     "event-stream": "^3.3.4",
+    "glob": "^7.1.6",
     "numeral": "^2.0.5",
     "promistreamus": "^0.1.14",
     "quadtile-index": "^0.0.6",
