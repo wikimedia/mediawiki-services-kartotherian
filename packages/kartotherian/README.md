@@ -11,7 +11,8 @@ Kartotherian can serve vector and raster tiles in multiple formats and optional 
 
     http://.../{source}/{zoom}/{x}/{y}[@{scale}x].{format}
 
-* The sources are configured with the [source config file](https://github.com/kartotherian/core). Sources configuration supports different methods of tile storage, such as Cassandra or files, generation from postgress db, overzoom to extract the tile from lower zooms if missing, layer extraction, mixing multiple sources together, etc.
+* The sources are configured with the
+[source config file](https://github.com/kartotherian/core). Sources configuration supports different methods of tile storage, such as HTTP or files, generation from postgress db, overzoom to extract the tile from lower zooms if missing, layer extraction, mixing multiple sources together, etc.
 * Optional scalling can render larger images for high resolution screens (only those enabled in the source, e.g. `[1.5, 2]`)
 * Supported formats include PNG ang JPEG, SVG, PBF vectors, and JSON (with `nogeo` and `summary` debug options)
 
@@ -65,8 +66,6 @@ For the rest of the configuration parameters, see [service runner](https://githu
 ## Components
 Kartotherian platform consists of a number of elements, some of which conform to the general specifications established
 by [MapBox](https://github.com/mapbox), and therefor can reuse components that confirm to the same specification.
-Also, see [Tilerator](https://github.com/kartotherian/tilerator), an optional stand-alone service to pre-generate tiles.
-Tilerator is separate from Kartotherian, but it reuses most of the same components.
 
 ### Components by Wikimedia Foundation
 
@@ -78,11 +77,8 @@ Tilerator is separate from Kartotherian, but it reuses most of the same componen
 #### Tile sources
 
 * [kartotherian-autogen](https://github.com/kartotherian/autogen) - Tile source that checks "storage" source for a tile, and if not found, gets it from the "generator" source and saves it into the "storage"
-* [kartotherian-cassandra](https://github.com/kartotherian/cassandra) - Tile source that stores tiles in the Cassandra database
 * [kartotherian-demultiplexer](https://github.com/kartotherian/demultiplexer) - Tile source that combines multiple sources by zoom level
-* [kartotherian-layermixer](https://github.com/kartotherian/layermixer) - Tile source capable of mixing different vector layers from multiple tile sources
 * [kartotherian-overzoom](https://github.com/kartotherian/overzoom) - Tile source that will zoom out if the requested tile does not exist, and extracts the needed portion from the lower-zoom tile it finds.
-* [kartotherian-postgres](https://github.com/kartotherian/postgres) - Tile source that stores tiles in the Postgres database
 * [kartotherian-substantial](https://github.com/kartotherian/substantial) - Tile source that filters out tiles that are not significant - e.g. nothing but water or land.
 
 #### Data and Styling
