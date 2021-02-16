@@ -22,19 +22,17 @@ table;
 :script creates a
 list of affected
 tiles to pass
-to Tilerator
-through a nodejs
-script;
+to tile generation;
 :triggers
 tile generation;
 fork
 |replication script (osm2pgsql)|
 :returns to
 script after
-Tilerator is
+tile generation is
 triggered;
 fork again
-|Tilerator|
+|Tile generation|
 :start tile
 generation
 data flow;

@@ -44,6 +44,3 @@ variants:
   production-kartotherian:
     copies: [prep]
     entrypoint: [node, packages/kartotherian/server.js]
-  production-tilerator:
-    copies: [prep]
-    entrypoint: [node, packages/tilerator/server.js]

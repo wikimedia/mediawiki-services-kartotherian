@@ -8,12 +8,4 @@ pipelines:
         publish:
           type: image
           tags: [kartotherian]
-  tilerator:
-    blubberfile: blubber.yaml
-    stages:
-      - name: test
-      - name: production-tilerator
-        build: production-tilerator
-        publish:
-          type: image
-          tags: [tilerator]
+

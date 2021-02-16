@@ -21,8 +21,8 @@ to get the tiles needed for render;
 for the rendering;
 |#AntiqueWhite|kartotherian(getTile)|
 :execute callback to fetch
-all needed vector-tiles from Cassandra;
-|Cassandra DB|
+all needed vector-tiles from tile source;
+|Tegola/Swift|
 :retrieve vector-tiles
 pre-generated;
 |kartotherian(getTile)|
