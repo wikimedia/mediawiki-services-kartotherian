@@ -11,8 +11,7 @@ Kartotherian can serve vector and raster tiles in multiple formats and optional 
 
     http://.../{source}/{zoom}/{x}/{y}[@{scale}x].{format}
 
-* The sources are configured with the
-[source config file](https://github.com/kartotherian/core). Sources configuration supports different methods of tile storage, such as Cassandra or files, generation from postgress db, overzoom to extract the tile from lower zooms if missing, layer extraction, mixing multiple sources together, etc.
+* The sources are configured with the [source config file](https://github.com/kartotherian/core). Sources configuration supports different methods of tile storage, such as Cassandra or files, generation from postgress db, overzoom to extract the tile from lower zooms if missing, layer extraction, mixing multiple sources together, etc.
 * Optional scalling can render larger images for high resolution screens (only those enabled in the source, e.g. `[1.5, 2]`)
 * Supported formats include PNG ang JPEG, SVG, PBF vectors, and JSON (with `nogeo` and `summary` debug options)
 
@@ -60,6 +59,7 @@ Inside the `conf` key:
 * `variables` (optional) - specify a set of variables (string key-value pairs) to be used inside sources, or it could be a filename or a list of filenames/objects.
 * `defaultHeaders` (optional, object) - a set of extra headers that will be sent to the user unless the source provides its own. (public requests only)
 * `headers` (optional, object) - a set of extra headers that will be sent to the user instead of the headers returned by the source. (public requests only)
+
 For the rest of the configuration parameters, see [service runner](https://github.com/wikimedia/service-runner) config info.
 
 ## Components
@@ -69,12 +69,14 @@ Also, see [Tilerator](https://github.com/kartotherian/tilerator), an optional st
 Tilerator is separate from Kartotherian, but it reuses most of the same components.
 
 ### Components by Wikimedia Foundation
+
 * [kartotherian-core](https://github.com/kartotherian/core) - Loads and configures tile sources, and provides some common utility functions
 * [kartotherian-server](https://github.com/kartotherian/server) - Handles user requests for tiles and source info, as well as registers additional data type handlers like maki markers and image snapshots.
 * [kartotherian-maki](https://github.com/kartotherian/maki) - Request handler for maki markers - generates PNG marker images that can be used from geojson.
 * [kartotherian-snapshot](https://github.com/kartotherian/snapshot) - Request handler for static images by combining multiple tiles into one snapshot image of a requested size.
 
 #### Tile sources
+
 * [kartotherian-autogen](https://github.com/kartotherian/autogen) - Tile source that checks "storage" source for a tile, and if not found, gets it from the "generator" source and saves it into the "storage"
 * [kartotherian-cassandra](https://github.com/kartotherian/cassandra) - Tile source that stores tiles in the Cassandra database
 * [kartotherian-demultiplexer](https://github.com/kartotherian/demultiplexer) - Tile source that combines multiple sources by zoom level
@@ -84,18 +86,21 @@ Tilerator is separate from Kartotherian, but it reuses most of the same componen
 * [kartotherian-substantial](https://github.com/kartotherian/substantial) - Tile source that filters out tiles that are not significant - e.g. nothing but water or land.
 
 #### Data and Styling
+
 * [osm-bright-source](https://github.com/kartotherian/osm-bright.tm2source) - SQL queries used by the `tilelive-bridge` to generate a vector tile from Postgres Database
 * [osm-bright-style](https://github.com/kartotherian/osm-bright.tm2) - Style used by the `tilelive-vector` to convert vector tiles into images.
 * [osm-bright-fonts](https://github.com/kartotherian/osm-bright.fonts) - Fonts used by the `osm-bright-style`.
 
 
 ### Components by MapBox
+
 * [tilelive](https://github.com/mapbox/tilelive) - ties together various tile sources, both vector and raster
 * [tilelive-bridge](https://github.com/mapbox/tilelive-bridge) - generates vector tiles from SQL
 * [tilelive-vector](https://github.com/mapbox/tilelive-vector) - converts vector tiles to raster tiles
 * [abaculus](https://github.com/mapbox/abaculus) - generates raster images of any location and size from a tile source
 
 ### Other Relevant Components
+
 * [mapnik](https://github.com/mapnik/node-mapnik) - Tile rendering library for node
 * [leaflet](https://github.com/Leaflet/Leaflet) - JavaScript library for mobile-friendly interactive maps
 

@@ -19,11 +19,13 @@ Inside the `conf` key:
 * `variables` - (optional) specify a set of variables (string key-value pairs) to be used inside sources, or it could be a filename or a list of filenames/objects.
 * `uiOnly`- (optional, boolean) runs Tilerator in UI mode - does not generate tiles, but still allows access to the web-based queue management tools.
 * `daemonOnly`- (optional, boolean) runs Tilerator in daemon mode - generates tiles, but does not allows access to the web-based queue management tools.
+* `redis` - (optional) configures redis server connection, e.g. redis://example.com:1234?redis_option=value&redis_option=value
+
 For the rest of the configuration parameters, see [service runner](https://github.com/wikimedia/service-runner) config info.
-* redis - (optional) configures redis server connection, e.g. redis://example.com:1234?redis_option=value&redis_option=value
 
 ## Single index concept
-* Internally, all [X,Y] coordinates are converted to a single integer, with values 0..(4^zoom-1). This index is constructed
+
+Internally, all [X,Y] coordinates are converted to a single integer, with values 0..(4^zoom-1). This index is constructed
 by taking bits of both X and Y coordinates one bit at a time, thus every odd bit of the index represents the X, and every even bit represents the Y coordinates.
 
 This allows us to easily treat the whole tile space as one linear space, yet provides for a convenient way to calculate other zoom levels.
@@ -48,6 +50,7 @@ http://localhost:6534/add?generatorId=gen&storageId=store&zoom=3
 ```
 
 ### Job Parameters
+
 * `generatorId` - required source ID, as defined in the sources configuration. Tiles from this source will be read.
 * `storageId` - required source ID, as defined in the sources configuration. Tiles will be written to this source.
 * `zoom` - zoom level to process
@@ -105,6 +108,7 @@ If any of these parameters are set, Tilerator will check if a specific tile exis
 * `biggerThan` - only generate tile if the tile in storage is bigger than a given size (compressed)
 * `smallerThan` - only generate tile if the tile in storage is smaller than a given size (compressed)
 * `missing` - if this is set to true, and other filters are not set, gets all the missing tiles.
+
 If other filters are set, generates the missing tiles plus the ones that match the filter.
 For example, to regenerate missing and small tiles, set the `smallerThan` and `missing` parameters.
 
