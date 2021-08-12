@@ -4,8 +4,8 @@
 'use strict';
 
 const preq = require('preq');
-const assert = require('../../utils/assert.js');
-const server = require('../../utils/server.js');
+const assert = require('../../utils/assert');
+const server = require('../../utils/server');
 const { URI } = require('swagger-router');
 const yaml = require('js-yaml');
 const fs = require('fs');
