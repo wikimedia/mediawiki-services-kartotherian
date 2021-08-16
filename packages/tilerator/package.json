@@ -30,7 +30,7 @@
   "dependencies": {
     "@kartotherian/mapnik": "~3.7.3",
     "@kartotherian/osm-bright-source": "^1.0.7-wmf.2",
-    "@kartotherian/osm-bright-style": "^4.0.1",
+    "@kartotherian/osm-bright-style": "^4.0.2",
     "@kartotherian/tilelive-bridge": "~3.1.0",
     "@kartotherian/tilelive-tmsource": "^1.0.2-alpha.0",
     "@kartotherian/tilelive-vector": "^4.0.3-alpha.0",

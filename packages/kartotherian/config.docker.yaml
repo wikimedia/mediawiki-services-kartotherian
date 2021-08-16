@@ -65,7 +65,7 @@ services:
       # expose_version: false
 
       # Kartotherian variables and sources
-      variables: 
+      variables:
         cassandra-pswd: cassandra
         cassandra-servers:
         - localhost
@@ -97,19 +97,19 @@ services:
         allowUserQueries: true
         database: gis
         host: localhost
-        lineTable: planet_osm_line
+        lineTable: wikidata_relation_members
         password: secret
-        polygonTable: planet_osm_polygon
+        polygonTable: wikidata_relation_polygon
         table: planet_osm_polygon
         user: default
         wikidataQueryService: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 
       mwapi_req:
         body: "{{ default(request.query, {}) }}"
-        headers:                                                                                                                      
+        headers:
           host: "{{request.params.domain}}"
-          user-agent: "{{user-agent}}"                                                                                                
-        method: post                                                                                                                  
+          user-agent: "{{user-agent}}"
+        method: post
         uri:
 
       allowedDomains:
