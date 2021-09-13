@@ -6,8 +6,8 @@ pipelines:
       - name: production-kartotherian
         build: production-kartotherian
         publish:
-          type: image
-          tags: [kartotherian]
+          image:
+            tags: [kartotherian]
   tilerator:
     blubberfile: blubber.yaml
     stages:
@@ -15,5 +15,5 @@ pipelines:
       - name: production-tilerator
         build: production-tilerator
         publish:
-          type: image
-          tags: [tilerator]
+          image:
+            tags: [tilerator]
