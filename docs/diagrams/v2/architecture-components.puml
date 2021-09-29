@@ -1,0 +1,40 @@
+@startuml maps-v2-architecture-components
+
+cloud "Kubernetes" {
+    [Tegola] as tegola
+    [Kubernetes CronJob] as cronjob
+}
+cloud "EventPlatform" {
+    [EventGate] as eventgate
+    [Kafka] as kafka
+}
+
+cloud "Swift" {
+    [S3 API] as s3api
+}
+
+node "Maps node" {
+    database "Postgres" {
+        [PostGIS] as postgis
+    }
+    [Integration scripts] as integrationscripts
+    package Kartotherian {
+        [tiles endpoint] as tiles
+        [snapshots endpoint] as snapshots
+        [geoshapes endpoint] as geoshapes
+    }
+    [imposm3] as imposm3
+}
+
+imposm3 --> postgis: Import OSM data
+tiles --> tegola: Read vector tiles
+snapshots --> tegola: Read vector tiles
+geoshapes --> postgis: Read wikidata
+imposm3 --> integrationscripts: Trigger scripts on each import
+integrationscripts --> eventgate: Send events for tile state change
+eventgate --> kafka: Validate and send kafka events to a topic
+cronjob --> kafka: Read events from a topic
+cronjob --> s3api: Pregenerate or invalidate tile cache
+tegola --> s3api: Get or set tile cache
+tegola --> postgis: Query spatial data
+@enduml

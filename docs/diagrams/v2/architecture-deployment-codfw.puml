@@ -1,0 +1,58 @@
+@startuml maps-v2-deployment-infra-codfw
+
+left to right direction
+
+rectangle codfw {
+    cloud "maps codfw" {
+        node "maps2009 master" as mapsmastercodfw {
+            component postgres as postgresmastercodfw
+            component imposm as imposmcodfw
+            component kartotherian as kartotheriancodfwmaster
+            component "OSM import scripts" as osmimportcodfw
+        }
+        node "maps{2005,2006,2007,2008,2010} replica" as mapsreplicacodfw {
+            component postgres as postgresreplicacodfw
+            component kartotherian as kartotherianreplicacodfw
+        }
+    }
+
+
+    cloud "k8s codfw" {
+        component pods as podscodfw {
+            [tegola-vector-tiles-main] as tegolacodfw
+            component envoy as envoycodfw {
+                [https-termination] as httpscodfw
+                [db-loadbalancer] as dbloadbalancercodfw
+            }
+        }
+        component cronjobs as cronjobscodfw {
+            [tegola-vector-tiles-main-pregeneration] as tegolacroncodfw
+        }
+    }
+}
+
+cloud "EventPlatform" {
+    [EventGate main] as eventgate
+    [Kafka main] as kafka
+}
+
+cloud "Swift (thanos)" {
+    database "tegola-swift-container" as tegolaswiftcontainer
+}
+
+eventgate -> kafka
+
+imposmcodfw -> postgresmastercodfw
+imposmcodfw -> osmimportcodfw
+osmimportcodfw -> eventgate
+kartotheriancodfwmaster -> httpscodfw
+kartotherianreplicacodfw -> httpscodfw
+httpscodfw -> tegolacodfw
+tegolacodfw -> dbloadbalancercodfw
+tegolacodfw -> tegolaswiftcontainer
+dbloadbalancercodfw -> postgresreplicacodfw
+postgresreplicacodfw -> postgresmastercodfw
+tegolacroncodfw --> kafka
+tegolacroncodfw --> tegolaswiftcontainer
+
+@enduml
