@@ -1,0 +1,59 @@
+@startuml maps-v2-deployment-infra
+
+left to right direction
+
+rectangle eqiad {
+    cloud "k8s eqiad" {
+        component pods as podseqiad {
+            [tegola-vector-tiles-main] as tegolaeqiad
+            component envoy as envoyeqiad {
+                [https-termination] as httpseqiad
+                [db-loadbalancer] as dbloadbalancereqiad
+            }
+        }
+        component cronjobs as cronjobseqiad {
+            [tegola-vector-tiles-main-pregeneration] as tegolacroneqiad
+        }
+    }
+
+    cloud "maps eqiad" {
+        node "maps1009 master" as mapsmastereqiad {
+            component postgres as postgresmastereqiad
+            component imposm as imposmeqiad
+            component kartotherian as kartotherianeqiadmaster
+            component "OSM import scripts" as osmimporteqiad
+        }
+        node "maps{1005,1006,1007,1008,1010} replica" as mapsreplicaeqiad {
+            component postgres as postgresreplicaeqiad
+            component kartotherian as kartotherianreplicaeqiad
+        }
+    }
+
+}
+
+
+cloud "EventPlatform" {
+    [EventGate main] as eventgate
+    [Kafka main] as kafka
+}
+
+cloud "Swift (thanos)" {
+    database "tegola-swift-container" as tegolaswiftcontainer
+}
+
+eventgate -> kafka
+
+imposmeqiad -> postgresmastereqiad
+imposmeqiad -> osmimporteqiad
+osmimporteqiad -> eventgate
+kartotherianeqiadmaster -> httpseqiad
+kartotherianreplicaeqiad -> httpseqiad
+httpseqiad -> tegolaeqiad
+tegolaeqiad -> dbloadbalancereqiad
+tegolaeqiad -> tegolaswiftcontainer
+dbloadbalancereqiad -> postgresreplicaeqiad
+postgresreplicaeqiad -> postgresmastereqiad
+tegolacroneqiad --> kafka
+tegolacroneqiad --> tegolaswiftcontainer
+
+@enduml
