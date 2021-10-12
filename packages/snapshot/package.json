@@ -23,7 +23,7 @@
     "@kartotherian/tilelive-overlay": "^2.1.1",
     "@wikimedia/err": "^1.0.3",
     "@wikimedia/kartotherian-input-validator": "^1.0.2",
-    "@wikimedia/mapdata": "^0.5.0",
+    "@wikimedia/mapdata": "wikimedia/mapdata#wmde-maps-revid",
     "bluebird": "^3.5.0",
     "domain-validator": "^0.0.5",
     "leaflet-headless": "^0.2.5",
