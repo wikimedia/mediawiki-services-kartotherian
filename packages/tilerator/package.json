@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/tilerator",
-  "version": "1.1.7-beta.6",
+  "version": "1.1.8-beta.0",
   "description": "Map tiles pre-generation service",
   "main": "./app.js",
   "scripts": {
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/kartotherian/tilerator",
   "dependencies": {
     "@kartotherian/mapnik": "~3.7.3",
-    "@kartotherian/osm-bright-source": "^1.0.7-wmf.2",
+    "@kartotherian/osm-bright-source": "^1.0.8-wmf.0",
     "@kartotherian/osm-bright-style": "^4.0.2",
     "@kartotherian/tilelive-bridge": "~3.1.0",
     "@kartotherian/tilelive-tmsource": "^1.0.2-alpha.0",
