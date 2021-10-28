@@ -12,7 +12,7 @@ let _ = require('underscore'),
  * @param {string} protocol - "http" or "https"
  * @param {string} domain - "en.wikipedia.org"
  * @param {string} title - title of the page - ok to be unsanitized
- * @param {string} revid - desired revision ID
+ * @param {string|boolean} revid - desired revision ID, or false to omit
  * @param {string|string[]} groupIds
  * @returns {Promise}
  */

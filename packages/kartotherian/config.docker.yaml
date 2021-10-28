@@ -63,6 +63,8 @@ services:
       # interface: localhost
       # Uncomment to disable the X-Powered-By header
       # expose_version: false
+      # Uncomment to prevent `revid` pass-through
+      # versioned_maps: false
 
       # Kartotherian variables and sources
       variables:

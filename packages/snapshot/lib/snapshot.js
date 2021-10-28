@@ -185,9 +185,10 @@ function requestHandler(req, res, next) {
         protocol = parseProtocol(qparams.domain);
 
         let baseMapHdrs = {};
+        let isVersioned = core.getConfiguration().versioned_maps !== false;
 
         return mapdataLoader(
-            req, protocol, qparams.domain, qparams.title, qparams.revid, qparams.groups
+            req, protocol, qparams.domain, qparams.title, isVersioned && qparams.revid, qparams.groups
         ).then(geojson => {
             let mapPosition;
 
