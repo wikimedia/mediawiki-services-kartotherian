@@ -4,7 +4,8 @@
   "description": "Serves Kartotherian snapshot images",
   "main": "lib/snapshot.js",
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "lint": "eslint ./test",
+    "test": "npm run lint && jest"
   },
   "repository": "kartotherian/snapshot",
   "keywords": [
@@ -32,6 +33,11 @@
   },
   "optionalDependencies": {
     "sphericalmercator": "^1.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-kartotherian": "0.0.5",
+    "jest": "^27.3.1"
   },
   "gitHead": "3baf4e16daefd18e7e7f7f652d0b5f7dbff50dd2"
 }
