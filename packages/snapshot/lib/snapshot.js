@@ -179,12 +179,16 @@ function requestHandler(req, res, next) {
         if (qparams.title.indexOf('|') !== -1) {
             throw new Err('title param may not contain pipe "|" symbol').metrics('err.req.stpipe');
         }
+        if (qparams.revid && qparams.revid.indexOf('|') !== -1) {
+            throw new Err('revid param may not contain pipe "|" symbol').metrics('err.req.stpipe');
+        }
         protocol = parseProtocol(qparams.domain);
 
         let baseMapHdrs = {};
+        let isVersioned = core.getConfiguration().versioned_maps !== false;
 
         return mapdataLoader(
-            req, protocol, qparams.domain, qparams.title, qparams.groups
+            req, protocol, qparams.domain, qparams.title, isVersioned && qparams.revid, qparams.groups
         ).then(geojson => {
             let mapPosition;
 

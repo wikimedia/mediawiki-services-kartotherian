@@ -12,10 +12,11 @@ let _ = require('underscore'),
  * @param {string} protocol - "http" or "https"
  * @param {string} domain - "en.wikipedia.org"
  * @param {string} title - title of the page - ok to be unsanitized
+ * @param {string|boolean} revid - desired revision ID, or false to omit
  * @param {string|string[]} groupIds
  * @returns {Promise}
  */
-module.exports = function downloadMapdata(req, protocol, domain, title, groupIds) {
+module.exports = function downloadMapdata(req, protocol, domain, title, revid, groupIds) {
     let dm = new DataManager({
         createPromise: createPromise,
         whenAllPromises: Promise.all,
@@ -44,6 +45,7 @@ module.exports = function downloadMapdata(req, protocol, domain, title, groupIds
             return mwapi.execute(request);
         },
         title: title,
+        revid: revid,
     });
 
     return dm.loadGroups( groupIds ).then( dataGroups => {
