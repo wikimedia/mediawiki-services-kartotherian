@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-substantial",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Filtering tile source to save only tiles that should be saved rather than overzoomed",
   "main": "substantial.js",
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@wikimedia/err": "^1.0.3",
-    "@wikimedia/kartotherian-input-validator": "^1.0.2",
+    "@wikimedia/kartotherian-input-validator": "^1.0.3",
     "bluebird": "^3.5.0",
     "quadtile-index": "^0.0.6",
     "underscore": "^1.8.3"

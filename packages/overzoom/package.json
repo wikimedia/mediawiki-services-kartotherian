@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-overzoom",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Overzoom tile source for Kartotherian map tile server",
   "keywords": [
     "kartotherian",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@wikimedia/err": "^1.0.3",
-    "@wikimedia/kartotherian-input-validator": "^1.0.2",
+    "@wikimedia/kartotherian-input-validator": "^1.0.3",
     "bluebird": "^3.5.0",
     "tilelive-promise": "^2.0.0"
   },

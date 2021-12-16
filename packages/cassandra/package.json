@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-cassandra",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cassandra tile storage for Kartotherian map tile server",
   "main": "CassandraStore.js",
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@wikimedia/err": "^1.0.3",
-    "@wikimedia/kartotherian-input-validator": "^1.0.2",
+    "@wikimedia/kartotherian-input-validator": "^1.0.3",
     "bluebird": "^3.5.0",
     "cassandra-driver": "3.0.2",
     "multistream": "^2.0.5",

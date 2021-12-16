@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian",
-  "version": "1.1.9-beta.0",
+  "version": "1.1.9",
   "description": "Renders map tiles",
   "main": "./app.js",
   "scripts": {
@@ -42,7 +42,7 @@
     "@wikimedia/kartotherian-autogen": "^1.0.2",
     "@wikimedia/kartotherian-babel": "^1.0.2",
     "@wikimedia/kartotherian-cassandra": "^1.0.2",
-    "@wikimedia/kartotherian-core": "^1.0.3",
+    "@wikimedia/kartotherian-core": "^1.0.4",
     "@wikimedia/kartotherian-geoshapes": "^1.1.5",
     "@wikimedia/kartotherian-layermixer": "^1.0.2",
     "@wikimedia/kartotherian-maki": "^1.0.4",

@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-postgres",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "PostgreSQL tile storage for Kartotherian map tile server",
   "keywords": [
     "kartotherian",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@wikimedia/err": "^1.0.3",
-    "@wikimedia/kartotherian-input-validator": "^1.0.2",
+    "@wikimedia/kartotherian-input-validator": "^1.0.3",
     "bluebird": "^3.5.0",
     "pg-promise": "^5.6.4",
     "pg-query-stream": "^1.0.0",

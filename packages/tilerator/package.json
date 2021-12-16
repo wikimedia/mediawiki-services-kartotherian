@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/tilerator",
-  "version": "1.1.8-beta.0",
+  "version": "1.1.8",
   "description": "Map tiles pre-generation service",
   "main": "./app.js",
   "scripts": {
@@ -39,8 +39,8 @@
     "@wikimedia/kartotherian-autogen": "^1.0.2",
     "@wikimedia/kartotherian-babel": "^1.0.2",
     "@wikimedia/kartotherian-cassandra": "^1.0.2",
-    "@wikimedia/kartotherian-core": "^1.0.3",
-    "@wikimedia/kartotherian-input-validator": "^1.0.2",
+    "@wikimedia/kartotherian-core": "^1.0.4",
+    "@wikimedia/kartotherian-input-validator": "^1.0.3",
     "@wikimedia/kartotherian-jobprocessor": "^1.0.6",
     "@wikimedia/kartotherian-layermixer": "^1.0.2",
     "@wikimedia/kartotherian-overzoom": "^1.0.2",

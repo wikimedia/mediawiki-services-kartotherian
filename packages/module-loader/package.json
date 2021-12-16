@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/module-loader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Kartotherian loader that instantiates tilelive and Kartotherian modules",
   "main": "lib/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@wikimedia/err": "^1.0.3",
-    "@wikimedia/kartotherian-input-validator": "^1.0.2",
+    "@wikimedia/kartotherian-input-validator": "^1.0.3",
     "bluebird": "^3.5.0",
     "js-yaml": "^3.8.2",
     "libxmljs": "0.19.5",
