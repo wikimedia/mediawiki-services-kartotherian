@@ -1,6 +1,6 @@
 {
   "name": "@wikimedia/kartotherian-core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "The core components of the Kartotherian maps tile service",
   "main": "index.js",
   "scripts": {

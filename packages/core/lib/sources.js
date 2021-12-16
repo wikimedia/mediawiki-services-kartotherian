@@ -212,8 +212,18 @@ Sources.prototype._loadSourceAsync = function _loadSourceAsync(src, sourceId) {
     checkType(src, 'static', 'boolean');
     checkType(src, 'maxwidth', 'integer');
     checkType(src, 'maxheight', 'integer');
-    checkType(src, 'setInfo', 'object');
-    checkType(src, 'overrideInfo', 'object');
+
+    /**
+     * Inject info properties into the URI objects to make tilelive-http [1]
+     * accept maxzoom and minzoom properties - T297753
+     * [1] https://github.com/mojodna/tilelive-http/blob/master/index.js#L133
+     */
+    if (checkType(src, 'setInfo', 'object') || checkType(src, 'overrideInfo', 'object')) {
+      const info = src.overrideInfo || src.setInfo;
+      _.each(info, (v, k) => {
+        uri.info[k] = self._resolveValue(v, k);
+      });
+    }
 
     // Add URI query values, e.g.  ?password=...
     if (checkType(src, 'params', 'object')) {

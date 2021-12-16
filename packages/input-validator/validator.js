@@ -200,5 +200,12 @@ checkType.normalizeUrl = function normalizeUrl(uri) {
         uri.query = qs.parse(uri.query);
     }
     uri.query = uri.query || {};
+
+    /**
+     * Allow info property to be injected into the URI objects to make tilelive-http [1]
+     * accept maxzoom and minzoom properties - T297753
+     * [1] https://github.com/mojodna/tilelive-http/blob/master/index.js#L133
+     */
+    uri.info = uri.info || {};
     return uri;
 };
