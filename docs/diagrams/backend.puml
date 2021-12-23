@@ -9,21 +9,12 @@ component Kartotherian {
         component mapdata
     }
 }
-[Tilerator]
-[TileratorUI]
 cloud OSM
 cloud WDQS
 cloud commons [
     commons.wikimedia.org
 ]
-database Cassandra [
-    Cassandra
-    ---
-    vector-tiles
-    --
-    v4 keyspace
-]
-database Redis
+cloud Tegola
 database Postgres [
     Postgres
     --
@@ -32,14 +23,11 @@ database Postgres [
     gis table
 ]
 package mapnik {
-    component mapnik_mvt_renderer
     component mapnik_raster_renderer
 }
 
-mapnik_mvt_renderer --> Postgres : query OSM data
-Tilerator --> mapnik_mvt_renderer : get data to\npre-generate\nvector tiles
 Kartotherian <--> mapnik_raster_renderer : get raster image
-
+mapnik_raster_renderer --> Tegola
 geoshapes --> Postgres : get OSM tag for given Wikidata ID
 geoshapes --> WDQS : get GeoJSON\nfrom\nWQDS
 mapdata --> commons : get GeoJSON\nfrom\nData namespace
@@ -49,12 +37,6 @@ geoshapes_req -- Varnish
 staticmaps -- Varnish
 
 OSM -> Postgres: import maps data
-Tilerator -left-> Redis: consume job queue
-'Tilerator --> Postgres: get data to pre-generate\nvector tiles
-Tilerator -> Cassandra: stores pre-generated\nvector tiles
 
-TileratorUI ..> Redis: schedule jobs to\npre-generate tiles
-
-Kartotherian --> Cassandra: get vector -tiles\nfor rendering
 Varnish --> Kartotherian
 @enduml

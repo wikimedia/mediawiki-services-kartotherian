@@ -5,15 +5,15 @@ repeat
 :invoke
 replication
 script;
-|#AntiqueWhite|replication script (osm2pgsql)|
+|#AntiqueWhite|replication script (imposm)|
 :pulls data from OSM using
-osm2pgsql with hourly strategy;
-:osm2pgsql stores
+imposm with hourly strategy;
+:imposm stores
 data into the DB;
 |PostgreSQL DB|
 :receives data from
-osm2pgsql;
-|replication script (osm2pgsql)|
+imposm;
+|replication script (imposm)|
 :script runs custom
 SQL function for
 indexes and to
@@ -22,26 +22,13 @@ table;
 :script creates a
 list of affected
 tiles to pass
-to Tilerator
-through a nodejs
-script;
-:triggers
-tile generation;
-fork
-|replication script (osm2pgsql)|
-:returns to
-script after
-Tilerator is
-triggered;
-fork again
-|Tilerator|
-:start tile
-generation
-data flow;
-(T)
+to tile generation;
 detach
-|replication script (osm2pgsql)|
-end fork
+|Tile generation|
+:Every 24 hours send tile invalidation events;
+:Every 24 hours pregenerate invalidated tiles;
+detach
+|replication script (imposm)|
 |maps::master cron|
 repeatwhile (<b>repeat every 12 hours)
 :SIGTERM;
