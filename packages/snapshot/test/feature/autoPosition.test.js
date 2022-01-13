@@ -16,7 +16,7 @@ describe('autoposition', () => {
     }, geoJson);
     expect(coordinates).toEqual({
       latitude: -23.17508256414426,
-      longitude: -45.85693359375001,
+      longitude: -45.85693359375,
       zoom: 8,
     });
   });
@@ -31,7 +31,7 @@ describe('autoposition', () => {
       }, geoJson);
       expect(coordinates).toEqual({
         latitude: -23.17508256414426,
-        longitude: -45.85693359375001,
+        longitude: -45.85693359375,
         zoom: 7,
       });
     });
@@ -61,7 +61,7 @@ describe('autoposition', () => {
       }, geoJson);
       expect(coordinates).toEqual({
         latitude: -23,
-        longitude: -45.85693359375001,
+        longitude: -45.85693359375,
         zoom: 8,
       });
     });
