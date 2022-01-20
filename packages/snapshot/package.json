@@ -5,6 +5,7 @@
   "main": "lib/snapshot.js",
   "scripts": {
     "lint": "eslint ./test",
+    "lint:fix": "eslint ./test --fix",
     "test": "npm run lint && jest"
   },
   "repository": "kartotherian/snapshot",
