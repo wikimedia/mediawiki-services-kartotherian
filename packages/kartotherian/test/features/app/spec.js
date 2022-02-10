@@ -1,8 +1,3 @@
-/* global describe it before */
-
-// eslint-disable-next-line strict,lines-around-directive
-'use strict';
-
 const preq = require('preq');
 const assert = require('../../utils/assert');
 const server = require('../../utils/server');
@@ -212,15 +207,13 @@ function validateTestResponse(testCase, res) {
   return true;
 }
 
-describe('Swagger spec', function () { // eslint-disable-line func-names
+describe('Swagger spec', () => { // eslint-disable-line func-names
   // the variable holding the spec
   let spec = staticSpecLoad();
   // default params, if given
   let defParams = spec['x-default-params'] || {};
 
-  this.timeout(20000);
-
-  before(() => server.start());
+  beforeAll(() => server.start());
 
   it('get the spec', () => preq.get(`${server.config.uri}?spec`)
     .then((res) => {
@@ -228,7 +221,7 @@ describe('Swagger spec', function () { // eslint-disable-line func-names
       assert.contentType(res, 'application/json');
       assert.notDeepEqual(res.body, undefined, 'No body received!');
       spec = res.body;
-    }));
+    }), 20000);
 
   it('spec validation', () => {
     if (spec['x-default-params']) {
@@ -254,7 +247,7 @@ describe('Swagger spec', function () { // eslint-disable-line func-names
         validateExamples(pathStr, defParams, mSpec['x-amples']);
       });
     });
-  });
+  }, 20000);
 
   describe('routes', () => {
     constructTests(spec.paths).forEach((testCase) => {
@@ -263,7 +256,7 @@ describe('Swagger spec', function () { // eslint-disable-line func-names
           validateTestResponse(testCase, res);
         }, (err) => {
           validateTestResponse(testCase, err);
-        }));
+        }), 20000);
     });
   });
 });

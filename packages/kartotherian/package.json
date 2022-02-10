@@ -6,7 +6,7 @@
   "scripts": {
     "start": "service-runner",
     "lint": "grunt lint",
-    "test": "grunt test",
+    "test": "npm run lint && jest --maxWorkers=1",
     "docker-start": "service-runner docker-start",
     "docker-test": "service-runner docker-test",
     "coverage": "istanbul cover _mocha -- -R spec"
@@ -72,8 +72,8 @@
     "grunt": "^1.0.2",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "^20.1.0",
-    "grunt-mocha-test": "^0.13.3",
     "istanbul": "^0.4.5",
+    "jest": "^27.3.1",
     "mocha": "^5.0.4",
     "mocha-lcov-reporter": "^1.3.0",
     "request": "^2.85.0",

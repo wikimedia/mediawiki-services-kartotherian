@@ -1,17 +1,12 @@
-/* global describe it before */
-
-// eslint-disable-next-line strict,lines-around-directive
-'use strict';
-
 const preq = require('preq');
 const assert = require('../../utils/assert');
 const server = require('../../utils/server');
 
 
-describe('service information', function testServiceInfo() {
+describe('service information', () => {
   this.timeout(20000);
 
-  before(() => server.start());
+  beforeAll(() => server.start());
 
   // common URI prefix for info tests
   const infoUri = `${server.config.uri}_info/`;
