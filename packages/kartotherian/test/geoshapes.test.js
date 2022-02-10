@@ -1,4 +1,4 @@
-const GeoShapes = require('../lib/geoshapes');
+const GeoShapes = require('../lib/geoshapes/geoshapes');
 
 describe('wrapResult', () => {
   test('converts point to geojson', () => {

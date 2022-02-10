@@ -10,7 +10,7 @@ module.exports = function Gruntfile(grunt) {
           configFile: '.eslintrc.js',
         },
         src: [
-          'lib/*.js',
+          'lib/**/*.js',
           'routes/*.js',
           'scripts/*.js',
           'app.js',

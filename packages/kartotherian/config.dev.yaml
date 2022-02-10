@@ -86,7 +86,7 @@ services:
       - "@mapbox/tilejson"
 
       requestHandlers:
-      - "@wikimedia/kartotherian-geoshapes"
+      - "../lib/geoshapes"
       - "../lib/maki"
       - "@wikimedia/kartotherian-snapshot"
 

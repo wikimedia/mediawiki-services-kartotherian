@@ -1,10 +1,12 @@
+/* eslint-disable no-param-reassign */
+
 const yaml = require('js-yaml');
 const fs = require('fs');
-const info = require('./package.json');
+const info = require('../../package.json');
 const BBPromise = require('bluebird');
 const Err = require('@wikimedia/err');
 const postgres = require('pg-promise')({ promiseLib: BBPromise });
-const GeoShapes = require('./lib/geoshapes');
+const GeoShapes = require('./geoshapes');
 
 /**
  * Web server (express) route handler to get geoshapes
