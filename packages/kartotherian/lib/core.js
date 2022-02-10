@@ -417,3 +417,5 @@ core.setResponseHeaders = function setResponseHeaders(res, source, dataHeaders) 
     res.set(source.headers);
   }
 };
+
+core.Sources = require('./sources');
