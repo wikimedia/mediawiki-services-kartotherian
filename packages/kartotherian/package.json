@@ -41,7 +41,6 @@
     "@mapbox/tilejson": "^1.0.3",
     "@mapbox/tilelive": "~5.12.2",
     "@wikimedia/err": "^1.0.3",
-    "@wikimedia/kartotherian-autogen": "^1.0.2",
     "@wikimedia/kartotherian-geoshapes": "^1.1.7",
     "@wikimedia/kartotherian-input-validator": "^1.0.3",
     "@wikimedia/kartotherian-server": "^1.0.4",
