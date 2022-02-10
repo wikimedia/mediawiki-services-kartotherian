@@ -4,7 +4,7 @@ const assert = require('assert');
 const Promise = require('bluebird');
 const pathLib = require('path');
 const fs = Promise.promisifyAll(require('fs'));
-const tileCodec = require('../lib/tileCodec');
+const tileCodec = require('../../lib/babel/tileCodec');
 
 describe('PBF round-trip', () => {
   function test(file, expectedData) {

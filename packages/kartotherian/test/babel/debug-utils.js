@@ -3,7 +3,7 @@
 const Promise = require('bluebird');
 const fs = require('fs');
 const _ = require('underscore');
-const tileCodec = require('../lib/tileCodec');
+const tileCodec = require('../../lib/babel/tileCodec');
 const toCompactJson = require('json-stringify-pretty-compact');
 const toBuffer = require('typedarray-to-buffer');
 

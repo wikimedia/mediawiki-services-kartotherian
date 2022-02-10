@@ -80,7 +80,7 @@ services:
       modules:
       - "tilelive-tmstyle"
       - "@wikimedia/kartotherian-autogen"
-      - "@wikimedia/kartotherian-babel"
+      - "../lib/babel"
       - "@wikimedia/kartotherian-overzoom"
       - "@wikimedia/kartotherian-substantial"
       - "@kartotherian/tilelive-tmsource"

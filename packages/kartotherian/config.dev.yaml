@@ -73,7 +73,7 @@ services:
       modules:
       - "tilelive-tmstyle"
       - "@wikimedia/kartotherian-autogen"
-      - "@wikimedia/kartotherian-babel"
+      - "../lib/babel"
       - "@wikimedia/kartotherian-layermixer"
       - "@wikimedia/kartotherian-overzoom"
       - "@wikimedia/kartotherian-substantial"
