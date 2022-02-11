@@ -60,7 +60,8 @@ function loadDBHandler(config) {
       database: config.database,
       user: config.user,
       password: config.password,
-      max: config.max_conns || 10,
+      application_name: 'geoshapes',
+      poolSize: config.poolSize || 10,
     });
 
     return config;
