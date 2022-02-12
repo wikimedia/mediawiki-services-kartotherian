@@ -4,7 +4,7 @@
  */
 
 const Promise = require('bluebird');
-const Err = require('@wikimedia/err');
+const Err = require('./err');
 const checkType = require('./input-validator');
 const uptile = require('tilelive-promise');
 

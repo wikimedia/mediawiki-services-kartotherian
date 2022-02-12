@@ -6,7 +6,7 @@ it to save it, rather than skip it and let kartotherian use overzooming later.
 
 const Promise = require('bluebird');
 const qidx = require('quadtile-index');
-const Err = require('@wikimedia/err');
+const Err = require('./err');
 const checkType = require('./input-validator');
 const _ = require('underscore');
 

@@ -1,5 +1,5 @@
 const topojson = require('topojson');
-const Err = require('@wikimedia/err');
+const Err = require('../err');
 const preq = require('preq');
 const BBPromise = require('bluebird');
 const parseWikidataValue = require('wd-type-parser');

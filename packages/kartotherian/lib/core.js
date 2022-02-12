@@ -5,7 +5,7 @@ const qidx = require('quadtile-index');
 const uptile = require('tilelive-promise');
 const toBuffer = require('typedarray-to-buffer');
 const checkType = require('./input-validator');
-const Err = require('@wikimedia/err');
+const Err = require('./err');
 
 Promise.promisifyAll(zlib);
 

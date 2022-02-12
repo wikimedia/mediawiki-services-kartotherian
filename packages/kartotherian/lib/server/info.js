@@ -1,6 +1,6 @@
 const infoHeaders = {};
 const util = require('util');
-const Err = require('@wikimedia/err');
+const Err = require('../err');
 const Promise = require('bluebird');
 
 let core;

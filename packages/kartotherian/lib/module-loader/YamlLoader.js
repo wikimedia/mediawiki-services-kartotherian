@@ -3,7 +3,7 @@ const _ = require('underscore');
 const Promise = require('bluebird');
 const yamlLib = require('js-yaml');
 const fs = require('fs');
-const Err = require('@wikimedia/err');
+const Err = require('../err');
 const checkType = require('../input-validator');
 
 Promise.promisifyAll(fs);

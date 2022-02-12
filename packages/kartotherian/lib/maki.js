@@ -1,6 +1,6 @@
 const Promise = require('bluebird');
 const makizushi = Promise.promisify(require('@kartotherian/makizushi'));
-const Err = require('@wikimedia/err');
+const Err = require('./err');
 
 let core;
 

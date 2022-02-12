@@ -1,7 +1,7 @@
 
 
 const util = require('util');
-const Err = require('@wikimedia/err');
+const Err = require('../err');
 const Promise = require('bluebird');
 const abaculus = Promise.promisify(require('@kartotherian/abaculus'), { multiArgs: true });
 const Overlay = require('@kartotherian/tilelive-overlay');

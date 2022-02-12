@@ -29,7 +29,7 @@ const _ = require('underscore');
 const qidx = require('quadtile-index');
 const qs = require('querystring');
 const urllib = require('url');
-const Err = require('@wikimedia/err');
+const Err = require('./err');
 
 function getDefault(obj, field, mustHave) {
   if (mustHave === true) {
