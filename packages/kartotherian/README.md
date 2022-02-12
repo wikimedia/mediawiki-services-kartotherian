@@ -70,7 +70,7 @@ by [MapBox](https://github.com/mapbox), and therefor can reuse components that c
 
 * `core` - Loads and configures tile sources, and provides some common utility functions
 * [kartotherian-server](https://github.com/kartotherian/server) - Handles user requests for tiles and source info, as well as registers additional data type handlers like maki markers and image snapshots.
-* [kartotherian-maki](https://github.com/kartotherian/maki) - Request handler for maki markers - generates PNG marker images that can be used from geojson.
+* maki - Request handler for maki markers, generates PNG marker images that can be used from geojson.
 * [kartotherian-snapshot](https://github.com/kartotherian/snapshot) - Request handler for static images by combining multiple tiles into one snapshot image of a requested size.
 
 #### babel

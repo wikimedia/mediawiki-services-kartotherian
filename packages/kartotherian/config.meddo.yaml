@@ -117,7 +117,7 @@ services:
       - "@mapbox/tilejson"
 
       requestHandlers:
-      - "@wikimedia/kartotherian-maki"
+      - "../lib/maki"
       - "@wikimedia/kartotherian-snapshot"
 
       # allowedDomains:
