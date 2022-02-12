@@ -2,7 +2,7 @@ const pathLib = require('path');
 const Promise = require('bluebird');
 const core = require('../lib/core');
 const info = require('../package.json');
-const server = require('@wikimedia/kartotherian-server');
+const server = require('../lib/server');
 
 function startup(app) {
   return startup.bootstrap(app).then(() => {

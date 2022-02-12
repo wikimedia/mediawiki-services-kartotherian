@@ -30,7 +30,7 @@ module.exports.init = function init(opts) {
 
     // Compression is nativelly handled by the tiles, so only statics need its
     app.use(compression({ threshold: 0 }));
-    app.use('/', express.static(pathLib.resolve(__dirname, '../static'), staticOpts));
+    app.use('/', express.static(pathLib.resolve(__dirname, '../../static'), staticOpts));
     app.use('/leaflet', express.static(pathLib.dirname(require.resolve('leaflet')), staticOpts));
 
     opts.core.metrics.increment('init');

@@ -69,7 +69,7 @@ by [MapBox](https://github.com/mapbox), and therefor can reuse components that c
 ### Components by Wikimedia Foundation
 
 * `core` - Loads and configures tile sources, and provides some common utility functions
-* [kartotherian-server](https://github.com/kartotherian/server) - Handles user requests for tiles and source info, as well as registers additional data type handlers like maki markers and image snapshots.
+* server - Handles user web requests for tiles and source info, as well as registers additional data type handlers like maki markers and image snapshots.
 * maki - Request handler for maki markers, generates PNG marker images that can be used from geojson.
 * snapshot - Request handler for static images by combining multiple tiles into one snapshot image of a requested size, with optional geojson overlays based on mapdata stored in MediaWiki.
 
