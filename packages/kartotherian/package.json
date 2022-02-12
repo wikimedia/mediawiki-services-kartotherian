@@ -47,7 +47,6 @@
     "@wikimedia/kartotherian-overzoom": "^1.0.2",
     "@wikimedia/kartotherian-server": "^1.0.4",
     "@wikimedia/kartotherian-snapshot": "^1.0.9",
-    "@wikimedia/kartotherian-substantial": "^1.0.2",
     "@wikimedia/module-loader": "^1.0.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.17.1",

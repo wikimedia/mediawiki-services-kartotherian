@@ -67,7 +67,7 @@ services:
       - "@wikimedia/kartotherian-autogen"
       - "../lib/babel"
       - "@wikimedia/kartotherian-overzoom"
-      - "@wikimedia/kartotherian-substantial"
+      - "../lib/substantial"
       - "@kartotherian/tilelive-vector"
       - "@mapbox/tilejson"
 
