@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const checkType = require('@wikimedia/kartotherian-input-validator');
+const checkType = require('./input-validator');
 
 let core;
 

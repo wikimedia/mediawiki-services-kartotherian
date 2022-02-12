@@ -4,7 +4,7 @@ const zlib = require('zlib');
 const qidx = require('quadtile-index');
 const uptile = require('tilelive-promise');
 const toBuffer = require('typedarray-to-buffer');
-const checkType = require('@wikimedia/kartotherian-input-validator');
+const checkType = require('./input-validator');
 const Err = require('@wikimedia/err');
 
 Promise.promisifyAll(zlib);

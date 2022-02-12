@@ -46,7 +46,6 @@
     "@mapbox/tilelive": "~5.12.2",
     "@turf/bbox": "^6.5.0",
     "@wikimedia/err": "^1.0.3",
-    "@wikimedia/kartotherian-input-validator": "^1.0.3",
     "@wikimedia/mapdata": "^0.6.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.17.1",

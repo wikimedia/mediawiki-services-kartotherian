@@ -6,7 +6,7 @@ const Promise = require('bluebird');
 const abaculus = Promise.promisify(require('@kartotherian/abaculus'), { multiArgs: true });
 const Overlay = require('@kartotherian/tilelive-overlay');
 const _ = require('underscore');
-const checkType = require('@wikimedia/kartotherian-input-validator');
+const checkType = require('../input-validator');
 const makeDomainValidator = require('domain-validator');
 const autoPosition = require('./autoPosition');
 

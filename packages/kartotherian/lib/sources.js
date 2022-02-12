@@ -6,7 +6,7 @@ const Promise = require('bluebird');
 const yaml = require('js-yaml');
 const fs = require('fs');
 const Err = require('@wikimedia/err');
-const checkType = require('@wikimedia/kartotherian-input-validator');
+const checkType = require('./input-validator');
 const core = require('./core');
 const { XmlLoader, YamlLoader } = require('./module-loader');
 

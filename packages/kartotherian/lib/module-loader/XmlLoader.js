@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const libxmljs = require('libxmljs');
 const fs = require('fs');
 const Err = require('@wikimedia/err');
-const checkType = require('@wikimedia/kartotherian-input-validator');
+const checkType = require('../input-validator');
 
 Promise.promisifyAll(fs);
 

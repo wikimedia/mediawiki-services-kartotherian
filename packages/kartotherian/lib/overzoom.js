@@ -5,7 +5,7 @@
 
 const Promise = require('bluebird');
 const Err = require('@wikimedia/err');
-const checkType = require('@wikimedia/kartotherian-input-validator');
+const checkType = require('./input-validator');
 const uptile = require('tilelive-promise');
 
 let core;
