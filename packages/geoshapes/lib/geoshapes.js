@@ -1,5 +1,3 @@
-
-
 const topojson = require('topojson');
 const Err = require('@wikimedia/err');
 const preq = require('preq');
@@ -69,7 +67,7 @@ class GeoShapes {
      */
   _runWikidataQuery(xClientIp) {
     // If there is no query, we only use the ids given in the request
-    if (!this.sparqlQuery) { return; }
+    if (!this.sparqlQuery) { return undefined; }
 
     return preq.get({
       uri: this.config.wikidataQueryService,
@@ -95,7 +93,7 @@ class GeoShapes {
           }
           throw new Err(errMsg, this.idColumn);
         }
-        const value = wd[this.idColumn];
+        const { [this.idColumn]: value, ...result } = wd;
         const id = parseWikidataValue(value, true);
         if (!id || value.type !== 'uri') {
           throw new Err('SPARQL query result id column %j is expected to be a valid Wikidata ID', this.idColumn);
@@ -105,8 +103,7 @@ class GeoShapes {
         }
         // further parsing will be done later, once we know the object actually
         // exists in the OSM db
-        delete wd[this.idColumn];
-        this.rawProperties[id] = wd;
+        this.rawProperties[id] = result;
         this.ids.push(id);
       });
     });
@@ -117,7 +114,7 @@ class GeoShapes {
      * @return {BBPromise|undefined}
      */
   _runSqlQuery() {
-    if (this.ids.length === 0) { return; }
+    if (this.ids.length === 0) { return undefined; }
     const args = [this.type === 'geoshape' ? this.config.polygonTable : this.config.lineTable, this.ids];
     const query = this.config.queries[this.reqParams.sql] || this.config.queries.default;
 
@@ -156,10 +153,10 @@ class GeoShapes {
     // }
     const props = [];
 
-    for (const id in this.rawProperties) {
+    Object.keys(this.rawProperties).forEach((id) => {
       if (this.rawProperties[id]) {
         const prop = this.rawProperties[id];
-        for (const key in prop) {
+        Object.keys(prop).forEach((key) => {
           if (prop[key]) {
             // If this is a simplestyle property with a '_' in the name instead of '-',
             // convert it to the proper syntax.
@@ -173,7 +170,7 @@ class GeoShapes {
               prop[key] = value;
             }
           }
-        }
+        });
         props.push({
           type: 'Feature',
           id,
@@ -181,9 +178,9 @@ class GeoShapes {
           geometry: { type: 'Point', coordinates: [0, 0] },
         });
       }
-    }
+    });
 
-    if (!props.length) { return; }
+    if (!props.length) { return undefined; }
 
     return preq.post({
       uri: this.config.mwapi,
