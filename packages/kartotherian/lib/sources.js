@@ -8,7 +8,7 @@ const fs = require('fs');
 const Err = require('@wikimedia/err');
 const checkType = require('@wikimedia/kartotherian-input-validator');
 const core = require('./core');
-const { XmlLoader, YamlLoader } = require('@wikimedia/module-loader');
+const { XmlLoader, YamlLoader } = require('./module-loader');
 
 Promise.promisifyAll(fs);
 

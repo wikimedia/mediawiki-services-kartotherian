@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { XmlLoader } = require('..');
+const { XmlLoader } = require('../../lib/module-loader');
 
 function test(opts, expected) {
   return () => {

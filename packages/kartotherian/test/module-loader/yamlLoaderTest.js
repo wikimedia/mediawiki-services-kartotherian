@@ -1,6 +1,6 @@
 const assert = require('assert');
 const jsYaml = require('js-yaml');
-const { YamlLoader } = require('..');
+const { YamlLoader } = require('../../lib/module-loader');
 
 function test(opts, expected) {
   return () => {
