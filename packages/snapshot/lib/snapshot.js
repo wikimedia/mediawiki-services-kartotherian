@@ -10,7 +10,7 @@ let util = require('util'),
     makeDomainValidator = require('domain-validator'),
     autoPosition = require('./autoPosition');
 
-let core, mapdataLoader, parseProtocol, mapnik;
+let core, mapdataLoader, getProtocolForHostname, mapnik;
 
 module.exports = function snapshot(cor, router) {
     core = cor;
@@ -21,7 +21,7 @@ module.exports = function snapshot(cor, router) {
         httpsDomains = makeDomainValidator(allowedDomains ? allowedDomains.https : undefined, true),
         httpDomains = makeDomainValidator(allowedDomains ? allowedDomains.http : undefined, true);
 
-    parseProtocol = domain => {
+    getProtocolForHostname = domain => {
         if (httpsDomains.test(domain)) {
             return 'https';
         } else if (httpDomains.test(domain)) {
@@ -182,13 +182,16 @@ function requestHandler(req, res, next) {
         if (qparams.revid && qparams.revid.indexOf('|') !== -1) {
             throw new Err('revid param may not contain pipe "|" symbol').metrics('err.req.stpipe');
         }
-        protocol = parseProtocol(qparams.domain);
+        // TODO: assume URL and simplify here once Kartographer is upgraded
+        const withoutProtocol = qparams.domain.replace(/https?:\/\//, '');
+        const hostname = withoutProtocol.replace(/:\d+$/, '');
+        protocol = getProtocolForHostname(hostname);
 
         let baseMapHdrs = {};
         let isVersioned = core.getConfiguration().versioned_maps !== false;
 
         return mapdataLoader(
-            req, protocol, qparams.domain, qparams.title, isVersioned && qparams.revid, qparams.groups
+            req, protocol, withoutProtocol, qparams.title, isVersioned && qparams.revid, qparams.groups
         ).then(geojson => {
             let mapPosition;
 

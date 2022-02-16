@@ -59,3 +59,15 @@ describe('versioned mapdata request', () => {
     expect(mwapiExecute).toHaveBeenCalledWith(unversionedRequest);
   });
 });
+
+describe('domain handling', () => {
+  test('strips protocol and port before validation', async () => {
+    await callSnapshot({}, { domain: 'http://localhost:1234' });
+    expect(mwapiExecute).toHaveBeenCalledWith(unversionedRequest);
+  });
+
+  test('rejects unknown domain', async () => {
+    await callSnapshot({}, { domain: 'nasty.invalid' });
+    expect(mwapiExecute).not.toHaveBeenCalled();
+  });
+});
