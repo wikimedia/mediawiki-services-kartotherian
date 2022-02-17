@@ -1,7 +1,7 @@
 const snapshotSetup = require('../../lib/snapshot');
 
-module.exports = function (additionalConfig, additionalQueryParams) {
-  return new Promise((resolve) => {
+module.exports = (additionalConfig, additionalQueryParams) =>
+  new Promise((resolve) => {
     const core = {
       getConfiguration: () => ({
         allowedDomains: {
@@ -48,4 +48,3 @@ module.exports = function (additionalConfig, additionalQueryParams) {
     };
     snapshotSetup(core, router);
   });
-};

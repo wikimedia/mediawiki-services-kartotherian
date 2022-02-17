@@ -31,15 +31,18 @@ const versionedRequest = {
   revids: '123',
 };
 
+beforeEach(() => mwapiExecute.mockClear());
+
+// TODO: Should also test that there were no errors and the returned "next"
+// function wasn't called.
+
 describe('unversioned mapdata request', () => {
   test('uses page title when revid parameter is absent', async () => {
-    // eslint-disable-next-line no-unused-vars
-    const [req, res, next] = await callSnapshot({ versioned_maps: false });
-    // FIXME: But `next` is still called because of errors after mwapi.  All
-    // cases should test `next`.
-    // expect(next).not.toHaveBeenCalled();
+    await callSnapshot({ versioned_maps: false });
     expect(mwapiExecute).toHaveBeenCalledWith(unversionedRequest);
+  });
 
+  test('versioned feature config doesn\'t affect legacy query', async () => {
     await callSnapshot({ versioned_maps: true });
     expect(mwapiExecute).toHaveBeenCalledWith(unversionedRequest);
   });
@@ -52,7 +55,7 @@ describe('versioned mapdata request', () => {
   });
 
   test('ignores revid parameter when versioned feature disabled', async () => {
-    await callSnapshot({ versioned_maps: false }, { revid: 123 });
+    await callSnapshot({ versioned_maps: false }, { revid: '123' });
     expect(mwapiExecute).toHaveBeenCalledWith(unversionedRequest);
   });
 });
