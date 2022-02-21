@@ -6,11 +6,11 @@ const Promise = require('bluebird');
 const pathLib = require('path');
 const fs = Promise.promisifyAll(require('fs'));
 const zlib = require('zlib');
-const babel = Promise.promisify(require('..'));
-const tileCodec = require('../lib/tileCodec');
+const babel = Promise.promisify(require('../../lib/babel'));
+const tileCodec = require('../../lib/babel/tileCodec');
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-const core = require('@wikimedia/kartotherian-core');
+const core = require('../../lib/core');
 
 const fauxSource = class {
   static getAsync(o) {

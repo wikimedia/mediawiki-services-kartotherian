@@ -1,7 +1,7 @@
 /* global describe it */
 
 const assert = require('assert');
-const LanguagePicker = require('../lib/LanguagePicker');
+const LanguagePicker = require('../../lib/babel/LanguagePicker');
 
 describe('LanguagePicker: Pick the correct language', () => {
   const cases = [
