@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/kartotherian/kartotherian",
   "dependencies": {
+    "@kartotherian/makizushi": "3.0.1",
     "@kartotherian/mapnik": "~3.7.3",
     "@kartotherian/osm-bright-source": "^1.0.8-wmf.0",
     "@kartotherian/osm-bright-style": "^4.0.2",
@@ -43,7 +44,6 @@
     "@wikimedia/kartotherian-autogen": "^1.0.2",
     "@wikimedia/kartotherian-geoshapes": "^1.1.7",
     "@wikimedia/kartotherian-input-validator": "^1.0.3",
-    "@wikimedia/kartotherian-maki": "^1.0.5",
     "@wikimedia/kartotherian-overzoom": "^1.0.2",
     "@wikimedia/kartotherian-server": "^1.0.4",
     "@wikimedia/kartotherian-snapshot": "^1.0.9",

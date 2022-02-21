@@ -80,7 +80,7 @@ services:
 
       requestHandlers:
       - "@wikimedia/kartotherian-geoshapes"
-      - "@wikimedia/kartotherian-maki"
+      - "../lib/maki"
       - "@wikimedia/kartotherian-snapshot"
 
       geoshapes:
