@@ -69,14 +69,14 @@ services:
       sources: sources.external.yaml
 
       modules:
-      - "tilelive-http"
-      - "tilelive-tmstyle"
-      - "@wikimedia/kartotherian-autogen"
-      - "../lib/babel"
-      - "@wikimedia/kartotherian-overzoom"
-      - "../lib/substantial"
-      - "@kartotherian/tilelive-vector"
-      - "@mapbox/tilejson"
+        - "tilelive-http"
+        - "tilelive-tmstyle"
+        - "@wikimedia/kartotherian-autogen"
+        - "../lib/babel"
+        - "../lib/overzoom"
+        - "../lib/substantial"
+        - "@kartotherian/tilelive-vector"
+        - "@mapbox/tilejson"
 
       requestHandlers:
       - "@wikimedia/kartotherian-geoshapes"

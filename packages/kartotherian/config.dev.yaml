@@ -75,7 +75,7 @@ services:
       - "@wikimedia/kartotherian-autogen"
       - "../lib/babel"
       - "@wikimedia/kartotherian-layermixer"
-      - "@wikimedia/kartotherian-overzoom"
+      - "../lib/overzoom"
       - "../lib/substantial"
       - "@kartotherian/tilelive-tmsource"
       - "@kartotherian/tilelive-vector"

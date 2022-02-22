@@ -78,14 +78,14 @@ services:
       sources: sources.docker.yaml
 
       modules:
-      - "tilelive-tmstyle"
-      - "@wikimedia/kartotherian-autogen"
-      - "../lib/babel"
-      - "@wikimedia/kartotherian-overzoom"
-      - "../lib/substantial"
-      - "@kartotherian/tilelive-tmsource"
-      - "@kartotherian/tilelive-vector"
-      - "@mapbox/tilejson"
+        - "tilelive-tmstyle"
+        - "@wikimedia/kartotherian-autogen"
+        - "../lib/babel"
+        - "../lib/overzoom"
+        - "../lib/substantial"
+        - "@kartotherian/tilelive-tmsource"
+        - "@kartotherian/tilelive-vector"
+        - "@mapbox/tilejson"
 
       requestHandlers:
       - "@wikimedia/kartotherian-geoshapes"

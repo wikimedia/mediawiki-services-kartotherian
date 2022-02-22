@@ -44,7 +44,6 @@
     "@wikimedia/kartotherian-autogen": "^1.0.2",
     "@wikimedia/kartotherian-geoshapes": "^1.1.7",
     "@wikimedia/kartotherian-input-validator": "^1.0.3",
-    "@wikimedia/kartotherian-overzoom": "^1.0.2",
     "@wikimedia/kartotherian-server": "^1.0.4",
     "@wikimedia/kartotherian-snapshot": "^1.0.9",
     "@wikimedia/module-loader": "^1.0.3",

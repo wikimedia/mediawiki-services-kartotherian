@@ -107,14 +107,14 @@ services:
             source: {ref: babel}
 
       modules:
-      - "tilelive-bridge"
-      - "tilelive-http"
-      - "@wikimedia/kartotherian-autogen"
-      - "../lib/babel"
-      - "@wikimedia/kartotherian-overzoom"
-      - "../lib/substantial"
-      - "@kartotherian/tilelive-vector"
-      - "@mapbox/tilejson"
+        - "tilelive-bridge"
+        - "tilelive-http"
+        - "@wikimedia/kartotherian-autogen"
+        - "../lib/babel"
+        - "../lib/overzoom"
+        - "../lib/substantial"
+        - "@kartotherian/tilelive-vector"
+        - "@mapbox/tilejson"
 
       requestHandlers:
       - "../lib/maki"
