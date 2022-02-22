@@ -20,7 +20,9 @@ paths:
 #        - kartotherian
 #        - maps
 #        - maptiles
-#      description: Renders an image tile for the given source, zoom, and coordinates.
+#      responses:
+#       200:
+#        description: Renders an image tile for the given source, zoom, and coordinates.
 #      produces:
 #        - image/png
 #        - application/json
@@ -39,7 +41,9 @@ paths:
 #        - kartotherian
 #        - maps
 #        - maptiles
-#      description: Renders an image tile for the given source, zoom, and coordinates, with scaling.
+#      responses:
+#       200:
+#        description: Renders an image tile for the given source, zoom, and coordinates, with scaling.
 #      produces:
 #        - image/png
 #        - application/json
@@ -55,9 +59,11 @@ paths:
     get:
       tags:
         - tileinfo
-      description: Returns json describing given tile source
       produces:
         - application/json
+      responses:
+        200:
+          description: Returns json describing given tile source
       x-amples:
         - title: tile service info for osm-intl
           response:
@@ -70,7 +76,9 @@ paths:
     get:
       tags:
         - tileinfo
-      description: Returns error describing that given tile source is private
+      responses:
+        400:
+          description: Returns error describing that given tile source is private
       produces:
         - application/json
       x-amples:
@@ -86,7 +94,9 @@ paths:
       tags:
         - marker
         - maki
-      description: Renders 2x scaled pushpin marker of a given color and size with an icon.
+      responses:
+        200:
+          description: Renders 2x scaled pushpin marker of a given color and size with an icon.
       produces:
         - image/png
       x-amples:
@@ -98,19 +108,25 @@ paths:
   # /v4/marker/{base}-{size}-{symbol}+{color}.png:
   /v4/marker/pin-m-fuel+ffffff.png:
     get:
-      description: Renders pushpin marker of a given color and size with an icon.
+      responses:
+        200:
+          description: Renders pushpin marker of a given color and size with an icon.
       produces:
         - image/png
   # /v4/marker/{base}-{size}+{color}.png:
   /v4/marker/pin-m+ffffff.png:
     get:
-      description: Renders a pushpin marker of a given color and size withoun an icon
+      responses:
+        200:
+          description: Renders a pushpin marker of a given color and size withoun an icon
       produces:
         - image/png
   # /v4/marker/{base}-{size}+{color}@{scale}x.png:
   /v4/marker/pin-m+ffffff@2x.png:
     get:
-      description: Renders 2x scaled pushpin marker of a given color and size withoun an icon.
+      responses:
+        200:
+          description: Renders 2x scaled pushpin marker of a given color and size withoun an icon.
       produces:
         - image/png
 #  # Map snapshots
@@ -121,7 +137,9 @@ paths:
 #        - kartotherian
 #        - maps
 #        - maptiles
-#      description: Renders requested map region as a scaled image (static map snapshot)
+#      responses:
+#       200:
+#        description: Renders requested map region as a scaled image (static map snapshot)
 #      produces:
 #        - image/png
 #      x-amples:
@@ -133,7 +151,9 @@ paths:
   # /{src}/{z},{lat},{lon},{w}x{h}.{format}:
   /osm-intl/1,0.0,0.0,100x100.png:
     get:
-      description: Renders requested map region as an image
+      responses:
+        200:
+          description: Renders requested map region as an image
       x-monitor: false
       produces:
         - image/png
@@ -145,7 +165,9 @@ paths:
         - kartotherian
         - maps
         - geojson
-      description: Returns a json representation of a given line
+      responses:
+        200:
+          description: Returns a json representation of a given line
       x-monitor: false
       produces:
         - application/vnd.geo+json
@@ -163,7 +185,9 @@ paths:
         - kartotherian
         - maps
         - geojson
-      description: Returns a json representation of a given shape
+      responses:
+        200:
+          description: Returns a json representation of a given shape
       x-monitor: false
       produces:
         - application/vnd.geo+json
@@ -179,13 +203,17 @@ paths:
       tags:
         - Root
         - Robots
-      description: Gets robots.txt
+      responses:
+        200:
+          description: Gets robots.txt
       x-monitor: false
   /:
     get:
       tags:
         - Root
-      description: The root service end-point
+      responses:
+        200:
+          description: The root service end-point
       x-monitor: false
       produces:
         - application/json
@@ -194,7 +222,9 @@ paths:
     get:
       tags:
         - Service information
-      description: Gets information about the service
+      responses:
+        200:
+          description: Gets information about the service
       x-monitor: true
       produces:
         - application/json
@@ -203,7 +233,9 @@ paths:
       tags:
         - Service information
         - Service name
-      description: Gets the name of the service
+      responses:
+        200:
+          description: Gets the name of the service
       x-monitor: false
       produces:
         - application/json
@@ -212,7 +244,9 @@ paths:
       tags:
         - Service information
         - Service version
-      description: Gets the running version of the service
+      responses:
+        200:
+          description: Gets the running version of the service
       x-monitor: false
       produces:
         - application/json
@@ -221,5 +255,7 @@ paths:
       tags:
         - Service information
         - Service homepage
-      description: Redirects to the home page
+      responses:
+        200:
+          description: Redirects to the home page
       x-monitor: false

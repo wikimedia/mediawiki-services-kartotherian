@@ -48,8 +48,8 @@ module.exports = (cor, router) => {
   // with the symbol being optional
   // /v4/marker/pin-m-cafe+7e7e7e@2x.png --
   // the format matches that of mapbox to simplify their library usage
-  router.get('/v4/marker/:base([\\w]+)-:size([sml])\\+:color([a-f0-9]+).png', markerHandler);
-  router.get('/v4/marker/:base([\\w]+)-:size([sml])\\+:color([a-f0-9]+)@:scale([\\.\\d]+)x.png', markerHandler);
-  router.get('/v4/marker/:base([\\w]+)-:size([sml])-:symbol([-\\w]+)\\+:color([a-f0-9]+).png', markerHandler);
-  router.get('/v4/marker/:base([\\w]+)-:size([sml])-:symbol([-\\w]+)\\+:color([a-f0-9]+)@:scale([\\.\\d]+)x.png', markerHandler);
+  router.get('/v4/marker/:base([\\w]+)-:size([sml])(\\+|%2B):color([a-f0-9]+).png', markerHandler);
+  router.get('/v4/marker/:base([\\w]+)-:size([sml])(\\+|%2B):color([a-f0-9]+)(@|%40):scale([\\.\\d]+)x.png', markerHandler);
+  router.get('/v4/marker/:base([\\w]+)-:size([sml])-:symbol([-\\w]+)(\\+|%2B):color([a-f0-9]+).png', markerHandler);
+  router.get('/v4/marker/:base([\\w]+)-:size([sml])-:symbol([-\\w]+)(\\+|%2B):color([a-f0-9]+)(@|%40):scale([\\.\\d]+)x.png', markerHandler);
 };

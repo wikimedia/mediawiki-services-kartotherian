@@ -25,7 +25,7 @@ module.exports = function Gruntfile(grunt) {
           'test/**/*.js',
         ],
       },
-    }
+    },
   });
 
   grunt.registerTask('lint', 'eslint');

@@ -1,60 +1,51 @@
-/* eslint no-console: 0 */
+const preq = require('preq');
+const TestRunner = require('service-runner/test/TestServer');
 
-// eslint-disable-next-line strict,lines-around-directive
-'use strict';
-
-const BBPromise = require('bluebird');
-const ServiceRunner = require('service-runner');
-const fs = require('fs');
-const assert = require('./assert');
-const yaml = require('js-yaml');
-const extend = require('extend');
-
-// set up the configuration
-let config = {
-  conf: yaml.safeLoad(fs.readFileSync(`${__dirname}/../../config.test.yaml`)),
-};
-// build the API endpoint URI by supposing the actual service
-// is the last one in the 'services' list in the config file
-const myServiceIdx = config.conf.services.length - 1;
-const myService = config.conf.services[myServiceIdx];
-config.uri = `http://localhost:${myService.conf.port}/`;
-config.service = myService;
-// no forking, run just one process when testing
-config.conf.num_workers = 0;
-// make a deep copy of it for later reference
-const origConfig = extend(true, {}, config);
-
-let stop = function stop() {};
-let options = null;
-const runner = new ServiceRunner();
-
-function start(_options) {
-  const normalizedOptions = _options || {};
-
-  if (!assert.isDeepEqual(options, normalizedOptions)) {
-    stop();
-    options = normalizedOptions;
-    // set up the config
-    config = extend(true, {}, origConfig);
-    extend(true, config.conf.services[myServiceIdx].conf, options);
-    return runner.start(config.conf)
-      .then((servers) => {
-        const server = servers[0];
-        stop = function stop() { // eslint-disable-line no-shadow
-          server.close();
-          stop = function stop() {}; // eslint-disable-line no-shadow,no-func-assign
-        };
-        return true;
-      });
+class TestServiceTemplateNodeRunner extends TestRunner {
+  constructor(configPath = `${__dirname}/../../config.test.yaml`) {
+    super(configPath);
+    this._spec = null;
   }
-  return BBPromise.resolve();
+
+  get config() {
+    if (!this._running) {
+      throw new Error('Accessing test service config before starting the service');
+    }
+
+    // build the API endpoint URI by supposing the actual service
+    // is the last one in the 'services' list in the config file
+    const myServiceIdx = this._runner._impl.config.services.length - 1;
+    const myService = this._runner._impl.config.services[myServiceIdx];
+    const uri = `http://localhost:${myService.conf.port}/`;
+    if (!this._spec) {
+      // We only want to load this once.
+      preq.get(`${uri}?spec`)
+        .then((res) => {
+          if (!res.body) {
+            throw new Error('Failed to get spec');
+          }
+          // save a copy
+          this._spec = res.body;
+        })
+        .catch(() => {
+          // this error will be detected later, so ignore it
+          this._spec = { paths: {}, 'x-default-params': {} };
+        })
+        .then(() => ({
+          uri,
+          service: myService,
+          conf: this._runner._impl.config,
+          spec: this._spec,
+        }));
+    }
+
+    return {
+      uri,
+      service: myService,
+      conf: this._runner._impl.config,
+      spec: this._spec,
+    };
+  }
 }
 
-function close() {
-  return runner.stop();
-}
-
-module.exports.config = config;
-module.exports.start = start;
-module.exports.close = close;
+module.exports = TestServiceTemplateNodeRunner;

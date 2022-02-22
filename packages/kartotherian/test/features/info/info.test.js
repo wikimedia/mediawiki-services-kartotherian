@@ -1,15 +1,24 @@
 const preq = require('preq');
 const assert = require('../../utils/assert');
-const server = require('../../utils/server');
+const Server = require('../../utils/server');
 
+const server = new Server();
 
 describe('service information', () => {
-  this.timeout(20000);
+  jest.setTimeout(20000);
 
-  beforeAll(() => server.start());
+  let infoUri;
+
+  beforeAll(async () => {
+    await server.start();
+    infoUri = `${server.config.uri}_info/`;
+  });
+
+  afterAll(() => {
+    server.stop();
+  });
 
   // common URI prefix for info tests
-  const infoUri = `${server.config.uri}_info/`;
 
   // common function used for generating requests
   // and checking their return values
