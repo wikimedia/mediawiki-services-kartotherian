@@ -97,13 +97,13 @@ services:
         user: ''
         wikidataQueryService: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 
-      # allowedDomains:
-      #   http:
-      #     # These are common development domains, matching subdomains such as dev.wiki.local.wmftest.net
-      #     - localhost
-      #     - "127.0.0.1"
-      #     - wmflabs.org
-      #     - wmftest.net
+      allowedDomains:
+        http:
+          # These are common development domains, matching subdomains such as dev.wiki.local.wmftest.net
+          - localhost
+          - "127.0.0.1"
+          - wmflabs.org
+          - wmftest.net
       #   https:
       #     - mediawiki.org
       #     - wikibooks.org
