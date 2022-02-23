@@ -113,12 +113,11 @@ services:
 
       allowedDomains:
         http:
-          - localhost:8080
+          # These are common development domains, matching subdomains such as dev.wiki.local.wmftest.net
           - localhost
-          - 127.0.0.1:8080
+          - "127.0.0.1"
           - wmflabs.org
-          - dev.wiki.local.wmftest.net:8080
-          - dev.wiki.local.wmftest.net
+          - wmftest.net
         https:
           - mediawiki.org
           - wikibooks.org
