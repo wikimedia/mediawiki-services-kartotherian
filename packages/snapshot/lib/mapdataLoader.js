@@ -1,11 +1,39 @@
-'use strict';
 
-let _ = require('underscore'),
-    urllib = require('url'),
-    MWApi = require('mwapi'),
-    DataManager = require('@wikimedia/mapdata'),
-    preq = require('preq'),
-    Promise = require('bluebird');
+
+const _ = require('underscore');
+const urllib = require('url');
+const MWApi = require('mwapi');
+const DataManager = require('@wikimedia/mapdata');
+const preq = require('preq');
+const Promise = require('bluebird');
+
+function expandArraysAndCollections(mapdata, geojson) {
+  if (Array.isArray(geojson)) {
+    for (const v of geojson) {
+      expandArraysAndCollections(mapdata, v);
+    }
+  } else if (_.isObject(geojson)) {
+    if (!geojson.type) throw new Error('Bad geojson - object has no type');
+    switch (geojson.type) {
+      case 'FeatureCollection':
+        expandArraysAndCollections(mapdata, geojson.features);
+        break;
+      case 'Feature':
+        // init empty "properties" so it doesn't fail with
+        // "invalid json" in geojson-mapnikify
+        mapdata.push({ ...geojson, properties: geojson.properties || {} });
+        break;
+      default:
+        throw new Error(`Bad geojson - unknown type ${geojson.type}`);
+    }
+  } else {
+    throw new Error(`Bad geojson - unknown type ${typeof (geojson)}`);
+  }
+}
+
+function createPromise(callback) {
+  return new Promise(callback);
+}
 
 /**
  * Download map data from MW api
@@ -17,78 +45,50 @@ let _ = require('underscore'),
  * @returns {Promise}
  */
 module.exports = function downloadMapdata(req, protocol, domain, title, revid, groupIds) {
-    let dm = new DataManager({
-        createPromise: createPromise,
-        whenAllPromises: Promise.all,
-        isEmptyObject: _.isEmpty,
-        isPlainObject: _.isObject,
-        isArray: _.isArray,
-        extend: _.extend,
-        getJSON: url => {
-            if (url[0] === '/' && url[1] === '/') {
-                // Workaround: urllib does not support relative URLs
-                url = protocol + ':' + url;
-            }
-            let urlParts = urllib.parse(url);
-            if (!urlParts.protocol) urlParts.protocol = protocol;
-            if (!urlParts.hostname) urlParts.hostname = domain;
-            if (!urlParts.slashes) urlParts.slashes = true;
+  const dm = new DataManager({
+    createPromise,
+    whenAllPromises: Promise.all,
+    isEmptyObject: _.isEmpty,
+    isPlainObject: _.isObject,
+    isArray: _.isArray,
+    extend: _.extend,
+    getJSON: (url) => {
+      let fullUrl = url;
+      if (url[0] === '/' && url[1] === '/') {
+        // Workaround: urllib does not support relative URLs
+        fullUrl = `${protocol}:${url}`;
+      }
+      const urlParts = urllib.parse(fullUrl);
+      if (!urlParts.protocol) urlParts.protocol = protocol;
+      if (!urlParts.hostname) urlParts.hostname = domain;
+      if (!urlParts.slashes) urlParts.slashes = true;
 
-            let request = {
-                uri: urllib.format(urlParts),
-                headers: {'User-Agent': 'kartotherian-getJSON (yurik @ wikimedia)'}
-            };
-            return preq.get(request).then(response => response.body);
-        },
-        mwApi: request => {
-            let mwapi = new MWApi('kartotherian (yurik @ wikimedia)', protocol + '://' + domain + '/w/api.php');
-            return mwapi.execute(request);
-        },
-        title: title,
-        revid: revid,
-    });
+      const request = {
+        uri: urllib.format(urlParts),
+        headers: { 'User-Agent': 'kartotherian-getJSON (yurik @ wikimedia)' },
+      };
+      return preq.get(request).then(response => response.body);
+    },
+    mwApi: (request) => {
+      const mwapi = new MWApi('kartotherian (yurik @ wikimedia)', `${protocol}://${domain}/w/api.php`);
+      return mwapi.execute(request);
+    },
+    title,
+    revid,
+  });
 
-    return dm.loadGroups( groupIds ).then( dataGroups => {
-        let mapdata = [];
+  return dm.loadGroups(groupIds).then((dataGroups) => {
+    const mapdata = [];
 
-        if (!dataGroups.length) {
-            req.logger.log( 'warn', `groupIds not available: ${groupIds}; domain: ${domain}; title: ${title}; req url: ${req.url}` );
-        }
-
-        for (let i = 0; i < dataGroups.length; i++ ) {
-            expandArraysAndCollections(mapdata, dataGroups[ i ].getGeoJSON());
-        }
-
-        if (mapdata.length === 1) return mapdata[0];
-        return {"type": "FeatureCollection", "features": mapdata};
-    } );
-};
-
-function expandArraysAndCollections(mapdata, geojson) {
-    if (Array.isArray(geojson)) {
-        for (let v of geojson) {
-            expandArraysAndCollections(mapdata, v);
-        }
-    } else if (_.isObject(geojson)) {
-        if (!geojson.type) throw new Error('Bad geojson - object has no type');
-        switch (geojson.type) {
-            case 'FeatureCollection':
-                expandArraysAndCollections(mapdata, geojson.features);
-                break;
-            case 'Feature':
-                // init empty "properties" so it doesn't fail with
-                // "invalid json" in geojson-mapnikify
-                geojson.properties = geojson.properties || {};
-                mapdata.push(geojson);
-                break;
-            default:
-                throw new Error('Bad geojson - unknown type ' + geojson.type);
-        }
-    } else {
-        throw new Error('Bad geojson - unknown type ' + typeof(geojson));
+    if (!dataGroups.length) {
+      req.logger.log('warn', `groupIds not available: ${groupIds}; domain: ${domain}; title: ${title}; req url: ${req.url}`);
     }
-}
 
-function createPromise(callback) {
-    return new Promise(callback);
-}
+    for (let i = 0; i < dataGroups.length; i++) {
+      expandArraysAndCollections(mapdata, dataGroups[i].getGeoJSON());
+    }
+
+    if (mapdata.length === 1) return mapdata[0];
+    return { type: 'FeatureCollection', features: mapdata };
+  });
+};

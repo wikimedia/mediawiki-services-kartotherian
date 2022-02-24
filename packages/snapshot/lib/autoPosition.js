@@ -1,7 +1,7 @@
-"use strict";
 
-var bbox = require("@turf/bbox").default;
-var { viewport } = require("@mapbox/geo-viewport");
+
+const bbox = require('@turf/bbox').default;
+const { viewport } = require('@mapbox/geo-viewport');
 
 /**
  * Gets the most optimal center and zoom for the map so that all the features
@@ -14,16 +14,15 @@ var { viewport } = require("@mapbox/geo-viewport");
  * @return {number} return.zoom Zoom
  */
 module.exports = function autoPosition(params, data) {
-  
-  var autobbox = bbox(data);
-  var autoviewport = viewport(autobbox, [params.w, params.h])
-  var autolon = autoviewport.center[0]
-  var autolat = autoviewport.center[1]
-  var autocenter = autoviewport.zoom
+  const autobbox = bbox(data);
+  const autoviewport = viewport(autobbox, [params.w, params.h]);
+  const autolon = autoviewport.center[0];
+  const autolat = autoviewport.center[1];
+  const autocenter = autoviewport.zoom;
 
   return {
-    latitude: params.lat === "a" ? autolat : params.lat,
-    longitude: params.lon === "a" ? autolon : params.lon,
-    zoom: params.zoom === "a" ? autocenter : params.zoom,
+    latitude: params.lat === 'a' ? autolat : params.lat,
+    longitude: params.lon === 'a' ? autolon : params.lon,
+    zoom: params.zoom === 'a' ? autocenter : params.zoom,
   };
 };
