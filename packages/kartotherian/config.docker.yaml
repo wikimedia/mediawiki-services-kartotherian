@@ -90,7 +90,7 @@ services:
       requestHandlers:
       - "../lib/geoshapes"
       - "../lib/maki"
-      - "@wikimedia/kartotherian-snapshot"
+      - "../lib/snapshot"
 
       geoshapes:
         allowUserQueries: true

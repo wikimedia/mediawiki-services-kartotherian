@@ -2,7 +2,7 @@
  * Test whether the autoPosition works for given GeoJSON
  */
 
-const autoPosition = require('../../lib/autoPosition');
+const autoPosition = require('../../../lib/snapshot/autoPosition');
 const geoJson = require('../fixtures/autoposition-geojson.json');
 
 describe('autoposition', () => {

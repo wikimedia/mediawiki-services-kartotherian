@@ -1,4 +1,4 @@
-const snapshotSetup = require('../../lib/snapshot');
+const snapshotSetup = require('../../../lib/snapshot');
 
 module.exports = (additionalConfig, additionalQueryParams) =>
   new Promise((resolve) => {
