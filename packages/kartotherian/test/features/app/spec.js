@@ -215,6 +215,8 @@ describe('Swagger spec', () => { // eslint-disable-line func-names
 
   beforeAll(() => server.start());
 
+  afterAll(() => server.close());
+
   it('get the spec', () => preq.get(`${server.config.uri}?spec`)
     .then((res) => {
       assert.status(200);

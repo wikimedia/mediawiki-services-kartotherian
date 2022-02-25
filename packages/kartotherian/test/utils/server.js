@@ -51,5 +51,10 @@ function start(_options) {
   return BBPromise.resolve();
 }
 
+function close() {
+  return runner.stop();
+}
+
 module.exports.config = config;
 module.exports.start = start;
+module.exports.close = close;
