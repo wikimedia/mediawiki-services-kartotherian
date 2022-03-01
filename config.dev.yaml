@@ -72,10 +72,10 @@ services:
 
       modules:
       - "tilelive-tmstyle"
-        # FIXME: These strings will be passed to a `require` call from
-        # routes/kartotherian.js , hence the wacky relative path.  In the future,
-        # this may be moved out of configuration or tightened to only refer to
-        # lib/modules subpaths, for example.
+      # FIXME: These strings will be passed to a `require` call from
+      # routes/kartotherian.js , hence the wacky relative path.  In the future,
+      # this may be moved out of configuration or tightened to only refer to
+      # lib/modules subpaths, for example.
       - "../lib/autogen"
       - "../lib/babel"
       - "@wikimedia/kartotherian-layermixer"
