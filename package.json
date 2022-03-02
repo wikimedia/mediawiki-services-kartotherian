@@ -8,6 +8,7 @@
   "scripts": {
     "start": "service-runner",
     "lint": "eslint . && stylelint **/*.css",
+    "lint:fix": "eslint --fix . && stylelint --fix **/*.css",
     "test": "npm run lint && jest --maxWorkers=1",
     "docker-start": "service-runner docker-start",
     "docker-test": "service-runner docker-test",
@@ -85,7 +86,7 @@
   },
   "devDependencies": {
     "chai": "^4.3.6",
-    "eslint": "^5.16.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-kartotherian": "^0.0.5",
     "eslint-config-wikimedia": "^0.5.0",

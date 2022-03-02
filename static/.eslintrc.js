@@ -1,18 +1,19 @@
 module.exports = {
-  "extends": "wikimedia",
-  "env": {
-    "node": false,
-    "es6": false,
-    "browser": true,
+  extends: "wikimedia",
+  env: {
+    node: false,
+    es6: false,
+    browser: true,
   },
-  "rules": {
-    "indent": ["error", 2]
+  rules: {
+    indent: ["error", 2]
   },
-  "parserOptions": {
+  parserOptions: {
     sourceType: 'script',
     ecmaVersion: 5,
   },
-  "globals": {
-    "L": false
-  }
+  globals: {
+    L: false
+  },
+  root: true
 };

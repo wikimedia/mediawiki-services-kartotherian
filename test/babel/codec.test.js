@@ -1,5 +1,3 @@
-/* global describe it */
-
 const assert = require('assert');
 const Promise = require('bluebird');
 const pathLib = require('path');

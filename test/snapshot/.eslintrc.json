@@ -6,6 +6,9 @@
 		"es6": true,
 		"jest": true
 	},
+	"parserOptions": {
+		"ecmaVersion": 2018
+	},
 	"rules": {
 		"one-var": "off"
 	}
