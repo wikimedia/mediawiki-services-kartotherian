@@ -9,14 +9,13 @@ describe('constructor', () => {
       .toThrowError('must be given');
   });
 
-  test('handles multiple IDs', () => {
-    // Trailing comma tests that empty IDs are ignored.
-    const shape = new GeoShapes('geoshape', { ids: 'Q123,Q456,' }, {});
+  test('handles multiple and blank IDs', () => {
+    const shape = new GeoShapes('geoshape', { ids: 'Q123,,Q456' }, {});
     expect(shape.ids).toStrictEqual(['Q123', 'Q456']);
   });
 
   test('rejects non-Q-IDs', () => {
-    expect(() => new GeoShapes('geoshape', { ids: 'A' }, {}))
+    expect(() => new GeoShapes('geoshape', { ids: 'A1' }, {}))
       .toThrowError('Invalid');
   });
 });
@@ -67,6 +66,7 @@ describe('runWikidataQuery', () => {
       },
       headers: { 'X-Test': 'yes', 'X-Client-IP': '127.0.0.1' },
     });
+    expect(shape.rawProperties).toStrictEqual({ Q321: {} });
   });
 });
 
@@ -77,14 +77,15 @@ describe('runSqlQuery', () => {
   });
 
   test('formats query', () => {
+    const dummyRows = ['rows'];
     const returnedPromise = {
-      then: jest.fn(cb => cb(['rows'])),
+      then: jest.fn(cb => cb(dummyRows)),
     };
     const mockDb = { query: jest.fn(() => returnedPromise) };
     const sqlQuery = 'SELECT $1~ $2:csv $3';
     const shape = new GeoShapes(
       'geoshape',
-      { ids: 'Q123,Q456,' },
+      { ids: 'Q123,Q456' },
       {
         db: mockDb,
         polygonTable: 'polys',
@@ -95,7 +96,70 @@ describe('runSqlQuery', () => {
     shape._runSqlQuery();
 
     expect(mockDb.query).toHaveBeenCalledWith(sqlQuery, ['polys', ['Q123', 'Q456']]);
-    expect(shape.geoRows).toStrictEqual(['rows']);
+    expect(shape.geoRows).toStrictEqual(dummyRows);
+  });
+});
+
+describe('expandProperties', () => {
+  test('handles empty list', () => {
+    const shape = new GeoShapes('geoshape', { ids: 'Q123' }, {});
+    mockPreq.post = jest.fn();
+    shape._expandProperties();
+    expect(mockPreq.post).not.toHaveBeenCalled();
+  });
+
+  test('maps and posts', () => {
+    const basicProperties = [{
+      type: 'Feature',
+      id: 'Q123',
+      properties: {
+        // TODO: include properties
+        // 'marker-color': 'f00',
+      },
+      geometry: { type: 'Point', coordinates: [0, 0] },
+    }];
+    const preqResult = {
+      headers: {
+        'content-type': 'application/sparql-results+json',
+      },
+      body: {
+        'sanitize-mapdata': {
+          sanitized: JSON.stringify([{
+            id: 'Q123',
+            properties: basicProperties,
+          }]),
+        },
+      },
+    };
+    const returnedPromise = {
+      then: jest.fn(cb => cb(preqResult)),
+    };
+    mockPreq.post = jest.fn(() => returnedPromise);
+    const apiUrl = 'https://api.test';
+    const shape = new GeoShapes('geoshape', { ids: 'Q123' }, { mwapi: apiUrl });
+    shape.rawProperties = {
+      Q123: {
+        marker_color: {},
+      },
+    };
+
+    shape._expandProperties();
+
+    expect(mockPreq.post).toHaveBeenCalledWith({
+      formData: {
+        action: 'sanitize-mapdata',
+        format: 'json',
+        formatversion: 2,
+        text: JSON.stringify(basicProperties),
+      },
+      headers: undefined,
+      uri: apiUrl,
+    });
+    expect(returnedPromise.then).toHaveBeenCalled();
+    expect(shape.cleanProperties).toStrictEqual({
+      Q123: basicProperties,
+    });
+    expect(shape.ids).toStrictEqual(['Q123']);
   });
 });
 
