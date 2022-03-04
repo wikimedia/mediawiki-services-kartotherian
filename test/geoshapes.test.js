@@ -41,6 +41,10 @@ describe('runWikidataQuery', () => {
                 type: 'uri',
                 value: 'http://www.wikidata.org/entity/Q321',
               },
+              fill: {
+                type: 'literal',
+                value: '#f00',
+              },
             },
           ],
         },
@@ -66,7 +70,7 @@ describe('runWikidataQuery', () => {
       },
       headers: { 'X-Test': 'yes', 'X-Client-IP': '127.0.0.1' },
     });
-    expect(shape.rawProperties).toStrictEqual({ Q321: {} });
+    expect(shape.rawProperties).toStrictEqual({ Q321: { fill: { type: 'literal', value: '#f00' } } });
   });
 });
 
@@ -113,8 +117,7 @@ describe('expandProperties', () => {
       type: 'Feature',
       id: 'Q123',
       properties: {
-        // TODO: include properties
-        // 'marker-color': 'f00',
+        fill: '#f00',
       },
       geometry: { type: 'Point', coordinates: [0, 0] },
     }];
@@ -139,7 +142,10 @@ describe('expandProperties', () => {
     const shape = new GeoShapes('geoshape', { ids: 'Q123' }, { mwapi: apiUrl });
     shape.rawProperties = {
       Q123: {
-        marker_color: {},
+        fill: {
+          type: 'literal',
+          value: '#f00',
+        },
       },
     };
 
