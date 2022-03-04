@@ -170,7 +170,7 @@ describe( 'expandProperties', () => {
 } );
 
 describe( 'wrapResult', () => {
-	test( 'converts point to geojson', () => {
+	test( 'create geojson for GeoShape', () => {
 		const shape = new GeoShapes( 'geoshape', { query: 'dummy' }, { wikidataQueryService: true } );
 
 		const geoRows = [
@@ -203,6 +203,31 @@ describe( 'wrapResult', () => {
 			},
 			arcs: [],
 			bbox: [ 0, 0, 0, 0 ]
+		};
+		expect( result ).toStrictEqual( expectedResult );
+	} );
+
+	test( 'create geojson for GeoPoint', () => {
+		const shape = new GeoShapes( 'geopoint', { query: 'dummy' }, { wikidataQueryService: true } );
+
+		const properties = {
+			Q188781: { geo: [ 34.83333333, 30.66666667 ], 'marker-color': '#800000' }
+		};
+		const result = shape._wrapResult( [], properties, true );
+		const expectedResult = {
+			features: [ {
+				geometry: {
+					coordinates: [ 34.83333333, 30.66666667 ],
+					type: 'Point'
+				},
+				id: 'Q188781',
+				properties: {
+					'marker-color': '#800000'
+				},
+				type: 'Feature'
+			}
+			],
+			type: 'FeatureCollection'
 		};
 		expect( result ).toStrictEqual( expectedResult );
 	} );

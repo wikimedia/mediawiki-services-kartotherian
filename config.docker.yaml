@@ -94,6 +94,8 @@ services:
         table: planet_osm_polygon
         user: default
         wikidataQueryService: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+        # temporary feature flag for geopoints
+        enableGeopoints: false
 
       allowedDomains:
         http:
