@@ -6,10 +6,11 @@ const mapdataLoader = require( '../../../lib/snapshot/mapdataLoader' );
 // const mockPreq = require('preq');
 
 describe( 'mapdataLoader', () => {
+	const groupId = '_1234';
+	const pageId = '567';
+	const pageTitle = 'Title';
+
 	test( 'handles success', async () => {
-		const groupId = '_1234';
-		const pageId = '567';
-		const pageTitle = 'Title';
 		const mapdata = {
 			type: 'Feature',
 			properties: {
@@ -49,5 +50,63 @@ describe( 'mapdataLoader', () => {
 			.then( ( geojson ) => {
 				expect( geojson ).toStrictEqual( mapdata );
 			} );
+	} );
+
+	// Page is missing, no geojson present, or Kartographer mapdata API is disabled.
+	test( 'handles missing mapdata', async () => {
+		const mockResponse = {
+			query: {
+				pages: [
+					{
+						pageid: pageId,
+						title: pageTitle,
+						missing: true,
+					},
+				],
+			},
+		};
+		mockMWApi.prototype.execute = jest.fn( () => ( {
+			then: jest.fn( ( cb ) => cb( mockResponse ) ),
+		} ) );
+		const req = { logger: { log: jest.fn() } };
+
+		await mapdataLoader( req, 'https', 'api.test', pageTitle, true, groupId )
+			.then( ( geojson ) => {
+				expect( geojson ).toStrictEqual( { features: [], type: 'FeatureCollection' } );
+			} );
+	} );
+
+	test( 'handles API exception', async () => {
+		const error = 'mwapi-test-error';
+		const req = { logger: { log: jest.fn() } };
+		mockMWApi.prototype.execute = jest.fn( () => ( {
+			then: jest.fn( () => { throw new Error( error ); } ),
+		} ) );
+
+		expect( () => mapdataLoader( req, 'https', 'api.test', pageTitle, true, groupId ) )
+			.toThrowError( error );
+	} );
+
+	test( 'handles null mapdata', async () => {
+		// FIXME: Capture a more realistic fixture causing these errors.
+		const mockResponse = {
+			query: {
+				pages: [
+					{
+						pageid: pageId,
+						title: pageTitle,
+						mapdata: JSON.stringify( {
+							[ groupId ]: [ null ],
+						} ),
+					},
+				],
+			},
+		};
+		mockMWApi.prototype.execute = jest.fn( () => ( {
+			then: jest.fn( ( cb ) => cb( mockResponse ) ),
+		} ) );
+
+		expect( () => mapdataLoader( null, 'https', 'api.test', pageTitle, true, groupId ) )
+			.rejects.toThrow( 'Bad geojson - unknown type object' );
 	} );
 } );
