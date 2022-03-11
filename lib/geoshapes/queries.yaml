@@ -5,7 +5,7 @@ direct:
   sql: |
     SELECT id, ST_AsGeoJSON(ST_Transform(geometry, 4326)) as data
     FROM (
-    SELECT id, ST_Multi(ST_Union(geometry)) AS geometry
+    SELECT id, ST_Multi(ST_Collect(geometry)) AS geometry
       FROM (
         SELECT wikidata AS id, (ST_Dump(geometry)).geom AS geometry
         FROM $1~
@@ -17,7 +17,7 @@ simplify:
   sql: |
     SELECT id, ST_AsGeoJSON(ST_Transform(ST_Simplify(geometry, $3), 4326)) as data
     FROM (
-    SELECT id, ST_Multi(ST_Union(geometry)) AS geometry
+    SELECT id, ST_Multi(ST_Collect(geometry)) AS geometry
       FROM (
         SELECT wikidata AS id, (ST_Dump(geometry)).geom AS geometry
         FROM $1~
@@ -33,7 +33,7 @@ simplifyarea:
   sql: |
     SELECT id, ST_AsGeoJSON(ST_Transform(ST_Simplify(geometry, $3*sqrt(ST_Area(ST_Envelope(geometry)))), 4326)) as data
     FROM (
-    SELECT id, ST_Multi(ST_Union(geometry)) AS geometry
+    SELECT id, ST_Multi(ST_Collect(geometry)) AS geometry
       FROM (
         SELECT wikidata AS id, (ST_Dump(geometry)).geom AS geometry
         FROM $1~
@@ -49,7 +49,7 @@ removerepeat:
   sql: |
     SELECT id, ST_AsGeoJSON(ST_Transform(ST_RemoveRepeatedPoints(geometry, $3), 4326)) as data
     FROM (
-    SELECT id, ST_Multi(ST_Union(geometry)) AS geometry
+    SELECT id, ST_Multi(ST_Collect(geometry)) AS geometry
       FROM (
         SELECT wikidata AS id, (ST_Dump(geometry)).geom AS geometry
         FROM $1~
