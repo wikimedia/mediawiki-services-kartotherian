@@ -54,7 +54,9 @@
 			maxZoom: config.maxzoom !== undefined ? config.maxzoom : defaultSettings.maxzoom,
 
 			// TODO: This is UI text, and needs to be translatable.
-			attribution: config.attribution !== undefined ? config.attribution : defaultSettings.attribution,
+			attribution: config.attribution !== undefined ?
+				config.attribution :
+				defaultSettings.attribution,
 
 			id: 'map-01'
 		};
