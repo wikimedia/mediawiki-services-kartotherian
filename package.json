@@ -99,8 +99,8 @@
     "openapi-schema-validator": "^3.0.3",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
-    "stylelint": "^8.2.0",
-    "stylelint-config-wikimedia": "^0.4.2",
+    "stylelint": "^13.13.1",
+    "stylelint-config-wikimedia": "^0.11.1",
     "swagger-router": "^0.5.6"
   }
 }
