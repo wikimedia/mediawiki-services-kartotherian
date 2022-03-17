@@ -1,12 +1,10 @@
-FROM debian:stretch
-RUN apt-get update && apt-get install -y nodejs nodejs-legacy git wget python apt-transport-https build-essential && rm -rf /var/lib/apt/lists/*
-RUN printf "deb https://apt.wikimedia.org/wikimedia stretch-wikimedia main backports" >> /etc/apt/sources.list
-RUN wget -qO - "https://wikitech.wikimedia.org/w/index.php?title=APT_repository/Stretch-Key&action=raw" | apt-key add -
-RUN apt-get update && apt-get install -y -t stretch-wikimedia libmapnik3.0 libmapnik-dev
+FROM debian:buster
+RUN apt-get update && apt-get install -y nodejs git wget build-essential python fonts-dejavu libboost-filesystem-dev libboost-regex-dev libboost-system-dev libcairo2-dev libfreetype6-dev libgdal-dev libharfbuzz-dev libjpeg-dev libpng-dev libpq-dev libproj-dev libtiff-dev libwebp-dev libxml2-dev libmapbox-variant-dev libboost-program-options-dev libboost-thread-dev libmapnik-dev mapnik-utils mapnik-doc libmapnik3.0 && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /usr/local/nvm
 ENV NVM_DIR /usr/local/nvm
-RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash && . $NVM_DIR/nvm.sh && nvm install 6.11.1
-ENV HOME=/root/ LINK=g++
+RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash && . $NVM_DIR/nvm.sh && nvm install 10.15.2
+RUN groupadd -o -g 1000 -r rungroup && useradd -o -m -r -g rungroup -u 1000 runuser
+USER runuser
+ENV HOME=/home/runuser LINK=g++
 ENV IN_DOCKER=1
-COPY . /home/code
-WORKDIR /home/code
-RUN . $NVM_DIR/nvm.sh && nvm use 6.11.1 && npm install --build-from-source=mapnik --fallback-to-build=false && npm test
+CMD  . $NVM_DIR/nvm.sh && nvm use 10.15.2 && npm install --production --build-from-source=@kartotherian/mapnik  
