@@ -1,3 +1,5 @@
+'use strict';
+
 const pathLib = require( 'path' );
 const Promise = require( 'bluebird' );
 const core = require( '../lib/core' );

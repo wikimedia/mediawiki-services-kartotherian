@@ -1,3 +1,5 @@
+'use strict';
+
 const snapshotSetup = require( '../../../lib/snapshot' );
 
 module.exports = ( additionalConfig, additionalQueryParams ) =>

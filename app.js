@@ -1,3 +1,5 @@
+'use strict';
+
 const http = require( 'http' );
 const BBPromise = require( 'bluebird' );
 const express = require( 'express' );
@@ -10,6 +12,7 @@ const yaml = require( 'js-yaml' );
 
 /**
  * Creates an express app and initialises it
+ *
  * @param {Object} options the options to initialise the app with
  * @return {bluebird} the promise resolving to the app object
  */
@@ -126,6 +129,7 @@ function initApp( options ) {
 
 /**
  * Loads all routes declared in routes/ into the app
+ *
  * @param {Application} app the application object to load routes into
  * @return {bluebird} a promise resolving to the app object
  */
@@ -171,6 +175,7 @@ function loadRoutes( app ) {
 
 /**
  * Creates and start the service's web server
+ *
  * @param {Application} app the app object to use in the service
  * @return {bluebird} a promise creating the web server
  */
@@ -199,6 +204,8 @@ function createServer( app ) {
  * options and the logger- and metrics-reporting objects from
  * service-runner and starts an HTTP server, attaching the application
  * object to it.
+ *
+ * @param options
  */
 module.exports = function entry( options ) {
 	return initApp( options )

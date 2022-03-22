@@ -27,12 +27,12 @@
 	map.attributionControl.setPrefix( '' );
 
 	/**
-   * Finishes setting up the map
-   *
-   * @param {Object|null} config Config object
-   * @param {string} [config.attribution] Attribution text to show in footer; see below for default
-   * @param {number} [config.maxzoom=18] Maximum zoom level
-   */
+	 * Finishes setting up the map
+	 *
+	 * @param {Object|null} config Config object
+	 * @param {string} [config.attribution] Attribution to show in footer; see below for default
+	 * @param {number} [config.maxzoom=18] Maximum zoom level
+	 */
 	function setupMap( config ) {
 		var layerSettings, defaultSettings,
 			query = '',

@@ -1,3 +1,5 @@
+'use strict';
+
 const GeoShapes = require( '../lib/geoshapes/geoshapes' );
 
 // Intercept external services

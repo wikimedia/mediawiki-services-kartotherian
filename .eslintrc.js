@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
 	root: true,
 	extends: 'wikimedia/server',
@@ -5,9 +7,13 @@ module.exports = {
 		ecmaVersion: 2018
 	},
 	rules: {
-		'valid-jsdoc': 'off',
 		'no-underscore-dangle': 'off',
 		'max-statements-per-line': [ 'error', { max: 2 } ],
-		camelcase: 'off'
+		camelcase: 'off',
+
+		'jsdoc/require-returns': 'off',
+		'jsdoc/no-undefined-types': 'off',
+		'jsdoc/check-param-names': 'off',
+		'jsdoc/require-param-type': 'off'
 	}
 };

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Test whether the mapdata API requests are correct for what was requested.
  */

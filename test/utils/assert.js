@@ -1,3 +1,5 @@
+'use strict';
+
 const { use } = require( 'chai' );
 
 module.exports = use( ( _chai ) => {

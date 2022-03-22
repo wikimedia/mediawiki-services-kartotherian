@@ -21,6 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+'use strict';
+
 const assert = require( 'assert' );
 const _ = require( 'underscore' );
 const checkType = require( '../lib/input-validator' );

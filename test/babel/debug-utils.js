@@ -1,3 +1,5 @@
+'use strict';
+
 const Promise = require( 'bluebird' );
 const fs = require( 'fs' );
 const _ = require( 'underscore' );
@@ -13,6 +15,8 @@ Promise.config( {
 
 /**
  * Helper function to sort JSON objects recursivelly by key
+ *
+ * @param obj
  */
 function sorter( obj ) {
 	if ( Array.isArray( obj ) ) {

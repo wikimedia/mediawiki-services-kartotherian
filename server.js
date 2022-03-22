@@ -6,6 +6,8 @@
 // (config.yaml by default, specify other path with -c). It requires the
 // module(s) specified in the config 'services' section (app.js in this
 // example).
+'use strict';
+
 const ServiceRunner = require( 'service-runner' );
 
 new ServiceRunner().start();

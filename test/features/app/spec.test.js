@@ -1,3 +1,5 @@
+'use strict';
+
 const preq = require( 'preq' );
 const assert = require( '../../utils/assert' );
 const Server = require( '../../utils/server' );

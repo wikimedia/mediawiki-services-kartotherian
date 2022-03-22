@@ -1,3 +1,5 @@
+'use strict';
+
 const preq = require( 'preq' );
 const TestRunner = require( 'service-runner/test/TestServer' );
 

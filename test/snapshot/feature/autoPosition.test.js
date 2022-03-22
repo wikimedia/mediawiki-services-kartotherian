@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Test whether the autoPosition works for given GeoJSON
  */

@@ -1,5 +1,6 @@
-const mockMWApi = require( 'mwapi' );
+'use strict';
 
+const mockMWApi = require( 'mwapi' );
 const mapdataLoader = require( '../../../lib/snapshot/mapdataLoader' );
 
 // Intercept external services

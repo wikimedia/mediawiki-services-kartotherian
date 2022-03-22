@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require( 'assert' );
 const jsYaml = require( 'js-yaml' );
 const { YamlLoader } = require( '../../lib/module-loader' );

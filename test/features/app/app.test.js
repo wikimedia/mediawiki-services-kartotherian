@@ -1,3 +1,5 @@
+'use strict';
+
 const preq = require( 'preq' );
 const rp = require( 'request-promise' );
 const assert = require( '../../utils/assert' );
