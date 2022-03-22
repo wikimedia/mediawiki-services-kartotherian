@@ -30,31 +30,31 @@ describe( 'xmlLoader', () => {
 	it( 'xmlSetParams', test( {
 		xml: xml(),
 		xmlSetParams: {
-			source: { ref: 'sourceId' },
-		},
+			source: { ref: 'sourceId' }
+		}
 	}, xml( { source: 'sourceId' } ) ) );
 
 	it( 'xmlSetParams new', test( {
 		xml: xml( { source: null } ),
 		xmlSetParams: {
-			source: { ref: 'sourceId' },
-		},
+			source: { ref: 'sourceId' }
+		}
 	}, xml( { source: 'sourceId' } ) ) );
 
 	it( 'xmlSetAttrs', test( {
 		xml: xml(),
 		xmlSetAttrs: {
-			attr: { ref: 'abc' },
-		},
+			attr: { ref: 'abc' }
+		}
 	}, xml( { attrs: ' attr="abc"' } ) ) );
 
 	it( 'xmlLayers', test( {
 		xml: xml(),
-		xmlLayers: [ 'layerAlways' ],
+		xmlLayers: [ 'layerAlways' ]
 	}, xml( { excludeOptional: true } ) ) );
 
 	it( 'xmlExceptLayers', test( {
 		xml: xml(),
-		xmlExceptLayers: [ 'layerOptional' ],
+		xmlExceptLayers: [ 'layerOptional' ]
 	}, xml( { excludeOptional: true } ) ) );
 } );

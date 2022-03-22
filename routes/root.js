@@ -17,7 +17,7 @@ let app;
 router.get( '/robots.txt', ( req, res ) => {
 	res.set( {
 		'User-agent': '*',
-		Disallow: '/',
+		Disallow: '/'
 	} ).end();
 } );
 
@@ -40,6 +40,6 @@ module.exports = function root( appObj ) {
 	return {
 		path: '/',
 		skip_domain: true,
-		router,
+		router
 	};
 };

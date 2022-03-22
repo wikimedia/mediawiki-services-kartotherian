@@ -31,7 +31,7 @@ describe( 'runWikidataQuery', () => {
 		const sparqlQuery = 'SELECT $1~ $2.csv $3';
 		const preqResult = {
 			headers: {
-				'content-type': 'application/sparql-results+json',
+				'content-type': 'application/sparql-results+json'
 			},
 			body: {
 				results: {
@@ -39,23 +39,23 @@ describe( 'runWikidataQuery', () => {
 						{
 							id: {
 								type: 'uri',
-								value: 'http://www.wikidata.org/entity/Q321',
+								value: 'http://www.wikidata.org/entity/Q321'
 							},
 							fill: {
 								type: 'literal',
-								value: '#f00',
-							},
-						},
-					],
-				},
-			},
+								value: '#f00'
+							}
+						}
+					]
+				}
+			}
 		};
 		const shape = new GeoShapes( 'geoshape', { query: sparqlQuery }, { sparqlHeaders: { 'X-Test': 'yes' }, wikidataQueryService: uri } );
 		const returnedPromise = {
 			then: jest.fn( ( result ) => {
 				result( preqResult );
 				expect( shape.ids ).toStrictEqual( [ 'Q321' ] );
-			} ),
+			} )
 		};
 		mockPreq.get = jest.fn( () => returnedPromise );
 
@@ -66,9 +66,9 @@ describe( 'runWikidataQuery', () => {
 			uri,
 			query: {
 				format: 'json',
-				query: sparqlQuery,
+				query: sparqlQuery
 			},
-			headers: { 'X-Test': 'yes', 'X-Client-IP': '127.0.0.1' },
+			headers: { 'X-Test': 'yes', 'X-Client-IP': '127.0.0.1' }
 		} );
 		expect( shape.rawProperties ).toStrictEqual( { Q321: { fill: { type: 'literal', value: '#f00' } } } );
 	} );
@@ -83,7 +83,7 @@ describe( 'runSqlQuery', () => {
 	test( 'formats query', () => {
 		const dummyRows = [ 'rows' ];
 		const returnedPromise = {
-			then: jest.fn( ( cb ) => cb( dummyRows ) ),
+			then: jest.fn( ( cb ) => cb( dummyRows ) )
 		};
 		const mockDb = { query: jest.fn( () => returnedPromise ) };
 		const sqlQuery = 'SELECT $1~ $2:csv $3';
@@ -93,7 +93,7 @@ describe( 'runSqlQuery', () => {
 			{
 				db: mockDb,
 				polygonTable: 'polys',
-				queries: { default: { sql: sqlQuery } },
+				queries: { default: { sql: sqlQuery } }
 			}
 		);
 
@@ -117,25 +117,25 @@ describe( 'expandProperties', () => {
 			type: 'Feature',
 			id: 'Q123',
 			properties: {
-				fill: '#f00',
+				fill: '#f00'
 			},
-			geometry: { type: 'Point', coordinates: [ 0, 0 ] },
+			geometry: { type: 'Point', coordinates: [ 0, 0 ] }
 		} ];
 		const preqResult = {
 			headers: {
-				'content-type': 'application/sparql-results+json',
+				'content-type': 'application/sparql-results+json'
 			},
 			body: {
 				'sanitize-mapdata': {
 					sanitized: JSON.stringify( [ {
 						id: 'Q123',
-						properties: basicProperties,
-					} ] ),
-				},
-			},
+						properties: basicProperties
+					} ] )
+				}
+			}
 		};
 		const returnedPromise = {
-			then: jest.fn( ( cb ) => cb( preqResult ) ),
+			then: jest.fn( ( cb ) => cb( preqResult ) )
 		};
 		mockPreq.post = jest.fn( () => returnedPromise );
 		const apiUrl = 'https://api.test';
@@ -144,9 +144,9 @@ describe( 'expandProperties', () => {
 			Q123: {
 				fill: {
 					type: 'literal',
-					value: '#f00',
-				},
-			},
+					value: '#f00'
+				}
+			}
 		};
 
 		shape._expandProperties();
@@ -156,14 +156,14 @@ describe( 'expandProperties', () => {
 				action: 'sanitize-mapdata',
 				format: 'json',
 				formatversion: 2,
-				text: JSON.stringify( basicProperties ),
+				text: JSON.stringify( basicProperties )
 			},
 			headers: undefined,
-			uri: apiUrl,
+			uri: apiUrl
 		} );
 		expect( returnedPromise.then ).toHaveBeenCalled();
 		expect( shape.cleanProperties ).toStrictEqual( {
-			Q123: basicProperties,
+			Q123: basicProperties
 		} );
 		expect( shape.ids ).toStrictEqual( [ 'Q123' ] );
 	} );
@@ -178,9 +178,9 @@ describe( 'wrapResult', () => {
 				id: 'dummy',
 				data: JSON.stringify( {
 					type: 'Point',
-					coordinates: [ 0, 0 ],
-				} ),
-			},
+					coordinates: [ 0, 0 ]
+				} )
+			}
 		];
 		const result = shape._wrapResult();
 		const expectedResult = {
@@ -192,17 +192,17 @@ describe( 'wrapResult', () => {
 						{
 							coordinates: [
 								0,
-								0,
+								0
 							],
 							id: 'dummy',
 							properties: {},
-							type: 'Point',
-						},
-					],
-				},
+							type: 'Point'
+						}
+					]
+				}
 			},
 			arcs: [],
-			bbox: [ 0, 0, 0, 0 ],
+			bbox: [ 0, 0, 0, 0 ]
 		};
 		expect( result ).toStrictEqual( expectedResult );
 	} );

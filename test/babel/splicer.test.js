@@ -15,7 +15,7 @@ const fauxSource = class {
 };
 
 core.tilelive = {
-	protocols: {},
+	protocols: {}
 };
 core.loadSource = () => fauxSource;
 
@@ -34,8 +34,8 @@ describe( 'Tag recombination', () => {
 				languageMap: opts.map,
 				source: 'a',
 				combineName: opts.combineName,
-				keepUncompressed: opts.keepUncompressed,
-			},
+				keepUncompressed: opts.keepUncompressed
+			}
 		} ).then( ( bbl ) => {
 			const headers = { xyz: 'abc' };
 			if ( opts.gzip ) {
@@ -43,7 +43,7 @@ describe( 'Tag recombination', () => {
 				pbfData = zlib.gzipSync( pbfData );
 			}
 			const getParams = {
-				type: opts.type, t: pbfData, h: headers, lang: opts.lang,
+				type: opts.type, t: pbfData, h: headers, lang: opts.lang
 			};
 			return bbl.getAsync( getParams );
 		} ).then( ( result ) => {
@@ -84,8 +84,8 @@ describe( 'Tag recombination', () => {
 						type: 1,
 						id: 5,
 						tags: [ 0, 0, 1, 1, 2, 2, 3, 3, 4, 1, 5, 4, 6, 5, 7, 6, 8, 7, 9, 7 ],
-						geometry: [ 9, 1599, 4288 ],
-					},
+						geometry: [ 9, 1599, 4288 ]
+					}
 				],
 				keys: [
 					'class',
@@ -97,7 +97,7 @@ describe( 'Tag recombination', () => {
 					'name_ja',
 					'name_kn',
 					'name_ru',
-					'name_uk',
+					'name_uk'
 				],
 				values: [
 					{ tag: 1, value: 'city' },
@@ -107,13 +107,13 @@ describe( 'Tag recombination', () => {
 					{ tag: 1, value: 'वांकूवर' },
 					{ tag: 1, value: 'バンクーバー' },
 					{ tag: 1, value: 'ವಾಂಕೂವರ್' },
-					{ tag: 1, value: 'Ванкувер' },
+					{ tag: 1, value: 'Ванкувер' }
 				],
 				version: 2,
 				name: 'place',
-				extent: 4096,
-			},
-		],
+				extent: 4096
+			}
+		]
 	};
 
 	it(
@@ -142,22 +142,22 @@ describe( 'Tag recombination', () => {
 						type: 1,
 						id: 5,
 						tags: [ 0, 0, 1, 1 ],
-						geometry: [ 9, 1599, 4288 ],
-					},
+						geometry: [ 9, 1599, 4288 ]
+					}
 				],
 				keys: [
 					'class',
-					'name',
+					'name'
 				],
 				values: [
 					{ tag: 1, value: 'city' },
-					{ tag: 1, value: 'Vancouver' },
+					{ tag: 1, value: 'Vancouver' }
 				],
 				version: 2,
 				name: 'place',
-				extent: 4096,
-			},
-		],
+				extent: 4096
+			}
+		]
 	};
 	it(
 		'pick en',
@@ -178,22 +178,22 @@ describe( 'Tag recombination', () => {
 							type: 1,
 							id: 5,
 							tags: [ 0, 0, 1, 1 ],
-							geometry: [ 9, 1599, 4288 ],
-						},
+							geometry: [ 9, 1599, 4288 ]
+						}
 					],
 					keys: [
 						'class',
-						'name',
+						'name'
 					],
 					values: [
 						{ tag: 1, value: 'city' },
-						{ tag: 1, value: 'Ванкувер' },
+						{ tag: 1, value: 'Ванкувер' }
 					],
 					version: 2,
 					name: 'place',
-					extent: 4096,
-				},
-			],
+					extent: 4096
+				}
+			]
 		} )
 	);
 
@@ -207,22 +207,22 @@ describe( 'Tag recombination', () => {
 							type: 1,
 							id: 5,
 							tags: [ 0, 0, 1, 1 ],
-							geometry: [ 9, 1599, 4288 ],
-						},
+							geometry: [ 9, 1599, 4288 ]
+						}
 					],
 					keys: [
 						'class',
-						'name',
+						'name'
 					],
 					values: [
 						{ tag: 1, value: 'city' },
-						{ tag: 1, value: 'Ванкувер (Vancouver)' },
+						{ tag: 1, value: 'Ванкувер (Vancouver)' }
 					],
 					version: 2,
 					name: 'place',
-					extent: 4096,
-				},
-			],
+					extent: 4096
+				}
+			]
 		} )
 	);
 
@@ -236,22 +236,22 @@ describe( 'Tag recombination', () => {
 							type: 1,
 							id: 5,
 							tags: [ 0, 0, 1, 1 ],
-							geometry: [ 9, 1599, 4288 ],
-						},
+							geometry: [ 9, 1599, 4288 ]
+						}
 					],
 					keys: [
 						'class',
-						'name',
+						'name'
 					],
 					values: [
 						{ tag: 1, value: 'city' },
-						{ tag: 1, value: 'Ванкувер' },
+						{ tag: 1, value: 'Ванкувер' }
 					],
 					version: 2,
 					name: 'place',
-					extent: 4096,
-				},
-			],
+					extent: 4096
+				}
+			]
 		} )
 	);
 
@@ -265,22 +265,22 @@ describe( 'Tag recombination', () => {
 							type: 1,
 							id: 5,
 							tags: [ 0, 0, 1, 1 ],
-							geometry: [ 9, 1599, 4288 ],
-						},
+							geometry: [ 9, 1599, 4288 ]
+						}
 					],
 					keys: [
 						'class',
-						'name',
+						'name'
 					],
 					values: [
 						{ tag: 1, value: 'city' },
-						{ tag: 1, value: 'Ванкувер' },
+						{ tag: 1, value: 'Ванкувер' }
 					],
 					version: 2,
 					name: 'place',
-					extent: 4096,
-				},
-			],
+					extent: 4096
+				}
+			]
 		} )
 	);
 
@@ -290,8 +290,8 @@ describe( 'Tag recombination', () => {
 			query: {
 				nameTag: 'name',
 				defaultLanguage: 'en',
-				source: 'a',
-			},
+				source: 'a'
+			}
 		} ).then( ( bbl ) => {
 			// NOTE: These are known fallbacks from within fallbacks.json
 			// if the file changes, these test cases may need to change as well
@@ -317,22 +317,22 @@ describe( 'Tag recombination', () => {
 							type: 1,
 							id: 5,
 							tags: [ 0, 0, 1, 1 ],
-							geometry: [ 9, 1599, 4288 ],
-						},
+							geometry: [ 9, 1599, 4288 ]
+						}
 					],
 					keys: [
 						'class',
-						'name',
+						'name'
 					],
 					values: [
 						{ tag: 1, value: 'city' },
-						{ tag: 1, value: 'Vancouver' },
+						{ tag: 1, value: 'Vancouver' }
 					],
 					version: 2,
 					name: 'place',
-					extent: 4096,
-				},
-			],
+					extent: 4096
+				}
+			]
 		} )
 	);
 
@@ -343,7 +343,7 @@ describe( 'Tag recombination', () => {
 			defaultLanguage: 'fr',
 			lang: 'local',
 			keepUncompressed: true,
-			map: {},
+			map: {}
 		},
 		{
 			layers: [
@@ -353,8 +353,8 @@ describe( 'Tag recombination', () => {
 							type: 1,
 							id: 5,
 							tags: [ 0, 0, 1, 1, 2, 2, 3, 3, 4, 1, 5, 4, 6, 5, 7, 6, 8, 7, 9, 7 ],
-							geometry: [ 9, 1599, 4288 ],
-						},
+							geometry: [ 9, 1599, 4288 ]
+						}
 					],
 					keys: [
 						'class',
@@ -366,7 +366,7 @@ describe( 'Tag recombination', () => {
 						'name_ja',
 						'name_kn',
 						'name_ru',
-						'name_uk',
+						'name_uk'
 					],
 					values: [
 						{ tag: 1, value: 'city' },
@@ -376,13 +376,13 @@ describe( 'Tag recombination', () => {
 						{ tag: 1, value: 'वांकूवर' },
 						{ tag: 1, value: 'バンクーバー' },
 						{ tag: 1, value: 'ವಾಂಕೂವರ್' },
-						{ tag: 1, value: 'Ванкувер' },
+						{ tag: 1, value: 'Ванкувер' }
 					],
 					version: 2,
 					name: 'place',
-					extent: 4096,
-				},
-			],
+					extent: 4096
+				}
+			]
 		}
 	) );
 
@@ -392,7 +392,7 @@ describe( 'Tag recombination', () => {
 			protocol: 'babel:',
 			defaultLanguage: 'local',
 			keepUncompressed: true,
-			map: {},
+			map: {}
 		},
 		{
 			layers: [
@@ -402,8 +402,8 @@ describe( 'Tag recombination', () => {
 							type: 1,
 							id: 5,
 							tags: [ 0, 0, 1, 1, 2, 2, 3, 3, 4, 1, 5, 4, 6, 5, 7, 6, 8, 7, 9, 7 ],
-							geometry: [ 9, 1599, 4288 ],
-						},
+							geometry: [ 9, 1599, 4288 ]
+						}
 					],
 					keys: [
 						'class',
@@ -415,7 +415,7 @@ describe( 'Tag recombination', () => {
 						'name_ja',
 						'name_kn',
 						'name_ru',
-						'name_uk',
+						'name_uk'
 					],
 					values: [
 						{ tag: 1, value: 'city' },
@@ -425,13 +425,13 @@ describe( 'Tag recombination', () => {
 						{ tag: 1, value: 'वांकूवर' },
 						{ tag: 1, value: 'バンクーバー' },
 						{ tag: 1, value: 'ವಾಂಕೂವರ್' },
-						{ tag: 1, value: 'Ванкувер' },
+						{ tag: 1, value: 'Ванкувер' }
 					],
 					version: 2,
 					name: 'place',
-					extent: 4096,
-				},
-			],
+					extent: 4096
+				}
+			]
 		}
 	) );
 

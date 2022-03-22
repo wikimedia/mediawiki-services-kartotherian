@@ -51,7 +51,7 @@ function initApp( options ) {
 	if ( !app.conf.log_header_whitelist ) {
 		app.conf.log_header_whitelist = [
 			'cache-control', 'content-type', 'content-length', 'if-match',
-			'user-agent', 'x-request-id',
+			'user-agent', 'x-request-id'
 		];
 	}
 	app.conf.log_header_whitelist = new RegExp( `^(?:${app.conf.log_header_whitelist.map( ( item ) => item.trim() ).join( '|' )})$`, 'i' );
@@ -75,7 +75,7 @@ function initApp( options ) {
 		app.conf.spec.info = {
 			version: app.info.version,
 			title: app.info.name,
-			description: app.info.description,
+			description: app.info.description
 		};
 	}
 	app.conf.spec.info.version = app.info.version;

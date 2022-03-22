@@ -12,12 +12,12 @@ describe( 'autoposition', () => {
 			lon: 'a',
 			zoom: 'a',
 			w: 100,
-			h: 100,
+			h: 100
 		}, geoJson );
 		expect( coordinates ).toEqual( {
 			latitude: -23.17508256414426,
 			longitude: -45.85693359375,
-			zoom: 8,
+			zoom: 8
 		} );
 	} );
 	describe( 'when param is set for lat/lon/zoom it should return the param values', () => {
@@ -27,12 +27,12 @@ describe( 'autoposition', () => {
 				lon: 'a',
 				zoom: 7,
 				w: 100,
-				h: 100,
+				h: 100
 			}, geoJson );
 			expect( coordinates ).toEqual( {
 				latitude: -23.17508256414426,
 				longitude: -45.85693359375,
-				zoom: 7,
+				zoom: 7
 			} );
 		} );
 
@@ -42,12 +42,12 @@ describe( 'autoposition', () => {
 				lon: -45,
 				zoom: 'a',
 				w: 100,
-				h: 100,
+				h: 100
 			}, geoJson );
 			expect( coordinates ).toEqual( {
 				latitude: -23.17508256414426,
 				longitude: -45,
-				zoom: 8,
+				zoom: 8
 			} );
 		} );
 
@@ -57,12 +57,12 @@ describe( 'autoposition', () => {
 				lon: 'a',
 				zoom: 'a',
 				w: 100,
-				h: 100,
+				h: 100
 			}, geoJson );
 			expect( coordinates ).toEqual( {
 				latitude: -23,
 				longitude: -45.85693359375,
-				zoom: 8,
+				zoom: 8
 			} );
 		} );
 	} );

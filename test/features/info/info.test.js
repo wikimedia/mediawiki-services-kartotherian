@@ -24,7 +24,7 @@ describe( 'service information', () => {
 	// and checking their return values
 	function checkRet( fieldName ) {
 		return preq.get( {
-			uri: infoUri + fieldName,
+			uri: infoUri + fieldName
 		} ).then( ( res ) => {
 			// check the returned Content-Type header
 			assert.contentType( res, 'application/json' );
@@ -42,14 +42,14 @@ describe( 'service information', () => {
 
 	it( 'should redirect to the service home page', () => preq.get( {
 		uri: `${infoUri}home`,
-		followRedirect: false,
+		followRedirect: false
 	} ).then( ( res ) => {
 		// check the status
 		assert.status( res, 301 );
 	} ) );
 
 	it( 'should get the service info', () => preq.get( {
-		uri: infoUri,
+		uri: infoUri
 	} ).then( ( res ) => {
 		// check the status
 		assert.status( res, 200 );

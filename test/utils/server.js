@@ -35,7 +35,7 @@ class TestServiceTemplateNodeRunner extends TestRunner {
 					uri,
 					service: myService,
 					conf: this._runner._impl.config,
-					spec: this._spec,
+					spec: this._spec
 				} ) );
 		}
 
@@ -43,7 +43,7 @@ class TestServiceTemplateNodeRunner extends TestRunner {
 			uri,
 			service: myService,
 			conf: this._runner._impl.config,
-			spec: this._spec,
+			spec: this._spec
 		};
 	}
 }

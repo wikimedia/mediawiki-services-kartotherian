@@ -20,7 +20,7 @@ router.get( '/', ( req, res ) => {
 		name: app.info.name,
 		version: app.info.version,
 		description: app.info.description,
-		home: app.info.homepage,
+		home: app.info.homepage
 	} );
 } );
 
@@ -64,6 +64,6 @@ module.exports = function info( appObj ) {
 	return {
 		path: '/_info',
 		skip_domain: true,
-		router,
+		router
 	};
 };

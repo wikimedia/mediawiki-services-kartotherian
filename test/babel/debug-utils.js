@@ -8,7 +8,7 @@ const toBuffer = require( 'typedarray-to-buffer' );
 // Enhance debugging
 Promise.config( {
 	warnings: true,
-	longStackTraces: true,
+	longStackTraces: true
 } );
 
 /**

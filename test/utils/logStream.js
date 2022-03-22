@@ -6,7 +6,7 @@ function logStream( logStdout ) {
 	const log = [];
 	const parrot = bunyan.createLogger( {
 		name: 'test-logger',
-		level: 'warn',
+		level: 'warn'
 	} );
 
 	function write( chunk /* encoding, callback */ ) {
@@ -50,7 +50,7 @@ function logStream( logStdout ) {
 
 		return {
 			halt,
-			get2,
+			get2
 		};
 	}
 
@@ -58,7 +58,7 @@ function logStream( logStdout ) {
 		write,
 		end,
 		slice,
-		get,
+		get
 	};
 }
 

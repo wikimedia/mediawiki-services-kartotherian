@@ -31,8 +31,8 @@ describe( 'PBF round-trip', () => {
 						geometry: [ 9, 7914, 8074, 10, 98, 344 ],
 						id: 1,
 						tags: [ 0, 0, 1, 1, 2, 2, 3, 3 ],
-						type: 2,
-					},
+						type: 2
+					}
 				],
 				keys: [ 'brunnel', 'class', 'layer', 'osm_id' ],
 				name: 'transport',
@@ -41,11 +41,11 @@ describe( 'PBF round-trip', () => {
 					{ tag: 1, value: 'tunnel' },
 					{ tag: 1, value: 'path' },
 					{ tag: 4, value: -1 },
-					{ tag: 4, value: 25024894 },
+					{ tag: 4, value: 25024894 }
 				],
-				extent: 4096,
-			},
-		],
+				extent: 4096
+			}
+		]
 	} ) );
 
 	it( 'simple', () => test( '01-simple', {
@@ -54,14 +54,14 @@ describe( 'PBF round-trip', () => {
 				type: 3,
 				geometry: [ 9, 6, 8448, 26, 261, 0, 0, 8453, 262, 0, 15 ],
 				id: 1,
-				tags: [ 0, 0 ],
+				tags: [ 0, 0 ]
 			} ],
 			keys: [ 'osm_id' ],
 			values: [ { tag: 4, value: 0 } ],
 			version: 2,
 			name: 'water',
-			extent: 4096,
-		} ],
+			extent: 4096
+		} ]
 	} ) );
 
 	it( 'multilingual', () => test( '02-multilingual', {
@@ -72,8 +72,8 @@ describe( 'PBF round-trip', () => {
 						type: 1,
 						id: 5,
 						tags: [ 0, 0, 1, 1, 2, 2 ],
-						geometry: [ 9, 1599, 4288 ],
-					},
+						geometry: [ 9, 1599, 4288 ]
+					}
 				],
 				keys: [ 'class', 'name', 'name_' ],
 				values: [
@@ -81,13 +81,13 @@ describe( 'PBF round-trip', () => {
 					{ tag: 1, value: 'Vancouver' },
 					{
 						tag: 1,
-						value: '{"ar": "فانكوفر", "bn": "বাংকূবর", "en": "Vancouver", "hi": "वांकूवर", "ja": "バンクーバー", "kn": "ವಾಂಕೂವರ್", "ru": "Ванкувер", "uk": "Ванкувер"}',
-					},
+						value: '{"ar": "فانكوفر", "bn": "বাংকূবর", "en": "Vancouver", "hi": "वांकूवर", "ja": "バンクーバー", "kn": "ವಾಂಕೂವರ್", "ru": "Ванкувер", "uk": "Ванкувер"}'
+					}
 				],
 				version: 2,
 				name: 'place',
-				extent: 4096,
-			},
-		],
+				extent: 4096
+			}
+		]
 	} ) );
 } );

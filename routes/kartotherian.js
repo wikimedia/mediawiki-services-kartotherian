@@ -13,7 +13,7 @@ function startup( app ) {
 		return server.init( {
 			core,
 			app,
-			requestHandlers: app.conf.requestHandlers.map( ( rh ) => require( rh ) ),
+			requestHandlers: app.conf.requestHandlers.map( ( rh ) => require( rh ) )
 		} );
 	} ).return(); // avoid app.js's default route initialization
 }

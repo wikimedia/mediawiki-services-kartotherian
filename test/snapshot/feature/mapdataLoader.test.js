@@ -14,9 +14,9 @@ describe( 'mapdataLoader', () => {
 		const mapdata = {
 			type: 'Feature',
 			properties: {
-				'marker-color': 'f00',
+				'marker-color': 'f00'
 			},
-			geometry: { type: 'Point', coordinates: [ 0, 0 ] },
+			geometry: { type: 'Point', coordinates: [ 0, 0 ] }
 		};
 		const expectedRequest = {
 			action: 'query',
@@ -24,7 +24,7 @@ describe( 'mapdataLoader', () => {
 			mpdlimit: 'max',
 			mpdgroups: groupId,
 			prop: 'mapdata',
-			revids: true,
+			revids: true
 		};
 		const mockResponse = {
 			query: {
@@ -33,11 +33,11 @@ describe( 'mapdataLoader', () => {
 						pageid: pageId,
 						title: pageTitle,
 						mapdata: JSON.stringify( {
-							[ groupId ]: [ mapdata ],
-						} ),
-					},
-				],
-			},
+							[ groupId ]: [ mapdata ]
+						} )
+					}
+				]
+			}
 		};
 		// TODO: Could also test mwapi wiring in only one case, otherwise stash the
 		// mock response in clientData.
@@ -60,13 +60,13 @@ describe( 'mapdataLoader', () => {
 					{
 						pageid: pageId,
 						title: pageTitle,
-						missing: true,
-					},
-				],
-			},
+						missing: true
+					}
+				]
+			}
 		};
 		mockMWApi.prototype.execute = jest.fn( () => ( {
-			then: jest.fn( ( cb ) => cb( mockResponse ) ),
+			then: jest.fn( ( cb ) => cb( mockResponse ) )
 		} ) );
 		const req = { logger: { log: jest.fn() } };
 
@@ -80,7 +80,7 @@ describe( 'mapdataLoader', () => {
 		const error = 'mwapi-test-error';
 		const req = { logger: { log: jest.fn() } };
 		mockMWApi.prototype.execute = jest.fn( () => ( {
-			then: jest.fn( () => { throw new Error( error ); } ),
+			then: jest.fn( () => { throw new Error( error ); } )
 		} ) );
 
 		expect( () => mapdataLoader( req, 'https', 'api.test', pageTitle, true, groupId ) )
@@ -96,14 +96,14 @@ describe( 'mapdataLoader', () => {
 						pageid: pageId,
 						title: pageTitle,
 						mapdata: JSON.stringify( {
-							[ groupId ]: [ null ],
-						} ),
-					},
-				],
-			},
+							[ groupId ]: [ null ]
+						} )
+					}
+				]
+			}
 		};
 		mockMWApi.prototype.execute = jest.fn( () => ( {
-			then: jest.fn( ( cb ) => cb( mockResponse ) ),
+			then: jest.fn( ( cb ) => cb( mockResponse ) )
 		} ) );
 
 		expect( () => mapdataLoader( null, 'https', 'api.test', pageTitle, true, groupId ) )

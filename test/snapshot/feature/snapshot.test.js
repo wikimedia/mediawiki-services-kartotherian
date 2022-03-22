@@ -8,7 +8,7 @@ const MWApi = require( 'mwapi' );
 
 const mwapiExecute = jest.fn();
 MWApi.mockImplementation( () => ( {
-	execute: mwapiExecute,
+	execute: mwapiExecute
 } ) );
 
 const callSnapshot = require( '../utils/callSnapshot' );
@@ -19,7 +19,7 @@ const unversionedRequest = {
 	mpdgroups: 'a|b',
 	mpdlimit: 'max',
 	prop: 'mapdata',
-	titles: 'Example',
+	titles: 'Example'
 };
 
 const versionedRequest = {
@@ -28,7 +28,7 @@ const versionedRequest = {
 	mpdgroups: 'a|b',
 	mpdlimit: 'max',
 	prop: 'mapdata',
-	revids: '123',
+	revids: '123'
 };
 
 beforeEach( () => mwapiExecute.mockClear() );

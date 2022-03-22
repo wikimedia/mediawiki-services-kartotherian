@@ -53,13 +53,13 @@ function constructTestCase( title, path, method, request, response ) {
 			headers: request.headers || {},
 			query: request.query,
 			body: request.body,
-			followRedirect: false,
+			followRedirect: false
 		},
 		response: {
 			status: response.status || 200,
 			headers: response.headers || {},
-			body: response.body,
-		},
+			body: response.body
+		}
 	};
 }
 
@@ -94,7 +94,7 @@ function constructTests( appSpec ) {
 							{},
 							defParams,
 							ex.request.params || {}
-						),
+						)
 					} ),
 					method,
 					ex.request,
@@ -172,7 +172,7 @@ function validateArray( val, resVal, key ) {
 		// fill the expected array with as many items as the returned one
 		if ( resVal.length < 1 ) {
 			throw new assert.AssertionError( {
-				message: `Expected more then one element in the field: ${key}`,
+				message: `Expected more then one element in the field: ${key}`
 			} );
 		}
 		arrVal = [];

@@ -12,7 +12,7 @@ describe( 'express app', () => {
 	afterAll( () => server.stop() );
 
 	it( 'should get robots.txt', () => preq.get( {
-		uri: `${server.config.uri}robots.txt`,
+		uri: `${server.config.uri}robots.txt`
 	}, 20000 ).then( ( res ) => {
 		assert.deepEqual( res.status, 200 );
 		assert.deepEqual( res.headers.disallow, '/' );
@@ -23,7 +23,7 @@ describe( 'express app', () => {
 			return true;
 		}
 		return preq.get( {
-			uri: `${server.config.uri}robots.txt`,
+			uri: `${server.config.uri}robots.txt`
 		} ).then( ( res ) => {
 			assert.deepEqual( res.status, 200 );
 			assert.deepEqual( res.headers[ 'access-control-allow-origin' ], '*' );
@@ -33,7 +33,7 @@ describe( 'express app', () => {
 	}, 20000 );
 
 	it( 'should set CSP headers', () => preq.get( {
-		uri: `${server.config.uri}robots.txt`,
+		uri: `${server.config.uri}robots.txt`
 	} ).then( ( res ) => {
 		const cspHeader = "default-src 'self'; object-src 'none'; media-src 'none'; style-src 'self'; script-src 'self'; frame-ancestors 'self'";
 		assert.deepEqual( res.status, 200 );
@@ -48,9 +48,9 @@ describe( 'express app', () => {
 	it( 'should get static content gzipped', () => rp( {
 		uri: `${server.config.uri}index.html`,
 		headers: {
-			'accept-encoding': 'gzip, deflate',
+			'accept-encoding': 'gzip, deflate'
 		},
-		resolveWithFullResponse: true,
+		resolveWithFullResponse: true
 	}, 20000 ).then( ( res ) => {
 		// check that the response is gzip-ed
 		assert.deepEqual( res.headers[ 'content-encoding' ], 'gzip', 'Expected gzipped contents!' );
@@ -59,9 +59,9 @@ describe( 'express app', () => {
 	it( 'should get static content uncompressed', () => rp( {
 		uri: `${server.config.uri}index.html`,
 		headers: {
-			'accept-encoding': '',
+			'accept-encoding': ''
 		},
-		resolveWithFullResponse: true,
+		resolveWithFullResponse: true
 	}, 20000 ).then( ( res ) => {
 		// check that the response is gzip-ed
 		assert.deepEqual( res.headers[ 'content-encoding' ], undefined, 'Did not expect gzipped contents!' );

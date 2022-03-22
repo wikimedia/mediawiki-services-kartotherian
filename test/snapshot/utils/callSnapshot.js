@@ -5,9 +5,9 @@ module.exports = ( additionalConfig, additionalQueryParams ) =>
 		const core = {
 			getConfiguration: () => ( {
 				allowedDomains: {
-					http: [ 'localhost' ],
+					http: [ 'localhost' ]
 				},
-				...additionalConfig,
+				...additionalConfig
 			} ),
 			getPublicSource() {
 				return {
@@ -15,12 +15,12 @@ module.exports = ( additionalConfig, additionalQueryParams ) =>
 					getHandler: jest.fn(),
 					maxwidth: 9999,
 					maxheight: 9999,
-					static: true,
+					static: true
 				};
 			},
 			reportRequestError: ( err ) => { throw err; },
 			validateScale: () => true,
-			Sources: [],
+			Sources: []
 		};
 		const router = {
 			get: ( route, handler ) => {
@@ -29,14 +29,14 @@ module.exports = ( additionalConfig, additionalQueryParams ) =>
 					params: {
 						format: 'png',
 						h: 100,
-						w: 100,
+						w: 100
 					},
 					query: {
 						domain: 'localhost',
 						groups: 'a,b',
 						title: 'Example',
-						...additionalQueryParams,
-					},
+						...additionalQueryParams
+					}
 				};
 				// TODO: catch and log errors from res
 				const res = jest.fn();
@@ -44,7 +44,7 @@ module.exports = ( additionalConfig, additionalQueryParams ) =>
 				handler( req, res, next ).then( () => {
 					resolve( [ req, res, next ] );
 				} );
-			},
+			}
 		};
 		snapshotSetup( core, router );
 	} );

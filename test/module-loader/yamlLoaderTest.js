@@ -25,25 +25,25 @@ function yaml( opts ) {
 					Datasource: {
 						dbname: 'gis',
 						host: '',
-						type: 'postgis',
-					},
+						type: 'postgis'
+					}
 				},
 				{
 					id: 'other_layer',
 					Datasource: {
 						host: '',
-						type: 'postgis',
-					},
-				},
-			],
+						type: 'postgis'
+					}
+				}
+			]
 		},
 		tmstyle: {
 			description: 'sample tmstyle yaml',
 			layers: [
 				'landuse',
-				'other_layer',
-			],
-		},
+				'other_layer'
+			]
+		}
 	};
 
 	return docs[ options.format ];
@@ -58,14 +58,14 @@ describe( 'yamlLoader', () => {
 			if: {
 				dbname: 'gis',
 				host: '',
-				type: 'postgis',
+				type: 'postgis'
 			},
 			set: {
 				host: 'localhost',
 				user: 'username',
-				password: 'password',
-			},
-		},
+				password: 'password'
+			}
+		}
 	}, {
 		description: 'sample tmsource yaml',
 		Layer: [
@@ -76,24 +76,24 @@ describe( 'yamlLoader', () => {
 					host: 'localhost',
 					type: 'postgis',
 					user: 'username',
-					password: 'password',
-				},
+					password: 'password'
+				}
 			},
 			{
 				id: 'other_layer',
 				Datasource: {
 					host: '',
-					type: 'postgis',
-				},
-			},
-		],
+					type: 'postgis'
+				}
+			}
+		]
 	} ) );
 
 	it( 'yamlSetParams', test( {
 		yaml: yaml(),
 		yamlSetParams: {
-			source: 'osm-pbf',
-		},
+			source: 'osm-pbf'
+		}
 	}, {
 		description: 'sample tmsource yaml',
 		Layer: [
@@ -102,23 +102,23 @@ describe( 'yamlLoader', () => {
 				Datasource: {
 					dbname: 'gis',
 					host: '',
-					type: 'postgis',
-				},
+					type: 'postgis'
+				}
 			},
 			{
 				id: 'other_layer',
 				Datasource: {
 					host: '',
-					type: 'postgis',
-				},
-			},
+					type: 'postgis'
+				}
+			}
 		],
-		source: 'osm-pbf',
+		source: 'osm-pbf'
 	} ) );
 
 	it( 'yamlLayers (tmsource)', test( {
 		yaml: yaml(),
-		yamlLayers: [ 'other_layer' ],
+		yamlLayers: [ 'other_layer' ]
 	}, {
 		description: 'sample tmsource yaml',
 		Layer: [
@@ -126,24 +126,24 @@ describe( 'yamlLoader', () => {
 				id: 'other_layer',
 				Datasource: {
 					host: '',
-					type: 'postgis',
-				},
-			},
-		],
+					type: 'postgis'
+				}
+			}
+		]
 	} ) );
 
 	it( 'yamlLayers (tmstyle)', test( {
 		uri: 'tmstyle://',
 		yaml: yaml( { format: 'tmstyle' } ),
-		yamlLayers: [ 'other_layer' ],
+		yamlLayers: [ 'other_layer' ]
 	}, {
 		description: 'sample tmstyle yaml',
-		layers: [ 'other_layer' ],
+		layers: [ 'other_layer' ]
 	} ) );
 
 	it( 'yamlExceptLayers (tmsource)', test( {
 		yaml: yaml(),
-		yamlExceptLayers: [ 'other_layer' ],
+		yamlExceptLayers: [ 'other_layer' ]
 	}, {
 		description: 'sample tmsource yaml',
 		Layer: [
@@ -152,18 +152,18 @@ describe( 'yamlLoader', () => {
 				Datasource: {
 					dbname: 'gis',
 					host: '',
-					type: 'postgis',
-				},
-			},
-		],
+					type: 'postgis'
+				}
+			}
+		]
 	} ) );
 
 	it( 'yamlExceptLayers (tmstyle)', test( {
 		uri: 'tmstyle://',
 		yaml: yaml( { format: 'tmstyle' } ),
-		yamlExceptLayers: [ 'other_layer' ],
+		yamlExceptLayers: [ 'other_layer' ]
 	}, {
 		description: 'sample tmstyle yaml',
-		layers: [ 'landuse' ],
+		layers: [ 'landuse' ]
 	} ) );
 } );
