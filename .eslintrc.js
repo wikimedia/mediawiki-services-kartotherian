@@ -11,9 +11,6 @@ module.exports = {
 		'max-statements-per-line': [ 'error', { max: 2 } ],
 		camelcase: 'off',
 
-		'jsdoc/require-returns': 'off',
-		'jsdoc/no-undefined-types': 'off',
-		'jsdoc/check-param-names': 'off',
-		'jsdoc/require-param-type': 'off'
+		'jsdoc/no-undefined-types': 'off'
 	}
 };
