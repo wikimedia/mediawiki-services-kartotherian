@@ -16,7 +16,8 @@ Promise.config( {
 /**
  * Helper function to sort JSON objects recursivelly by key
  *
- * @param obj
+ * @param {*} obj
+ * @return {*}
  */
 function sorter( obj ) {
 	if ( Array.isArray( obj ) ) {
