@@ -23,12 +23,12 @@ describe( 'constructor', () => {
 } );
 
 describe( 'runWikidataQuery', () => {
-	test( 'ignores IDs request', () => {
+	test( 'ignores IDs request', async () => {
 		const shape = new GeoShapes( 'geoshape', { ids: 'Q123' }, {} );
-		expect( shape._runWikidataQuery() ).toBe( undefined );
+		expect( await shape._runWikidataQuery() ).toStrictEqual( {} );
 	} );
 
-	test( 'makes sparql query', () => {
+	test( 'makes sparql query', async () => {
 		const uri = 'https://wdqs.test';
 		const sparqlQuery = 'SELECT $1~ $2.csv $3';
 		const preqResult = {
@@ -56,12 +56,14 @@ describe( 'runWikidataQuery', () => {
 		const returnedPromise = {
 			then: jest.fn( ( result ) => {
 				result( preqResult );
-				expect( shape.ids ).toStrictEqual( [ 'Q321' ] );
 			} )
 		};
 		mockPreq.get = jest.fn( () => returnedPromise );
 
-		shape._runWikidataQuery( '127.0.0.1' );
+		const result = await shape._runWikidataQuery( '127.0.0.1' );
+		expect( result ).toStrictEqual( {
+			Q321: { fill: { type: 'literal', value: '#f00' } } }
+		);
 
 		expect( returnedPromise.then ).toHaveBeenCalled();
 		expect( mockPreq.get ).toHaveBeenCalledWith( {
@@ -72,37 +74,38 @@ describe( 'runWikidataQuery', () => {
 			},
 			headers: { 'X-Test': 'yes', 'X-Client-IP': '127.0.0.1' }
 		} );
-		expect( shape.rawProperties ).toStrictEqual( { Q321: { fill: { type: 'literal', value: '#f00' } } } );
 	} );
 } );
 
 describe( 'runSqlQuery', () => {
-	test( 'ignores sparql query', () => {
+	test( 'ignores sparql query', async () => {
 		const shape = new GeoShapes( 'geoshape', { query: 'dummy' }, { wikidataQueryService: true } );
-		expect( shape._runSqlQuery() ).toBe( undefined );
+		expect( await shape._runSqlQuery( [] ) ).toStrictEqual( [] );
 	} );
 
-	test( 'formats query', () => {
+	test( 'formats query', async () => {
 		const dummyRows = [ 'rows' ];
 		const returnedPromise = {
 			then: jest.fn( ( cb ) => cb( dummyRows ) )
 		};
 		const mockDb = { query: jest.fn( () => returnedPromise ) };
 		const sqlQuery = 'SELECT $1~ $2:csv $3';
+		const ids = [ 'Q123', 'Q456' ];
 		const shape = new GeoShapes(
 			'geoshape',
-			{ ids: 'Q123,Q456' },
+			{ query: 'dummy' },
 			{
 				db: mockDb,
 				polygonTable: 'polys',
-				queries: { default: { sql: sqlQuery } }
+				queries: { default: { sql: sqlQuery } },
+				wikidataQueryService: true
 			}
 		);
 
-		shape._runSqlQuery();
+		const geoRows = await shape._runSqlQuery( ids );
 
-		expect( mockDb.query ).toHaveBeenCalledWith( sqlQuery, [ 'polys', [ 'Q123', 'Q456' ] ] );
-		expect( shape.geoRows ).toStrictEqual( dummyRows );
+		expect( mockDb.query ).toHaveBeenCalledWith( sqlQuery, [ 'polys', ids ] );
+		expect( geoRows ).toStrictEqual( dummyRows );
 	} );
 } );
 
@@ -110,11 +113,11 @@ describe( 'expandProperties', () => {
 	test( 'handles empty list', () => {
 		const shape = new GeoShapes( 'geoshape', { ids: 'Q123' }, {} );
 		mockPreq.post = jest.fn();
-		shape._expandProperties();
+		shape._expandProperties( {} );
 		expect( mockPreq.post ).not.toHaveBeenCalled();
 	} );
 
-	test( 'maps and posts', () => {
+	test( 'maps and posts', async () => {
 		const basicProperties = [ {
 			type: 'Feature',
 			id: 'Q123',
@@ -136,13 +139,11 @@ describe( 'expandProperties', () => {
 				}
 			}
 		};
-		const returnedPromise = {
-			then: jest.fn( ( cb ) => cb( preqResult ) )
-		};
-		mockPreq.post = jest.fn( () => returnedPromise );
+		mockPreq.post = jest.fn( () => Promise.resolve( preqResult ) );
 		const apiUrl = 'https://api.test';
 		const shape = new GeoShapes( 'geoshape', { ids: 'Q123' }, { mwapi: apiUrl } );
-		shape.rawProperties = {
+
+		const rawProperties = {
 			Q123: {
 				fill: {
 					type: 'literal',
@@ -150,8 +151,7 @@ describe( 'expandProperties', () => {
 				}
 			}
 		};
-
-		shape._expandProperties();
+		const cleanProperties = await shape._expandProperties( rawProperties );
 
 		expect( mockPreq.post ).toHaveBeenCalledWith( {
 			formData: {
@@ -163,11 +163,9 @@ describe( 'expandProperties', () => {
 			headers: undefined,
 			uri: apiUrl
 		} );
-		expect( returnedPromise.then ).toHaveBeenCalled();
-		expect( shape.cleanProperties ).toStrictEqual( {
+		expect( cleanProperties ).toStrictEqual( {
 			Q123: basicProperties
 		} );
-		expect( shape.ids ).toStrictEqual( [ 'Q123' ] );
 	} );
 } );
 
@@ -175,7 +173,7 @@ describe( 'wrapResult', () => {
 	test( 'converts point to geojson', () => {
 		const shape = new GeoShapes( 'geoshape', { query: 'dummy' }, { wikidataQueryService: true } );
 
-		shape.geoRows = [
+		const geoRows = [
 			{
 				id: 'dummy',
 				data: JSON.stringify( {
@@ -184,7 +182,7 @@ describe( 'wrapResult', () => {
 				} )
 			}
 		];
-		const result = shape._wrapResult();
+		const result = shape._wrapResult( geoRows, {}, false );
 		const expectedResult = {
 			type: 'Topology',
 			objects: {
@@ -207,5 +205,43 @@ describe( 'wrapResult', () => {
 			bbox: [ 0, 0, 0, 0 ]
 		};
 		expect( result ).toStrictEqual( expectedResult );
+	} );
+} );
+
+describe( 'execute', () => {
+	test( 'wires functions together', async () => {
+
+		const shape = new GeoShapes(
+			'geoshape',
+			{ query: 'dummy' },
+			{ wikidataQueryService: true }
+		);
+		const rawProperties = {
+			Q321: { fill: { type: 'literal', value: '#f00' } }
+		};
+		const cleanProperties = {
+			Q321: [ {
+				type: 'Feature',
+				id: 'Q123',
+				properties: {
+					fill: '#f00'
+				},
+				geometry: { type: 'Point', coordinates: [ 0, 0 ] }
+			} ]
+		};
+		const dummyRows = [ 'dummy' ];
+		const ids = [ 'Q321' ];
+		shape._runWikidataQuery = jest.fn( () => Promise.resolve( rawProperties ) );
+		shape._runSqlQuery = jest.fn( () => Promise.resolve( dummyRows ) );
+		shape._expandProperties = jest.fn( () => Promise.resolve( cleanProperties ) );
+		shape._wrapResult = jest.fn( () => Promise.resolve() );
+
+		const clientIp = '127.0.0.1';
+		await shape.execute( clientIp );
+
+		expect( shape._runWikidataQuery ).toHaveBeenCalledWith( clientIp );
+		expect( shape._runSqlQuery ).toHaveBeenCalledWith( ids );
+		expect( shape._expandProperties ).toHaveBeenCalledWith( rawProperties );
+		expect( shape._wrapResult ).toHaveBeenCalledWith( dummyRows, cleanProperties, false );
 	} );
 } );
