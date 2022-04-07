@@ -17,7 +17,7 @@ describe( 'express app', () => {
 		uri: `${server.config.uri}robots.txt`
 	}, 20000 ).then( ( res ) => {
 		assert.deepEqual( res.status, 200 );
-		assert.deepEqual( res.headers.disallow, '/' );
+		assert.deepEqual( res.body, 'User-agent: *\nDisallow: /' );
 	} ) );
 
 	it( 'should set CORS headers', () => {
