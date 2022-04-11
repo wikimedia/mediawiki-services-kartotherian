@@ -22,8 +22,16 @@ describe( 'constructor', () => {
 	} );
 } );
 
+describe( 'createPointsSparqlQuery', () => {
+	test( 'creates an sparql query for geopoints', async () => {
+		const shape = new GeoShapes( 'geopoint', { ids: 'Q123,Q456' }, {} );
+		const expectedQuery = 'SELECT ?id ?geo WHERE { VALUES ?id { wd:Q123 wd:Q456 } ?id wdt:P625 ?geo }';
+		expect( await shape._createPointsSparqlQuery( shape.ids ) ).toStrictEqual( expectedQuery );
+	} );
+} );
+
 describe( 'runWikidataQuery', () => {
-	test( 'ignores IDs request', async () => {
+	test( 'ignores geoshape IDs request', async () => {
 		const shape = new GeoShapes( 'geoshape', { ids: 'Q123' }, {} );
 		expect( await shape._runWikidataQuery() ).toStrictEqual( {} );
 	} );
