@@ -24,7 +24,11 @@ describe( 'constructor', () => {
 
 describe( 'createPointsSparqlQuery', () => {
 	test( 'creates an sparql query for geopoints', async () => {
-		const shape = new GeoShapes( 'geopoint', { ids: 'Q123,Q456' }, {} );
+		const shape = new GeoShapes(
+			'geopoint',
+			{ ids: 'Q123,Q456' },
+			{ coordinatePredicateId: 'wdt:P625' }
+		);
 		const expectedQuery = 'SELECT ?id ?geo WHERE { VALUES ?id { wd:Q123 wd:Q456 } ?id wdt:P625 ?geo }';
 		expect( await shape._createPointsSparqlQuery( shape.ids ) ).toStrictEqual( expectedQuery );
 	} );
