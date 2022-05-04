@@ -130,14 +130,40 @@ describe( 'expandProperties', () => {
 	} );
 
 	test( 'maps and posts', async () => {
-		const basicProperties = [ {
+		const rawProperties = {
+			Q123: {
+				id: 'Q123',
+				fill: {
+					type: 'literal',
+					value: '#f00'
+				},
+				'marker-symbol': {
+					type: 'literal',
+					value: '-letter'
+				}
+			}
+		};
+		const rawGeoJsonWithFakeGeometry = [ {
 			type: 'Feature',
 			id: 'Q123',
 			properties: {
-				fill: '#f00'
+				fill: '#f00',
+				'marker-symbol': '-letter'
 			},
 			geometry: { type: 'Point', coordinates: [ 0, 0 ] }
 		} ];
+		const sanitizedProperties = {
+			type: 'Feature',
+			id: 'Q123',
+			properties: {
+				fill: '#f00',
+				'marker-symbol': 'a'
+			},
+			geometry: { type: 'Point', coordinates: [ 0, 0 ] }
+		};
+		const expectedProperties = {
+			Q123: sanitizedProperties
+		};
 		const preqResult = {
 			headers: {
 				'content-type': 'application/sparql-results+json'
@@ -146,7 +172,7 @@ describe( 'expandProperties', () => {
 				'sanitize-mapdata': {
 					sanitized: JSON.stringify( [ {
 						id: 'Q123',
-						properties: basicProperties
+						properties: sanitizedProperties
 					} ] )
 				}
 			}
@@ -155,14 +181,6 @@ describe( 'expandProperties', () => {
 		const apiUrl = 'https://api.test';
 		const shape = new GeoShapes( 'geoshape', { ids: 'Q123' }, { mwapi: apiUrl } );
 
-		const rawProperties = {
-			Q123: {
-				fill: {
-					type: 'literal',
-					value: '#f00'
-				}
-			}
-		};
 		const cleanProperties = await shape._expandProperties( rawProperties );
 
 		expect( mockPreq.post ).toHaveBeenCalledWith( {
@@ -170,14 +188,12 @@ describe( 'expandProperties', () => {
 				action: 'sanitize-mapdata',
 				format: 'json',
 				formatversion: 2,
-				text: JSON.stringify( basicProperties )
+				text: JSON.stringify( rawGeoJsonWithFakeGeometry )
 			},
 			headers: undefined,
 			uri: apiUrl
 		} );
-		expect( cleanProperties ).toStrictEqual( {
-			Q123: basicProperties
-		} );
+		expect( cleanProperties ).toStrictEqual( expectedProperties );
 	} );
 } );
 
@@ -239,10 +255,7 @@ describe( 'wrapResult', () => {
 					type: 'Feature',
 					geometry: {
 						type: 'Point',
-						coordinates: [
-							1,
-							2
-						]
+						coordinates: [ 1, 2 ]
 					},
 					id: 'dummy',
 					properties: {}
