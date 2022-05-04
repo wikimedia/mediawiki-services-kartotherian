@@ -88,6 +88,77 @@ describe( 'runWikidataQuery', () => {
 			headers: { 'X-Test': 'yes', 'X-Client-IP': '127.0.0.1' }
 		} );
 	} );
+
+	test( 'handle multiple points for an entity', async () => {
+		const preqResult = {
+			headers: {
+				'content-type': 'application/sparql-results+json'
+			},
+			body: {
+				results: {
+					bindings: [
+						{
+							id: {
+								type: 'uri',
+								value: 'http://www.wikidata.org/entity/Q321'
+							},
+							geo: {
+								type: 'literal',
+								datatype: 'http://www.opengis.net/ont/geosparql#wktLiteral',
+								value: 'Point(12.34 56.78)'
+							}
+						},
+						{
+							id: {
+								type: 'uri',
+								value: 'http://www.wikidata.org/entity/Q321'
+							},
+							geo: {
+								type: 'literal',
+								datatype: 'http://www.opengis.net/ont/geosparql#wktLiteral',
+								value: 'Point(43.21 98.76)'
+							}
+						}
+					]
+				}
+			}
+		};
+		const shape = new GeoShapes( 'geopoint', { query: 'dummy' }, { sparqlHeaders: {}, wikidataQueryService: true } );
+		const returnedPromise = {
+			then: jest.fn( ( result ) => {
+				result( preqResult );
+			} )
+		};
+		mockPreq.get = jest.fn( () => returnedPromise );
+
+		const result = await shape._runWikidataQuery( 'geopoint', undefined, [ 'Q321' ] );
+		expect( result ).toStrictEqual( [
+			{
+				id: 'Q321',
+				coordinate: [
+					12.34,
+					56.78
+				],
+				geo: {
+					datatype: 'http://www.opengis.net/ont/geosparql#wktLiteral',
+					type: 'literal',
+					value: 'Point(12.34 56.78)'
+				}
+			},
+			{
+				id: 'Q321',
+				coordinate: [
+					43.21,
+					98.76
+				],
+				geo: {
+					datatype: 'http://www.opengis.net/ont/geosparql#wktLiteral',
+					type: 'literal',
+					value: 'Point(43.21 98.76)'
+				}
+			}
+		] );
+	} );
 } );
 
 describe( 'runSqlQuery', () => {
