@@ -1,4 +1,8 @@
 pipelines:
+  test:
+    blubberfile: blubber.yaml
+    stages:
+      - name: test
   kartotherian:
     blubberfile: blubber.yaml
     stages:
@@ -6,6 +10,6 @@ pipelines:
       - name: production-kartotherian
         build: production-kartotherian
         publish:
-          type: image
-          tags: [kartotherian]
+          image:
+            tags: [kartotherian]
 
