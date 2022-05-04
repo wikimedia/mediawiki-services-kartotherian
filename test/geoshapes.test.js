@@ -182,7 +182,7 @@ describe( 'expandProperties', () => {
 } );
 
 describe( 'wrapResult', () => {
-	test( 'create geojson for GeoShape', () => {
+	test( 'create topojson for GeoShape', () => {
 		const shape = new GeoShapes( 'geoshape', { query: 'dummy' }, { wikidataQueryService: true } );
 
 		const geoRows = [
@@ -215,6 +215,39 @@ describe( 'wrapResult', () => {
 			},
 			arcs: [],
 			bbox: [ 0, 0, 0, 0 ]
+		};
+		expect( result ).toStrictEqual( expectedResult );
+	} );
+
+	test( 'create geojson for GeoShape', () => {
+		const shape = new GeoShapes( 'geoshape', { query: 'dummy' }, { wikidataQueryService: true } );
+
+		const geoRows = [
+			{
+				id: 'dummy',
+				data: JSON.stringify( {
+					type: 'Point',
+					coordinates: [ 1, 2 ]
+				} )
+			}
+		];
+		const result = shape._wrapResult( geoRows, [], true );
+		const expectedResult = {
+			type: 'FeatureCollection',
+			features: [
+				{
+					type: 'Feature',
+					geometry: {
+						type: 'Point',
+						coordinates: [
+							1,
+							2
+						]
+					},
+					id: 'dummy',
+					properties: {}
+				}
+			]
 		};
 		expect( result ).toStrictEqual( expectedResult );
 	} );
