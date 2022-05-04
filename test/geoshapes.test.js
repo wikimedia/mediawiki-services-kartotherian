@@ -38,7 +38,7 @@ describe( 'createPointsSparqlQuery', () => {
 describe( 'runWikidataQuery', () => {
 	test( 'ignores geoshape IDs request', async () => {
 		const shape = new GeoShapes( 'geoshape', { ids: 'Q123' }, {} );
-		expect( await shape._runWikidataQuery( 'geoshape', undefined, [ 'Q123' ] ) ).toStrictEqual( {} );
+		expect( await shape._runWikidataQuery( 'geoshape', undefined, [ 'Q123' ] ) ).toStrictEqual( [] );
 	} );
 
 	test( 'makes sparql query', async () => {
@@ -74,9 +74,9 @@ describe( 'runWikidataQuery', () => {
 		mockPreq.get = jest.fn( () => returnedPromise );
 
 		const result = await shape._runWikidataQuery( 'geoshape', sparqlQuery, [], undefined, '127.0.0.1' );
-		expect( result ).toStrictEqual( {
-			Q321: { fill: { type: 'literal', value: '#f00' } } }
-		);
+		expect( result ).toStrictEqual( [
+			{ id: 'Q321', fill: { type: 'literal', value: '#f00' } }
+		] );
 
 		expect( returnedPromise.then ).toHaveBeenCalled();
 		expect( mockPreq.get ).toHaveBeenCalledWith( {
@@ -126,13 +126,13 @@ describe( 'expandProperties', () => {
 	test( 'handles empty list', () => {
 		const shape = new GeoShapes( 'geoshape', { ids: 'Q123' }, {} );
 		mockPreq.post = jest.fn();
-		shape._expandProperties( {} );
+		shape._expandProperties( [] );
 		expect( mockPreq.post ).not.toHaveBeenCalled();
 	} );
 
 	test( 'maps and posts', async () => {
-		const rawProperties = {
-			Q123: {
+		const rawProperties = [
+			{
 				id: 'Q123',
 				fill: {
 					type: 'literal',
@@ -143,7 +143,7 @@ describe( 'expandProperties', () => {
 					value: '-letter'
 				}
 			}
-		};
+		];
 		const rawGeoJsonWithFakeGeometry = [ {
 			type: 'Feature',
 			id: 'Q123',
@@ -162,9 +162,7 @@ describe( 'expandProperties', () => {
 			},
 			geometry: { type: 'Point', coordinates: [ 0, 0 ] }
 		};
-		const expectedProperties = {
-			Q123: sanitizedProperties
-		};
+		const expectedProperties = [ sanitizedProperties ];
 		const preqResult = {
 			headers: {
 				'content-type': 'application/sparql-results+json'
@@ -211,7 +209,7 @@ describe( 'wrapResult', () => {
 				} )
 			}
 		];
-		const result = shape._wrapResult( 'geoshape', geoRows, {}, false );
+		const result = shape._wrapResult( 'geoshape', geoRows, [], false );
 		const expectedResult = {
 			type: 'Topology',
 			objects: {
@@ -269,9 +267,9 @@ describe( 'wrapResult', () => {
 	test( 'create geojson for GeoPoint', () => {
 		const shape = new GeoShapes( 'geopoint', { query: 'dummy' }, { wikidataQueryService: true } );
 
-		const properties = {
-			Q188781: { geo: [ 34.83333333, 30.66666667 ], 'marker-color': '#800000' }
-		};
+		const properties = [
+			{ id: 'Q188781', geo: [ 34.83333333, 30.66666667 ], 'marker-color': '#800000' }
+		];
 		const result = shape._wrapResult( 'geopoint', [], properties, true );
 		const expectedResult = {
 			features: [ {
@@ -302,9 +300,9 @@ describe( 'execute', () => {
 			reqParams,
 			{ wikidataQueryService: true }
 		);
-		const rawProperties = {
-			Q321: { fill: { type: 'literal', value: '#f00' } }
-		};
+		const rawProperties = [
+			{ id: 'Q321', fill: { type: 'literal', value: '#f00' } }
+		];
 		const cleanProperties = {
 			Q321: [ {
 				type: 'Feature',
