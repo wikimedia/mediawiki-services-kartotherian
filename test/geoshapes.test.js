@@ -359,6 +359,41 @@ describe( 'wrapResult', () => {
 		};
 		expect( result ).toStrictEqual( expectedResult );
 	} );
+
+	test( 'shape property merged from mapframe', () => {
+		const shape = new GeoShapes( 'geoshape', { query: 'dummy' }, { wikidataQueryService: true } );
+
+		const geoRows = [
+			{
+				id: 'Q123',
+				data: JSON.stringify( {
+					type: 'Point',
+					coordinates: [ 1, 2 ]
+				} )
+			}
+		];
+		const properties = [
+			{ id: 'Q123', fill: '#00f' }
+		];
+		const result = shape._wrapResult( 'geoshape', geoRows, properties, true );
+		const expectedResult = {
+			type: 'FeatureCollection',
+			features: [
+				{
+					type: 'Feature',
+					geometry: {
+						type: 'Point',
+						coordinates: [ 1, 2 ]
+					},
+					id: 'Q123',
+					properties: {
+						fill: '#00f'
+					}
+				}
+			]
+		};
+		expect( result ).toStrictEqual( expectedResult );
+	} );
 } );
 
 describe( 'execute', () => {
