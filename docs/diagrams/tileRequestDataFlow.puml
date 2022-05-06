@@ -5,8 +5,8 @@ start
 maps.wikimedia.org/osm-intl/z/x/y.png;
 |#AntiqueWhite|kartotherian|
 :Receives tile request;
-:fetch data from Cassandra;
-|Cassandra DB|
+:fetch data from tile source;
+|Tegola/Swift|
 :retrieve vector-tile
 pre-generated;
 |kartotherian|
