@@ -30,14 +30,15 @@ describe( 'createPointsSparqlQuery', () => {
 			{ coordinatePredicateId: 'wdt:P625' }
 		);
 		const expectedQuery = 'SELECT ?id ?geo WHERE { VALUES ?id { wd:Q123 wd:Q456 } ?id wdt:P625 ?geo }';
-		expect( await shape._createPointsSparqlQuery( shape.ids ) ).toStrictEqual( expectedQuery );
+		expect( await shape._createPointsSparqlQuery( [ 'Q123', 'Q456' ] ) )
+			.toStrictEqual( expectedQuery );
 	} );
 } );
 
 describe( 'runWikidataQuery', () => {
 	test( 'ignores geoshape IDs request', async () => {
 		const shape = new GeoShapes( 'geoshape', { ids: 'Q123' }, {} );
-		expect( await shape._runWikidataQuery() ).toStrictEqual( {} );
+		expect( await shape._runWikidataQuery( 'geoshape', undefined, [ 'Q123' ] ) ).toStrictEqual( {} );
 	} );
 
 	test( 'makes sparql query', async () => {
@@ -72,7 +73,7 @@ describe( 'runWikidataQuery', () => {
 		};
 		mockPreq.get = jest.fn( () => returnedPromise );
 
-		const result = await shape._runWikidataQuery( '127.0.0.1' );
+		const result = await shape._runWikidataQuery( 'geoshape', sparqlQuery, [], undefined, '127.0.0.1' );
 		expect( result ).toStrictEqual( {
 			Q321: { fill: { type: 'literal', value: '#f00' } } }
 		);
@@ -92,7 +93,7 @@ describe( 'runWikidataQuery', () => {
 describe( 'runSqlQuery', () => {
 	test( 'ignores sparql query', async () => {
 		const shape = new GeoShapes( 'geoshape', { query: 'dummy' }, { wikidataQueryService: true } );
-		expect( await shape._runSqlQuery( [] ) ).toStrictEqual( [] );
+		expect( await shape._runSqlQuery( 'geoshape', [] ) ).toStrictEqual( [] );
 	} );
 
 	test( 'formats query', async () => {
@@ -114,7 +115,7 @@ describe( 'runSqlQuery', () => {
 			}
 		);
 
-		const geoRows = await shape._runSqlQuery( ids );
+		const geoRows = await shape._runSqlQuery( 'geoshape', ids );
 
 		expect( mockDb.query ).toHaveBeenCalledWith( sqlQuery, [ 'polys', ids ] );
 		expect( geoRows ).toStrictEqual( dummyRows );
@@ -210,7 +211,7 @@ describe( 'wrapResult', () => {
 				} )
 			}
 		];
-		const result = shape._wrapResult( geoRows, {}, false );
+		const result = shape._wrapResult( 'geoshape', geoRows, {}, false );
 		const expectedResult = {
 			type: 'Topology',
 			objects: {
@@ -247,7 +248,7 @@ describe( 'wrapResult', () => {
 				} )
 			}
 		];
-		const result = shape._wrapResult( geoRows, [], true );
+		const result = shape._wrapResult( 'geoshape', geoRows, [], true );
 		const expectedResult = {
 			type: 'FeatureCollection',
 			features: [
@@ -271,7 +272,7 @@ describe( 'wrapResult', () => {
 		const properties = {
 			Q188781: { geo: [ 34.83333333, 30.66666667 ], 'marker-color': '#800000' }
 		};
-		const result = shape._wrapResult( [], properties, true );
+		const result = shape._wrapResult( 'geopoint', [], properties, true );
 		const expectedResult = {
 			features: [ {
 				geometry: {
@@ -294,9 +295,11 @@ describe( 'wrapResult', () => {
 describe( 'execute', () => {
 	test( 'wires functions together', async () => {
 
+		const sparqlQuery = 'dummyQuery';
+		const reqParams = { query: sparqlQuery };
 		const shape = new GeoShapes(
 			'geoshape',
-			{ query: 'dummy' },
+			reqParams,
 			{ wikidataQueryService: true }
 		);
 		const rawProperties = {
@@ -305,15 +308,15 @@ describe( 'execute', () => {
 		const cleanProperties = {
 			Q321: [ {
 				type: 'Feature',
-				id: 'Q123',
+				id: 'Q321',
 				properties: {
 					fill: '#f00'
 				},
 				geometry: { type: 'Point', coordinates: [ 0, 0 ] }
 			} ]
 		};
+		const type = 'geoshape';
 		const dummyRows = [ 'dummy' ];
-		const ids = [ 'Q321' ];
 		shape._runWikidataQuery = jest.fn( () => Promise.resolve( rawProperties ) );
 		shape._runSqlQuery = jest.fn( () => Promise.resolve( dummyRows ) );
 		shape._expandProperties = jest.fn( () => Promise.resolve( cleanProperties ) );
@@ -323,10 +326,11 @@ describe( 'execute', () => {
 		const metrics = { endTiming: jest.fn() };
 		await shape.execute( clientIp, metrics );
 
-		expect( shape._runWikidataQuery ).toHaveBeenCalledWith( clientIp );
-		expect( shape._runSqlQuery ).toHaveBeenCalledWith( ids );
+		expect( shape._runWikidataQuery ).toHaveBeenCalledWith(
+			type, sparqlQuery, [], undefined, clientIp );
+		expect( shape._runSqlQuery ).toHaveBeenCalledWith( type, [ 'Q321' ], undefined, reqParams );
 		expect( shape._expandProperties ).toHaveBeenCalledWith( rawProperties );
-		expect( shape._wrapResult ).toHaveBeenCalledWith( dummyRows, cleanProperties, false );
+		expect( shape._wrapResult ).toHaveBeenCalledWith( type, dummyRows, cleanProperties, false );
 		expect( metrics.endTiming ).toHaveBeenCalled();
 	} );
 } );
