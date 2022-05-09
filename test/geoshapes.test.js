@@ -13,7 +13,7 @@ describe( 'constructor', () => {
 
 	test( 'handles multiple and blank IDs', () => {
 		const shape = new GeoShapes( 'geoshape', { ids: 'Q123,,Q456' }, {} );
-		expect( shape.ids ).toStrictEqual( [ 'Q123', 'Q456' ] );
+		expect( [ ...shape.ids ] ).toStrictEqual( [ 'Q123', 'Q456' ] );
 	} );
 
 	test( 'rejects non-Q-IDs', () => {
