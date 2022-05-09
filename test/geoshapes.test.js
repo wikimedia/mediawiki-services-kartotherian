@@ -320,11 +320,13 @@ describe( 'execute', () => {
 		shape._wrapResult = jest.fn( () => Promise.resolve() );
 
 		const clientIp = '127.0.0.1';
-		await shape.execute( clientIp );
+		const metrics = { endTiming: jest.fn() };
+		await shape.execute( clientIp, metrics );
 
 		expect( shape._runWikidataQuery ).toHaveBeenCalledWith( clientIp );
 		expect( shape._runSqlQuery ).toHaveBeenCalledWith( ids );
 		expect( shape._expandProperties ).toHaveBeenCalledWith( rawProperties );
 		expect( shape._wrapResult ).toHaveBeenCalledWith( dummyRows, cleanProperties, false );
+		expect( metrics.endTiming ).toHaveBeenCalled();
 	} );
 } );
