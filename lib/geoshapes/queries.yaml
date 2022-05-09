@@ -10,6 +10,7 @@ direct:
         SELECT wikidata AS id, (ST_Dump(geometry)).geom AS geometry
         FROM $1~
         WHERE wikidata IN ($2:csv)
+          AND GeometryType(geometry) != 'POINT'
         ) combq
       GROUP BY id
     ) subq
@@ -22,6 +23,7 @@ simplify:
         SELECT wikidata AS id, (ST_Dump(geometry)).geom AS geometry
         FROM $1~
         WHERE wikidata IN ($2:csv)
+          AND GeometryType(geometry) != 'POINT'
         ) combq
       GROUP BY id
     ) subq
@@ -38,6 +40,7 @@ simplifyarea:
         SELECT wikidata AS id, (ST_Dump(geometry)).geom AS geometry
         FROM $1~
         WHERE wikidata IN ($2:csv)
+          AND GeometryType(geometry) != 'POINT'
         ) combq
       GROUP BY id
     ) subq
@@ -54,6 +57,7 @@ removerepeat:
         SELECT wikidata AS id, (ST_Dump(geometry)).geom AS geometry
         FROM $1~
         WHERE wikidata IN ($2:csv)
+          AND GeometryType(geometry) != 'POINT'
         ) combq
       GROUP BY id
     ) subq
