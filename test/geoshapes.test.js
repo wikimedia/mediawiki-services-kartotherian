@@ -5,20 +5,54 @@ const GeoShapes = require( '../lib/geoshapes/geoshapes' );
 // Intercept external services
 const mockPreq = require( 'preq' );
 
-describe( 'constructor', () => {
+describe( 'parseParams', () => {
 	test( 'errors on empty params', () => {
 		expect( () => new GeoShapes( 'geoshape', {}, {} ) )
 			.toThrowError( 'must be given' );
 	} );
 
 	test( 'handles multiple and blank IDs', () => {
-		const shape = new GeoShapes( 'geoshape', { ids: 'Q123,,Q456' }, {} );
-		expect( [ ...shape.ids ] ).toStrictEqual( [ 'Q123', 'Q456' ] );
+		const parsed = ( new GeoShapes( 'geoshape', { ids: ',' }, {} ) )._parseParams( { ids: 'Q123,,Q456' } );
+		expect( parsed.ids ).toStrictEqual( [ 'Q123', 'Q456' ] );
 	} );
 
 	test( 'rejects non-Q-IDs', () => {
-		expect( () => new GeoShapes( 'geoshape', { ids: 'A1' }, {} ) )
+		expect( () => ( new GeoShapes( 'geoshape', { ids: ',' }, {} ) )._parseParams( { ids: 'A1' } ) )
 			.toThrowError( 'Invalid' );
+	} );
+
+	test( 'happy minimal params', () => {
+		const reqParams = {
+			query: 'dummy'
+		};
+		const expectedParams = {
+			sparqlQuery: 'dummy',
+			ids: [],
+			idColumn: undefined,
+			useGeoJson: false,
+			queryName: undefined
+		};
+		expect( ( new GeoShapes( 'geoshape', { query: 'dummy' }, { wikidataQueryService: true } ) )._parseParams( reqParams ) )
+			.toStrictEqual( expectedParams );
+	} );
+
+	test( 'happy maximal params', () => {
+		const reqParams = {
+			query: 'dummy',
+			ids: 'Q123',
+			idcolumn: 'foo',
+			getgeojson: '1',
+			sql: 'test'
+		};
+		const expectedParams = {
+			sparqlQuery: 'dummy',
+			ids: [ 'Q123' ],
+			idColumn: 'foo',
+			useGeoJson: true,
+			queryName: 'test'
+		};
+		expect( ( new GeoShapes( 'geoshape', { query: 'dummy' }, { wikidataQueryService: true } ) )._parseParams( reqParams ) )
+			.toStrictEqual( expectedParams );
 	} );
 } );
 
