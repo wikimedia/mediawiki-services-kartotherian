@@ -374,16 +374,9 @@ describe( 'execute', () => {
 		const rawProperties = [
 			{ id: 'Q321', fill: { type: 'literal', value: '#f00' } }
 		];
-		const cleanProperties = {
-			Q321: [ {
-				type: 'Feature',
-				id: 'Q321',
-				properties: {
-					fill: '#f00'
-				},
-				geometry: { type: 'Point', coordinates: [ 0, 0 ] }
-			} ]
-		};
+		const cleanProperties = [
+			{ id: 'Q321', fill: '#f00' }
+		];
 		const type = 'geoshape';
 		const dummyRows = [ 'dummy' ];
 		shape._runWikidataQuery = jest.fn( () => Promise.resolve( rawProperties ) );
