@@ -66,6 +66,10 @@ services:
       # Uncomment to prevent `revid` pass-through
       # versioned_maps: false
 
+      # String appended to the User-Agent header, should give a site
+      # administrator enough information to get in contact with the authors.
+      userAgentContact: "the WMF Content Transform Team (https://www.mediawiki.org/wiki/Content_Transform_Team)"
+
       sources: sources.docker.yaml
 
       modules:
