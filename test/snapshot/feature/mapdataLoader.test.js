@@ -48,12 +48,12 @@ describe( 'mapdataLoader', () => {
 		} );
 
 		await mapdataLoader( null, 'https', 'api.test', pageTitle, true, groupId )
-			.then( ( geojson ) => {
-				expect( geojson ).toStrictEqual( mapdata );
+			.then( ( geoJSON ) => {
+				expect( geoJSON ).toStrictEqual( mapdata );
 			} );
 	} );
 
-	// Page is missing, no geojson present, or Kartographer mapdata API is disabled.
+	// Page is missing, no GeoJSON present, or Kartographer mapdata API is disabled.
 	test( 'handles missing mapdata', async () => {
 		const mockResponse = {
 			query: {
@@ -72,8 +72,8 @@ describe( 'mapdataLoader', () => {
 		const req = { logger: { log: jest.fn() } };
 
 		await mapdataLoader( req, 'https', 'api.test', pageTitle, true, groupId )
-			.then( ( geojson ) => {
-				expect( geojson ).toStrictEqual( { features: [], type: 'FeatureCollection' } );
+			.then( ( geoJSON ) => {
+				expect( geoJSON ).toStrictEqual( { features: [], type: 'FeatureCollection' } );
 			} );
 	} );
 
@@ -108,6 +108,6 @@ describe( 'mapdataLoader', () => {
 		} ) );
 
 		expect( () => mapdataLoader( null, 'https', 'api.test', pageTitle, true, groupId ) )
-			.rejects.toThrow( 'Bad geojson - unknown type object' );
+			.rejects.toThrow( 'Bad GeoJSON - unknown type object' );
 	} );
 } );

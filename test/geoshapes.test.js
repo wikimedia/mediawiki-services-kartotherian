@@ -333,7 +333,7 @@ describe( 'wrapResult', () => {
 		expect( result ).toStrictEqual( expectedResult );
 	} );
 
-	test( 'create geojson for GeoShape', () => {
+	test( 'create GeoJSON for GeoShape', () => {
 		const shape = new GeoShapes( { wikidataQueryService: true } );
 
 		const geoRows = [
@@ -363,7 +363,7 @@ describe( 'wrapResult', () => {
 		expect( result ).toStrictEqual( expectedResult );
 	} );
 
-	test( 'create geojson for GeoPoint', () => {
+	test( 'create GeoJSON for GeoPoint', () => {
 		const shape = new GeoShapes( { wikidataQueryService: true } );
 
 		const properties = [
