@@ -4,7 +4,7 @@ Kartotherian is a map tile service originally built for the [Wikimedia](https://
 
 This version supports Node.js 10+.
 
-* [Changelog](./docs/changelog.md)
+* [Changelog](./docs/CHANGELOG.md)
 * [Maps version 2 architecture and infrastructure diagrams](./docs/Architecture-v2.md)
 * [Maps infrastructure diagrams](./docs/Infra.md)
 * [Maps data flow diagrams](./docs/DataFlow.md)

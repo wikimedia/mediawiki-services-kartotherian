@@ -5,7 +5,7 @@ Changes done as part of the
 [GeoInfo focus area](https://phabricator.wikimedia.org/tag/wmde-geoinfo-focusarea/)
 by the Wikimedia Deutschland Technical Wishes team.
 
-### User-facing
+#### User-facing
 * [T293844](https://phabricator.wikimedia.org/T293844): Added revision support
   specifically to support WMF wikis with the
   [Flagged Revisions extension](https://www.mediawiki.org/wiki/Extension:FlaggedRevs)
@@ -23,7 +23,7 @@ by the Wikimedia Deutschland Technical Wishes team.
 * [T292613](https://phabricator.wikimedia.org/T292613): Filter out points from
   geoshape and geoline query
 
-### Technical
+#### Technical
 * [T262523](https://phabricator.wikimedia.org/T262523): The Kartotherian
   codebase is now a monolith that contains many of the libraries that have been
   hosted in separate code repositories before.
