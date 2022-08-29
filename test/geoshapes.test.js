@@ -200,7 +200,7 @@ describe( 'runSqlQuery', () => {
 	test( 'formats query', async () => {
 		const dummyRows = [ 'rows' ];
 		const returnedPromise = {
-			then: jest.fn( ( cb ) => cb( dummyRows ) )
+			catch: jest.fn( () => dummyRows )
 		};
 		const mockDb = { query: jest.fn( () => returnedPromise ) };
 		const sqlQuery = 'SELECT $1~ $2:csv $3';
