@@ -47,7 +47,7 @@ describe( 'mapdataLoader', () => {
 			return { then: jest.fn( ( cb ) => cb( mockResponse ) ) };
 		} );
 
-		await mapdataLoader( null, 'https', 'api.test', pageTitle, true, groupId )
+		await mapdataLoader( {}, 'https', 'api.test', pageTitle, true, groupId )
 			.then( ( geoJSON ) => {
 				expect( geoJSON ).toStrictEqual( mapdata );
 			} );
@@ -107,7 +107,7 @@ describe( 'mapdataLoader', () => {
 			then: jest.fn( ( cb ) => cb( mockResponse ) )
 		} ) );
 
-		expect( () => mapdataLoader( null, 'https', 'api.test', pageTitle, true, groupId ) )
+		expect( () => mapdataLoader( {}, 'https', 'api.test', pageTitle, true, groupId ) )
 			.rejects.toThrow( 'Bad GeoJSON - unknown type object' );
 	} );
 } );
