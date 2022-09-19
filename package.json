@@ -50,7 +50,7 @@
 		"@mapbox/tilelive": "~5.12.2",
 		"@turf/bbox": "^6.5.0",
 		"@wikimedia/kartotherian-tilelive-switch": "0.0.1",
-		"@wikimedia/mapdata": "^0.7.1",
+		"@wikimedia/mapdata": "^0.7.2",
 		"bluebird": "^3.5.1",
 		"body-parser": "^1.17.1",
 		"browserify": "^16.2.2",
