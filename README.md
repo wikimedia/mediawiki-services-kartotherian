@@ -454,3 +454,21 @@ In a lot of cases when there is an issue with node it helps to recreate the
 rm -r node_modules
 npm install
 ```
+
+# Metrics
+
+Kartotherian emits StatsD metrics, under the following keys:
+
+`kartotherian.req.<src>.<zoom>.<format>.static.<scale>` - timing metric for successful snapshot request.  The parameters correspond to the URL parameters, for example `https://maps.wikimedia.org/img/osm-intl,6,53.383333,-1.466667,300x400.png` has `src`="osm-intl", `zoom`="6", and `format`="png".
+
+`kartotherian.req.<src>.<zoom>.<format>[.<scale>]` - timing metric for a tile request.
+
+`kartotherian.req.<src>.info` - timing metric for info.json request.
+
+`kartotherian.marker` - timing metric for serving a single Maki marker icon, which will be embedded in an interactive view.  Example request `https://maps.wikimedia.org/v4/marker/pin-m-museum+a6a6a6.png`
+
+`kartotherian.<type>.<query>` - timing metric for geoshape request.  `type` can be "geoshape", "geoline", or "geopoint".  `query` is either "wdqs" for a SPARQL query, or "ids" for a local postgres lookup.
+
+`kartotherian.init` - counter incremented when the service starts up.
+
+`kartotherian.err.<error>` - counter incremented for each error that ends a request.  Timing metrics above are not incremented in case of an error.
