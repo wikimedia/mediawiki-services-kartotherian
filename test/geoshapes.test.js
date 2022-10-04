@@ -165,10 +165,6 @@ describe( 'runWikidataQuery', () => {
 		expect( result ).toStrictEqual( [
 			{
 				id: 'Q321',
-				coordinate: [
-					12.34,
-					56.78
-				],
 				geo: {
 					datatype: 'http://www.opengis.net/ont/geosparql#wktLiteral',
 					type: 'literal',
@@ -177,10 +173,6 @@ describe( 'runWikidataQuery', () => {
 			},
 			{
 				id: 'Q321',
-				coordinate: [
-					43.21,
-					98.76
-				],
 				geo: {
 					datatype: 'http://www.opengis.net/ont/geosparql#wktLiteral',
 					type: 'literal',
