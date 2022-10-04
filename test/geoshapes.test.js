@@ -422,6 +422,20 @@ describe( 'wrapResult', () => {
 		};
 		expect( result ).toStrictEqual( expectedResult );
 	} );
+
+	test( 'filter results with no coordinates', () => {
+		const shape = new GeoShapes( { wikidataQueryService: true } );
+
+		const properties = [
+			{ id: 'Q188781' }
+		];
+		const result = shape._wrapResult( 'geopoint', [], properties, true );
+		const expectedResult = {
+			features: [],
+			type: 'FeatureCollection'
+		};
+		expect( result ).toStrictEqual( expectedResult );
+	} );
 } );
 
 describe( 'execute', () => {
