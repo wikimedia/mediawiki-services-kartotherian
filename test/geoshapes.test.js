@@ -451,7 +451,7 @@ describe( 'execute', () => {
 		shape._wrapResult = jest.fn( () => Promise.resolve() );
 
 		const clientIp = '127.0.0.1';
-		const metrics = { endTiming: jest.fn() };
+		const metrics = { makeMetric: jest.fn( () => ( { endTiming: jest.fn() } ) ) };
 		await shape.execute( type, reqParams, clientIp, metrics );
 
 		expect( shape._runWikidataQuery ).toHaveBeenCalledWith(
@@ -459,6 +459,6 @@ describe( 'execute', () => {
 		expect( shape._runSqlQuery ).toHaveBeenCalledWith( type, ids, undefined, reqParams );
 		expect( shape._expandProperties ).toHaveBeenCalledWith( rawProperties );
 		expect( shape._wrapResult ).toHaveBeenCalledWith( type, dummyRows, cleanProperties, false );
-		expect( metrics.endTiming ).toHaveBeenCalled();
+		expect( metrics.makeMetric ).toHaveBeenCalled();
 	} );
 } );
