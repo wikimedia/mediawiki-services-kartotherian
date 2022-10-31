@@ -190,7 +190,7 @@ function validateArray( val, resVal, key ) {
 		} actual ${resVal.length}`
 	);
 	arrVal.forEach( ( item, index ) => {
-		// eslint-disable-next-line no-use-before-define
+
 		validateBody( resVal[ index ], item );
 	} );
 }

@@ -5,15 +5,15 @@
 		matchStyle = location.search.match( /s=([^&/]*)/ ),
 		matchScale = location.search.match( /scale=([.0-9]*)/ ),
 		bracketDevicePixelRatio = function bracketDevicePixelRatio() {
-			var i, scale,
+			var i, ratioScale,
 				brackets = [ 1, 1.3, 1.5, 2, 2.6, 3 ],
 				baseRatio = window.devicePixelRatio || 1;
 
 			for ( i = 0; i < brackets.length; i++ ) {
-				scale = brackets[ i ];
+				ratioScale = brackets[ i ];
 
-				if ( scale >= baseRatio || ( baseRatio - scale ) < 0.1 ) {
-					return scale;
+				if ( ratioScale >= baseRatio || ( baseRatio - ratioScale ) < 0.1 ) {
+					return ratioScale;
 				}
 			}
 			return brackets[ brackets.length - 1 ];

@@ -17,7 +17,7 @@ logging:
 #    port: 12201
 
 # Statsd metrics reporter
-metrics:
+# metrics:
 # type: info
 # host: localhost
 # port: 8125
@@ -77,7 +77,7 @@ services:
         - ../lib/babel
         - ../lib/overzoom
         - ../lib/substantial
-        - "@kartotherian/tilelive-vector"
+        - "@mapbox/tilelive-vector"
         - "@mapbox/tilejson"
 
       requestHandlers:

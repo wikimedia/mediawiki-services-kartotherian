@@ -79,8 +79,8 @@ services:
         - ../lib/babel
         - ../lib/overzoom
         - ../lib/substantial
-        - "@kartotherian/tilelive-tmsource"
-        - "@kartotherian/tilelive-vector"
+        - "@wikimedia/tilelive-tmsource"
+        - "@mapbox/tilelive-vector"
         - "@mapbox/tilejson"
 
       requestHandlers:
