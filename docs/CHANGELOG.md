@@ -1,9 +1,22 @@
 # Change log
 
-### As of May 2022
 Changes done as part of the
 [GeoInfo focus area](https://phabricator.wikimedia.org/tag/wmde-geoinfo-focusarea/)
 by the Wikimedia Deutschland Technical Wishes team.
+
+### As of October 2022
+
+* [T319283](https://phabricator.wikimedia.org/T319283): Ignore SPARQL results with some-value/no-value
+* [T317766](https://phabricator.wikimedia.org/T317766): Include some documentation about the StatsD metrics emitted
+* [T312913](https://phabricator.wikimedia.org/T312913): Added lots of error logging
+    * Log failing promises everywhere
+    * Log when geoshape/geoline requests return empty data
+    * Use mapdata v0.7.2 including bugfix and more logging
+* Updated libraries
+    * Use [@wikimedia/mapdata](https://www.npmjs.com/package/@wikimedia/mapdata) library version 0.7.0
+    * Use [@wikimedia/makizushi](https://www.npmjs.com/package/@wikimedia/makizushi) version 4.0.0
+
+### As of May 2022
 
 #### User-facing
 * [T293844](https://phabricator.wikimedia.org/T293844): Added revision support
