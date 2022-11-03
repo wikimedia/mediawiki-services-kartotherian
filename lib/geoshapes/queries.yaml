@@ -28,7 +28,7 @@ simplify:
       GROUP BY id
     ) subq
   params:
-    - name: 'arg1'
+    - name: arg1
       default: 10000
 # Convert geometry (in mercator) to a bbox, calc area, sqrt of that
 simplifyarea:
@@ -45,7 +45,7 @@ simplifyarea:
       GROUP BY id
     ) subq
   params:
-    - name: 'arg1'
+    - name: arg1
       default: 0.001
 
 removerepeat:
@@ -62,5 +62,5 @@ removerepeat:
       GROUP BY id
     ) subq
   params:
-    - name: 'arg1'
+    - name: arg1
       default: 10000

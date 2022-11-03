@@ -36,7 +36,7 @@ services:
       # the location of the spec, defaults to spec.yaml if not specified
       spec: ./spec.template.yaml
       # allow cross-domain requests to the API (default '*')
-      cors: '*'
+      cors: "*"
       # to disable use:
       # cors: false
       # to restrict to a particular domain, use:
@@ -73,20 +73,20 @@ services:
       sources: sources.docker.yaml
 
       modules:
-        - "tilelive-tmstyle"
-        - "tilelive-http"
-        - "../lib/autogen"
-        - "../lib/babel"
-        - "../lib/overzoom"
-        - "../lib/substantial"
+        - tilelive-tmstyle
+        - tilelive-http
+        - ../lib/autogen
+        - ../lib/babel
+        - ../lib/overzoom
+        - ../lib/substantial
         - "@kartotherian/tilelive-tmsource"
         - "@kartotherian/tilelive-vector"
         - "@mapbox/tilejson"
 
       requestHandlers:
-      - "../lib/geoshapes"
-      - "../lib/maki"
-      - "../lib/snapshot"
+        - ../lib/geoshapes
+        - ../lib/maki
+        - ../lib/snapshot
 
       geoshapes:
         allowUserQueries: true
@@ -106,7 +106,7 @@ services:
         http:
           # These are common development domains, matching subdomains such as dev.wiki.local.wmftest.net
           - localhost
-          - "127.0.0.1"
+          - 127.0.0.1
           - wmflabs.org
           - wmftest.net
         https:

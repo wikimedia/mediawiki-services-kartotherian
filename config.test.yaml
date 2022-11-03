@@ -18,9 +18,9 @@ logging:
 
 # Statsd metrics reporter
 metrics:
-  #type: info
-  #host: localhost
-  #port: 8125
+# type: info
+# host: localhost
+# port: 8125
 
 services:
   - name: kartotherian
@@ -36,7 +36,7 @@ services:
       # the location of the spec, defaults to spec.yaml if not specified
       spec: ./spec.yaml
       # allow cross-domain requests to the API (default '*')
-      cors: '*'
+      cors: "*"
       # to disable use:
       # cors: false
       # to restrict to a particular domain, use:
@@ -71,28 +71,28 @@ services:
       sources: sources.test.yaml
 
       modules:
-        - "tilelive-http"
-        - "tilelive-tmstyle"
-        - "../lib/autogen"
-        - "../lib/babel"
-        - "../lib/overzoom"
-        - "../lib/substantial"
+        - tilelive-http
+        - tilelive-tmstyle
+        - ../lib/autogen
+        - ../lib/babel
+        - ../lib/overzoom
+        - ../lib/substantial
         - "@kartotherian/tilelive-vector"
         - "@mapbox/tilejson"
 
       requestHandlers:
-      - "../lib/maki"
-      - "../lib/snapshot"
+        - ../lib/maki
+        - ../lib/snapshot
 
       geoshapes:
         allowUserQueries: true
         database: gis
         host: localhost
         lineTable: wikidata_relation_members
-        password: ''
+        password: ""
         polygonTable: wikidata_relation_polygon
         table: planet_osm_polygon
-        user: ''
+        user: ""
 
       # allowedDomains:
       #   http:
