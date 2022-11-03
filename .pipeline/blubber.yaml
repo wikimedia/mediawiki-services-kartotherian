@@ -1,11 +1,12 @@
+# syntax=docker-registry.wikimedia.org/repos/releng/blubber:v0.12.1
 version: v4
-base: docker-registry.wikimedia.org/nodejs10-slim
+base: docker-registry.wikimedia.org/nodejs16-slim
 lives:
   in: /srv/service
 
 variants:
   build:
-    base: docker-registry.wikimedia.org/nodejs10-devel
+    base: docker-registry.wikimedia.org/nodejs16-slim
     apt: { packages: [
       git,
       build-essential,
@@ -31,7 +32,7 @@ variants:
       libmapnik-dev,
       mapnik-utils,
       mapnik-doc,
-      libmapnik3.0
+      libmapnik3.1
       ] }
     node: { requirements: [.] }
     copies: [local]
@@ -43,4 +44,4 @@ variants:
     includes: [build]
   production-kartotherian:
     copies: [prep]
-    entrypoint: [node, packages/kartotherian/server.js]
+    entrypoint: [node, server.js]
