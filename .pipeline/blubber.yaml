@@ -3,7 +3,9 @@ base: docker-registry.wikimedia.org/nodejs10-slim
 lives:
   in: /srv/service
 runs:
-  environment: { APP_BASE_PATH: /srv/service }
+  environment:
+    APP_BASE_PATH: /srv/service
+    ICU_DATA: /srv/service/node_modules/mapnik/lib/binding/share/icu
 
 variants:
   build:
