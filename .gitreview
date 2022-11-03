@@ -4,3 +4,4 @@ port=29418
 project=mediawiki/services/kartotherian.git
 track=1
 defaultrebase=0
+defaultbranch=mapnik-3.1
