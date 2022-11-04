@@ -4,8 +4,9 @@ Changes done as part of the
 [GeoInfo focus area](https://phabricator.wikimedia.org/tag/wmde-geoinfo-focusarea/)
 by the Wikimedia Deutschland Technical Wishes team.
 
-### As of October 2022
+### As of November 2022
 
+* [T319287](https://phabricator.wikimedia.org/T319287): Fix drawing order of markers to match front-end behavior
 * [T319283](https://phabricator.wikimedia.org/T319283): Ignore SPARQL results with some-value/no-value
 * [T317766](https://phabricator.wikimedia.org/T317766): Include some documentation about the StatsD metrics emitted
 * [T312913](https://phabricator.wikimedia.org/T312913): Added lots of error logging
