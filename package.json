@@ -67,7 +67,7 @@
 		"mapnik": "^4.5.9",
 		"mwapi": "^0.0.10",
 		"pbf": "^3.2.0",
-		"pg-promise": "^9.3.6",
+		"pg-promise": "^10.12.1",
 		"pg.js": "^4.1.1",
 		"preq": "^0.5.2",
 		"quadtile-index": "^0.0.6",
