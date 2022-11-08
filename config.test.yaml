@@ -77,7 +77,7 @@ services:
         - ../lib/babel
         - ../lib/overzoom
         - ../lib/substantial
-        - "@mapbox/tilelive-vector"
+        - "@wikimedia/tilelive-vector"
         - "@mapbox/tilejson"
 
       requestHandlers:

@@ -80,7 +80,7 @@ services:
         - ../lib/overzoom
         - ../lib/substantial
         - "@wikimedia/tilelive-tmsource"
-        - "@mapbox/tilelive-vector"
+        - "@wikimedia/tilelive-vector"
         - "@mapbox/tilejson"
 
       requestHandlers:
