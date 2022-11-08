@@ -108,6 +108,6 @@ describe( 'mapdataLoader', () => {
 		} ) );
 
 		expect( () => mapdataLoader( {}, 'https', 'api.test', pageTitle, true, groupId ) )
-			.rejects.toThrow( 'Bad GeoJSON - unknown type object' );
+			.rejects.toThrow( 'Bad GeoJSON - is null' );
 	} );
 } );
