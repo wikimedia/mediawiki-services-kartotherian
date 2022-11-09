@@ -91,13 +91,13 @@
 		"eslint-config-wikimedia": "^0.20.0",
 		"extend": "^3.0.0",
 		"jest": "^27.3.1",
-		"json-stringify-pretty-compact": "^3.0.0",
-		"openapi-schema-validator": "^3.0.3",
-		"request": "^2.85.0",
+		"json-stringify-pretty-compact": "^4.0.0",
+		"openapi-schema-validator": "^12.0.2",
+		"request": "^2.88.2",
 		"request-promise": "^4.2.2",
 		"stylelint": "^13.13.1",
 		"stylelint-config-wikimedia": "^0.11.1",
-		"swagger-router": "^0.5.6"
+		"swagger-router": "^0.7.4"
 	},
 	"deploy": {
 		"node": "10.15.2",
