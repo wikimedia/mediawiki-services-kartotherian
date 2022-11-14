@@ -48,7 +48,6 @@
 		"@mapbox/tilelive": "^6.1.1",
 		"@turf/bbox": "^6.5.0",
 		"@wikimedia/geojson-mapnikify": "^3.0.1",
-		"@wikimedia/kartotherian-tilelive-switch": "0.0.1",
 		"@wikimedia/makizushi": "4.0.0",
 		"@wikimedia/mapdata": "^0.7.2",
 		"@wikimedia/tilelive-overlay": "^2.3.0",

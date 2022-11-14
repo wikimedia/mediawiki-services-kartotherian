@@ -73,10 +73,8 @@ services:
       modules:
         - tilelive-http
         - tilelive-tmstyle
-        - ../lib/autogen
         - ../lib/babel
         - ../lib/overzoom
-        - ../lib/substantial
         - "@kartotherian/tilelive-vector"
         - "@mapbox/tilejson"
 
