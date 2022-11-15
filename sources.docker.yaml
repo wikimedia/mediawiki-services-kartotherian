@@ -34,18 +34,6 @@ beta-cluster-http-tegola:
       - id: poi_label
       - id: road_label
 
-# Mirror requests to a secondary source
-# switch:
-#  uri: mirror://
-#  params:
-#    source: {ref: genall-tegola}
-#    secondarySource: { ref: beta-cluster-http-tegola }
-#    enableMirror: true
-#    loadBalancer:
-#      bucketSize: 1000 # milliseconds
-#      totalBuckets: 10 # number of buckets in the histogram
-#      threshold: 0.5 # % of load to the mirrored source
-
 # expands name_ json blob into several name_{code} tags
 genall-tegola:
   uri: json2tags://

@@ -321,10 +321,7 @@ Optional truthy parameter `getgeojson=1` will force the result to be returned as
 
 #### Tile sources
 
-* [kartotherian-autogen](https://github.com/kartotherian/autogen) - Tile source that checks "storage" source for a tile, and if not found, gets it from the "generator" source and saves it into the "storage"
-* [kartotherian-demultiplexer](https://github.com/kartotherian/demultiplexer) - Tile source that combines multiple sources by zoom level
 * [kartotherian-overzoom](https://github.com/kartotherian/overzoom) - Tile source that will zoom out if the requested tile does not exist, and extracts the needed portion from the lower-zoom tile it finds.
-* substantial - A filtering tile source for Kartotherian map tile server that only lets through tiles that have complex data, and should be saved to a database. Tiles that only contain one layer like water could be easily extracted from lower-level zoom (overzooming).
 
 #### Data and Styling
 
