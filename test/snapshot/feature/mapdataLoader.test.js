@@ -173,17 +173,17 @@ describe( 'flattenArraysAndFeatureCollections', () => {
 		{
 			name: 'fails on unknown input',
 			input: [ 'foo' ],
-			error: 'Bad GeoJSON - unknown type \'string\''
+			error: 'Bad GeoJSON - unknown JSON type "string"'
 		},
 		{
 			name: 'fails on missing structure',
 			input: [ {} ],
-			error: 'Bad GeoJSON - object has no type'
+			error: 'Bad GeoJSON - object has no "type" property'
 		},
 		{
 			name: 'fails on bad "type"',
 			input: [ { type: 'Foo' } ],
-			error: 'Bad GeoJSON - unknown type Foo'
+			error: 'Bad GeoJSON - unknown "type" property "Foo"'
 		}
 	].forEach( ( { name, input, error } ) => {
 		test( name, () => {
