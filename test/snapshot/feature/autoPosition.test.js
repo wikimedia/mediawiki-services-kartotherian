@@ -5,7 +5,8 @@
  */
 
 const autoPosition = require( '../../../lib/snapshot/autoPosition' );
-const geoJson = require( '../fixtures/autoposition-geojson.json' );
+const geoJsonPolygon = require( '../fixtures/autoposition-geojson-polygon.json' );
+const geoJsonPoint = require( '../fixtures/autoposition-geojson-point.json' );
 
 describe( 'autoposition', () => {
 	test( 'lat, lon and zoom set as auto', async () => {
@@ -15,7 +16,7 @@ describe( 'autoposition', () => {
 			zoom: 'a',
 			w: 100,
 			h: 100
-		}, geoJson );
+		}, geoJsonPolygon );
 		expect( coordinates ).toEqual( {
 			latitude: -23.17508256414426,
 			longitude: -45.85693359375,
@@ -30,7 +31,7 @@ describe( 'autoposition', () => {
 				zoom: 7,
 				w: 100,
 				h: 100
-			}, geoJson );
+			}, geoJsonPolygon );
 			expect( coordinates ).toEqual( {
 				latitude: -23.17508256414426,
 				longitude: -45.85693359375,
@@ -45,7 +46,7 @@ describe( 'autoposition', () => {
 				zoom: 'a',
 				w: 100,
 				h: 100
-			}, geoJson );
+			}, geoJsonPolygon );
 			expect( coordinates ).toEqual( {
 				latitude: -23.17508256414426,
 				longitude: -45,
@@ -60,11 +61,41 @@ describe( 'autoposition', () => {
 				zoom: 'a',
 				w: 100,
 				h: 100
-			}, geoJson );
+			}, geoJsonPolygon );
 			expect( coordinates ).toEqual( {
 				latitude: -23,
 				longitude: -45.85693359375,
 				zoom: 8
+			} );
+		} );
+
+		test( 'for points fallback to viewport() default minzoom if not set explicitly', async () => {
+			const coordinates = autoPosition( {
+				lat: 0,
+				lon: 0,
+				zoom: 'a',
+				w: 100,
+				h: 100
+			}, geoJsonPoint );
+			expect( coordinates ).toEqual( {
+				latitude: 0,
+				longitude: 0,
+				zoom: 20
+			} );
+		} );
+
+		test( 'for points use minzoom default if set explicitly', async () => {
+			const coordinates = autoPosition( {
+				lat: 0,
+				lon: 0,
+				zoom: 'a',
+				w: 100,
+				h: 100
+			}, geoJsonPoint, 1, 19 );
+			expect( coordinates ).toEqual( {
+				latitude: 0,
+				longitude: 0,
+				zoom: 19
 			} );
 		} );
 	} );
