@@ -15,6 +15,12 @@ MWApi.mockImplementation( () => ( {
 
 const callSnapshot = require( '../utils/callSnapshot' );
 
+const overlayQueryParams = {
+	domain: 'localhost',
+	groups: 'a,b',
+	title: 'Example'
+};
+
 const unversionedRequest = {
 	action: 'query',
 	formatversion: '2',
@@ -40,36 +46,62 @@ beforeEach( () => mwapiExecute.mockClear() );
 
 describe( 'unversioned mapdata request', () => {
 	test( 'uses page title when revid parameter is absent', async () => {
-		await callSnapshot( { versioned_maps: false } );
+		await callSnapshot( { versioned_maps: false }, overlayQueryParams );
 		expect( mwapiExecute ).toHaveBeenCalledWith( unversionedRequest );
 	} );
 
 	test( 'versioned feature config doesn\'t affect legacy query', async () => {
-		await callSnapshot( { versioned_maps: true } );
+		await callSnapshot( { versioned_maps: true }, overlayQueryParams );
 		expect( mwapiExecute ).toHaveBeenCalledWith( unversionedRequest );
 	} );
 } );
 
 describe( 'versioned mapdata request', () => {
 	test( 'passes through revid parameter when versioned feature enabled', async () => {
-		await callSnapshot( { versioned_maps: true }, { revid: '123' } );
+		await callSnapshot( { versioned_maps: true }, { revid: '123', ...overlayQueryParams } );
 		expect( mwapiExecute ).toHaveBeenCalledWith( versionedRequest );
 	} );
 
 	test( 'ignores revid parameter when versioned feature disabled', async () => {
-		await callSnapshot( { versioned_maps: false }, { revid: '123' } );
+		await callSnapshot( { versioned_maps: false }, { revid: '123', ...overlayQueryParams } );
 		expect( mwapiExecute ).toHaveBeenCalledWith( unversionedRequest );
 	} );
 } );
 
 describe( 'domain handling', () => {
 	test( 'strips protocol and port before validation', async () => {
-		await callSnapshot( {}, { domain: 'http://localhost:1234' } );
+		await callSnapshot( {}, {
+			domain: 'http://localhost:1234',
+			title: 'Example',
+			groups: 'a,b'
+		} );
 		expect( mwapiExecute ).toHaveBeenCalledWith( unversionedRequest );
 	} );
 
 	test( 'rejects unknown domain', async () => {
-		await callSnapshot( {}, { domain: 'nasty.invalid' } );
+		await callSnapshot( {}, {
+			domain: 'nasty.invalid',
+			title: 'Example',
+			groups: 'a,b'
+		} );
+		expect( mwapiExecute ).not.toHaveBeenCalled();
+	} );
+} );
+
+describe( 'no overlay handling', () => {
+	test( 'does not try to get data when no domain set', async () => {
+		await callSnapshot( {}, {
+			title: 'Example',
+			groups: 'a,b'
+		} );
+		expect( mwapiExecute ).not.toHaveBeenCalled();
+	} );
+
+	test( 'does not try to get data when no title set', async () => {
+		await callSnapshot( {}, {
+			domain: 'localhost',
+			groups: 'a,b'
+		} );
 		expect( mwapiExecute ).not.toHaveBeenCalled();
 	} );
 } );
