@@ -2,7 +2,7 @@
 
 const snapshotSetup = require( '../../../lib/snapshot' );
 
-module.exports = ( additionalConfig, additionalQueryParams ) =>
+module.exports = ( additionalConfig, queryParams ) =>
 	new Promise( ( resolve ) => {
 		const core = {
 			getConfiguration: () => ( {
@@ -34,10 +34,7 @@ module.exports = ( additionalConfig, additionalQueryParams ) =>
 						w: 100
 					},
 					query: {
-						domain: 'localhost',
-						groups: 'a,b',
-						title: 'Example',
-						...additionalQueryParams
+						...queryParams
 					}
 				};
 				// TODO: catch and log errors from res
