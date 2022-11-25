@@ -97,7 +97,7 @@ services:
         user: default
         wikidataQueryService: https://query.wikidata.org/bigdata/namespace/wdq/sparql
         # temporary feature flag for geopoints
-        enableGeopoints: false
+        enableGeopoints: true
         coordinatePredicateId: wdt:P625
 
       allowedDomains:
