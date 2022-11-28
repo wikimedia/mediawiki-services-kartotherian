@@ -33,26 +33,26 @@ paths:
             status: 200
             headers:
               content-type: image/png
-  #  # Tiles handler with scaling
-  #  # /{src}/{z}/{x}/{y}@{scale}x.{format}:
-  #  /osm-intl/9/207/163@1.5x.png:
-  #    get:
-  #      tags:
-  #        - kartotherian
-  #        - maps
-  #        - maptiles
-  #      responses:
-  #       200:
-  #        description: Renders an image tile for the given source, zoom, and coordinates, with scaling.
-  #      produces:
-  #        - image/png
-  #        - application/json
-  #      x-amples:
-  #        - title: default scaled tile
-  #          response:
-  #            status: 200
-  #            headers:
-  #              content-type: image/png
+  # Tiles handler with scaling
+  # /{src}/{z}/{x}/{y}@{scale}x.{format}:
+  /osm-intl/11/828/655@1.5x.png:
+    get:
+      tags:
+        - kartotherian
+        - maps
+        - maptiles
+      responses:
+       200:
+        description: Renders an image tile for the given source, zoom, and coordinates, with scaling.
+      produces:
+        - image/png
+        - application/json
+      x-amples:
+        - title: default scaled tile
+          response:
+            status: 200
+            headers:
+              content-type: image/png
   # Source info
   # /{src}/info.json:
   /osm-intl/info.json:
@@ -129,34 +129,43 @@ paths:
           description: Renders 2x scaled pushpin marker of a given color and size withoun an icon.
       produces:
         - image/png
-  #  # Map snapshots
-  #  # /img/{src},{z},{lat},{lon},{w}x{h}@{scale}x.{format}:
-  #  /img/osm-intl,1,0.0,0.0,100x100@1.5x.png:
-  #    get:
-  #      tags:
-  #        - kartotherian
-  #        - maps
-  #        - maptiles
-  #      responses:
-  #       200:
-  #        description: Renders requested map region as a scaled image (static map snapshot)
-  #      produces:
-  #        - image/png
-  #      x-amples:
-  #        - title: Small scaled map
-  #          response:
-  #            status: 200
-  #            headers:
-  #              content-type: image/png
-  # /{src}/{z},{lat},{lon},{w}x{h}.{format}:
-  /osm-intl/1,0.0,0.0,100x100.png:
+  # Map snapshots
+  # /img/{src},{z},{lat},{lon},{w}x{h}.{format}:
+  /img/osm-intl,1,0.0,0.0,100x100.png:
     get:
+      tags:
+        - kartotherian
+        - maps
+        - maptiles
       responses:
         200:
-          description: Renders requested map region as an image
-      x-monitor: false
+          description: Renders requested map region as an image (static map snapshot)
       produces:
         - image/png
+      x-amples:
+        - title: Small stiched static map
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+  # /img/{src},{z},{lat},{lon},{w}x{h}@{scale}x.{format}:
+  /img/osm-intl,1,0.0,0.0,100x100@2x.png:
+    get:
+      tags:
+        - kartotherian
+        - maps
+        - maptiles
+      responses:
+        200:
+          description: Renders requested map region as a scaled image (static map snapshot)
+      produces:
+        - image/png
+      x-amples:
+        - title: Small stiched static map scaled
+          response:
+            status: 200
+            headers:
+              content-type: image/png
   # geoline service
   # /geoline?getgeojson=1&ids={ids}:
   /geoline?getgeojson=1&ids=Q649:

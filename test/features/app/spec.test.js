@@ -266,6 +266,8 @@ describe( 'Swagger spec', () => {
 		constructTests( spec ).forEach( ( testCase ) => {
 			it( testCase.title, async () => {
 				try {
+					// preq seems to expect an decoded URI
+					testCase.request.uri = decodeURIComponent( testCase.request.uri );
 					const res = await preq( testCase.request );
 					assert.status( res, testCase.response.status );
 					validateTestResponse( testCase, res );
