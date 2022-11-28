@@ -177,7 +177,6 @@ paths:
       responses:
         200:
           description: Returns a json representation of a given line
-      x-monitor: false
       produces:
         - application/vnd.geo+json
       x-amples:
@@ -197,7 +196,6 @@ paths:
       responses:
         200:
           description: Returns a json representation of a given shape
-      x-monitor: false
       produces:
         - application/vnd.geo+json
       x-amples:
@@ -206,6 +204,26 @@ paths:
             status: 200
             headers:
               content-type: application/vnd.geo+json; charset=utf-8
+  # geopoint service
+  # /geopoint?getgeojson=1&ids={ids}:
+  /geopoint?getgeojson=1&ids=Q151356:
+    get:
+      tags:
+        - kartotherian
+        - maps
+        - geojson
+      responses:
+        200:
+          description: Retrievs the location of a Wikidata item and returns a json representation of point
+      produces:
+        - application/vnd.geo+json
+      x-amples:
+        - title: get Berliner Fernsehturm geojson
+          response:
+            status: 200
+            headers:
+              content-type: application/vnd.geo+json; charset=utf-8
+
   # from routes/root.js
   /robots.txt:
     get:
