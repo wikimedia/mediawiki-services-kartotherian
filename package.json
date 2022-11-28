@@ -75,7 +75,7 @@
 		"tilelive-promise": "^2.0.0",
 		"tilelive-tmstyle": "0.8.0",
 		"to-regex-range": "^4.0.2",
-		"topojson": "^2.2.0",
+		"topojson-server": "^2.0.0",
 		"typedarray-to-buffer": "^3.1.2",
 		"underscore": "^1.13.6",
 		"wd-type-parser": "^0.0.3"
