@@ -109,99 +109,15 @@ function constructTests( appSpec ) {
 	return ret;
 }
 
-function cmp( result, expected, errMsg ) {
-	if ( expected === null || expected === undefined ) {
-		// nothing to expect, so we can return
-		return true;
-	}
-	if ( result === null || result === undefined ) {
-		result = '';
-	}
-
-	if ( expected.constructor === Object ) {
-		Object.keys( expected ).forEach( ( key ) => {
-			const val = expected[ key ];
-			assert.deepEqual(
-				{}.hasOwnProperty.call( result, key ), true,
-				`Body field ${key} not found in response!`
-			);
-			cmp( result[ key ], val, `${key} body field mismatch!` );
-		} );
-		return true;
-	} else if ( expected.constructor === Array ) {
-		if ( result.constructor !== Array ) {
-			assert.deepEqual( result, expected, errMsg );
-			return true;
-		}
-		// only one item in expected - compare them all
-		if ( expected.length === 1 && result.length > 1 ) {
-			result.forEach( ( item ) => {
-				cmp( item, expected[ 0 ], errMsg );
-			} );
-			return true;
-		}
-		// more than one item expected, check them one by one
-		if ( expected.length !== result.length ) {
-			assert.deepEqual( result, expected, errMsg );
-			return true;
-		}
-		expected.forEach( ( item, idx ) => {
-			cmp( result[ idx ], item, errMsg );
-		} );
-		return true;
-	}
-
-	if ( expected.length > 1 && expected[ 0 ] === '/' && expected[ expected.length - 1 ] === '/' ) {
-		if ( new RegExp( expected.slice( 1, -1 ) ).test( result ) ) {
-			return true;
-		}
-	} else if ( expected.length === 0 && result.length === 0 ) {
-		return true;
-	} else if ( result === expected || result.startsWith( expected ) ) {
-		return true;
-	}
-
-	assert.deepEqual( result, expected, errMsg );
-	return true;
-}
-
-function validateArray( val, resVal, key ) {
-	assert.deepEqual( Array.isArray( resVal ), true, `Body field ${key} is not an array!` );
-	let arrVal;
-	if ( val.length === 1 ) {
-		// special case: we have specified only one item in the expected body,
-		// but what we really want is to check all of the returned items so
-		// fill the expected array with as many items as the returned one
-		if ( resVal.length < 1 ) {
-			throw new assert.AssertionError( {
-				message: `Expected more then one element in the field: ${key}`
-			} );
-		}
-		arrVal = [];
-		while ( arrVal.length < resVal.length ) {
-			arrVal.push( val[ 0 ] );
-		}
-	} else {
-		arrVal = val;
-	}
-	assert.deepEqual(
-		arrVal.length, resVal.length,
-		`Different size of array for field ${key}, expected ${arrVal.length
-		} actual ${resVal.length}`
-	);
-	arrVal.forEach( ( item, index ) => {
-		// eslint-disable-next-line no-use-before-define
-		validateBody( resVal[ index ], item );
-	} );
-}
-
 function validateBody( resBody, expBody ) {
-	if ( !expBody ) { return true; }
-	if ( !resBody ) { return false; }
+	if ( !expBody ) { return; }
+
+	assert.isTrue( !!resBody, 'Missing body' );
 
 	if ( Buffer.isBuffer( resBody ) ) {
 		resBody = resBody.toString();
 	}
+
 	if ( expBody.constructor !== resBody.constructor ) {
 		if ( expBody.constructor === String ) {
 			resBody = JSON.stringify( resBody );
@@ -209,46 +125,29 @@ function validateBody( resBody, expBody ) {
 			resBody = JSON.parse( resBody );
 		}
 	}
-	if ( expBody.constructor === Object ) {
-		Object.keys( expBody ).forEach( ( key ) => {
-			const val = expBody[ key ];
-			// eslint-disable-next-line no-prototype-builtins
-			assert.deepEqual( resBody.hasOwnProperty( key ), true, `Body field ${key} not found in response!` );
-			if ( val.constructor === Object ) {
-				validateBody( resBody[ key ], val );
-			} else if ( val.constructor === Array ) {
-				validateArray( val, resBody[ key ], key );
-			} else {
-				cmp( resBody[ key ], val, `${key} body field mismatch!` );
-			}
-		} );
-	} else if ( Array.isArray( expBody ) ) {
-		validateArray( expBody, resBody, 'body' );
-	} else {
-		cmp( resBody, expBody, 'Body mismatch!' );
-	}
-	return true;
+
+	assert.deepEqual( resBody, expBody );
 }
 
 function validateHeader( resHeaders, expHeaders ) {
-	if ( expHeaders && !resHeaders ) { return false; }
+	if ( !expHeaders ) { return; }
+
+	assert.isTrue( !!resHeaders, 'Missing headers' );
 
 	Object.keys( expHeaders ).forEach( ( key ) => {
-		assert.deepEqual(
-			// eslint-disable-next-line no-prototype-builtins
-			resHeaders.hasOwnProperty( key ),
-			true,
+		assert.isTrue(
+			{}.hasOwnProperty.call( resHeaders, key ),
 			`Header ${key} not found in response!`
 		);
 
-		cmp( resHeaders[ key ], expHeaders[ key ], `${key} header mismatch!` );
+		assert.deepEqual( resHeaders[ key ], expHeaders[ key ], `${key} header mismatch!` );
 	} );
 }
 
 function validateTestResponse( res, expRes ) {
 	assert.deepEqual( res.status, expRes.status );
 	validateHeader( res.headers, expRes.headers );
-	return validateBody( res.body || '', expRes.body );
+	validateBody( res.body, expRes.body );
 }
 
 describe( 'Swagger spec', () => {

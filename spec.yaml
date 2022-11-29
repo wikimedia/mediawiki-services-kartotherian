@@ -69,18 +69,8 @@ paths:
           response:
             status: 200
             headers:
-              content-type: application/json
-            body:
-              tilejson: 2.1.0
-              attribution: <a href='https://www.openstreetmap.org/copyright' target='_blank'>&copy; OpenStreetMap</a> <a href='https://www.openstreetmap.org/fixthemap' target='_blank'>Improve this map</a>
-              bounds: [ -180, -85.0511, 180, 85.0511 ]
-              center: [ -69.4336, 59.1309, 3 ]
-              format: png8:m=h
-              maxzoom: 18
-              minzoom: 0
-              name: osm-intl
-              scale: 1
-              source: sourceref:///?ref=gen
+              content-type: application/json; charset=utf-8
+            body: {"tilejson":"2.1.0","attribution":"<a href='https://www.openstreetmap.org/copyright' target='_blank'>&copy; OpenStreetMap</a> <a href='https://www.openstreetmap.org/fixthemap' target='_blank'>Improve this map</a>","bounds":[-180,-85.0511,180,85.0511],"center":[-69.4336,59.1309,3],"format":"png8:m=h","maxzoom":18,"minzoom":0,"name":"osm-intl","scale":"1","source":"sourceref:///?ref=gen"}
   # Private source info
   # /{src}/info.json:
   /private-info/info.json:
@@ -91,17 +81,14 @@ paths:
         400:
           description: Returns error describing that given tile source is private
       produces:
-        - application/json
+        - application/json; charset=utf-8
       x-amples:
         - title: private tile service info for osm-intl
           response:
             status: 400
             headers:
-              content-type: application/json
-            body:
-              detail: Source info is not public
-              internalURI: http://localhost:6533/private-info/info.json
-              internalMethod: get
+              content-type: application/json; charset=utf-8
+            body: {"detail":"Source info is not public","internalURI":"http://localhost:6533/private-info/info.json","internalMethod":"get"}
   # Maki icon markers (pushpins)
   # /v4/marker/{base}-{size}-{symbol}+{color}@{scale}x.png:
   /v4/marker/pin-m-fuel+ffffff@2x.png:
@@ -238,14 +225,7 @@ paths:
             status: 200
             headers:
               content-type: application/vnd.geo+json; charset=utf-8
-            body:
-              type: FeatureCollection
-              features:
-                -
-                  type: Feature
-                  id: Q151356
-                  properties: {}
-                  geometry: {}
+            body: {"type":"FeatureCollection","features":[{"type":"Feature","id":"Q151356","properties":{},"geometry":{"type":"Point","coordinates":[13.409444444,52.520833333]}}]}
   # from routes/root.js
   /robots.txt:
     get:
@@ -282,12 +262,8 @@ paths:
           response:
             status: 200
             headers:
-              content-type: application/json
-            body:
-              name: kartotherian
-              version: 2.0.0
-              description: Kartotherian - a suite of map tile rendering and map serving software
-              home: https://github.com/kartotherian/kartotherian
+              content-type: application/json; charset=utf-8
+            body: {"name":"kartotherian","version":"2.0.0","description":"Kartotherian - a suite of map tile rendering and map serving software","home":"https://github.com/kartotherian/kartotherian"}
   /_info/name:
     get:
       tags:
@@ -298,7 +274,7 @@ paths:
           description: Gets the name of the service
       x-monitor: false
       produces:
-        - application/json
+        - application/json; charset=utf-8
   /_info/version:
     get:
       tags:
@@ -309,7 +285,7 @@ paths:
           description: Gets the running version of the service
       x-monitor: false
       produces:
-        - application/json
+        - application/json; charset=utf-8
   /_info/home:
     get:
       tags:
