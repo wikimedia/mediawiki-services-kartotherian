@@ -230,20 +230,24 @@ function validateBody( resBody, expBody ) {
 	return true;
 }
 
-function validateTestResponse( testCase, res ) {
-	const expRes = testCase.response;
+function validateHeader( resHeaders, expHeaders ) {
+	if ( expHeaders && !resHeaders ) { return false; }
 
-	assert.deepEqual( res.status, expRes.status );
+	Object.keys( expHeaders ).forEach( ( key ) => {
+		assert.deepEqual(
+			// eslint-disable-next-line no-prototype-builtins
+			resHeaders.hasOwnProperty( key ),
+			true,
+			`Header ${key} not found in response!`
+		);
 
-	if ( expRes.headers && !res.headers ) { return false; }
-
-	Object.keys( expRes.headers ).forEach( ( key ) => {
-		const val = expRes.headers[ key ];
-		// eslint-disable-next-line no-prototype-builtins
-		assert.deepEqual( res.headers.hasOwnProperty( key ), true, `Header ${key} not found in response!` );
-		cmp( res.headers[ key ], val, `${key} header mismatch!` );
+		cmp( resHeaders[ key ], expHeaders[ key ], `${key} header mismatch!` );
 	} );
+}
 
+function validateTestResponse( res, expRes ) {
+	assert.deepEqual( res.status, expRes.status );
+	validateHeader( res.headers, expRes.headers );
 	return validateBody( res.body || '', expRes.body );
 }
 
@@ -265,15 +269,17 @@ describe( 'Swagger spec', () => {
 	describe( 'test spec x-amples', () => {
 		constructTests( spec ).forEach( ( testCase ) => {
 			it( testCase.title, async () => {
+				const expRes = testCase.response;
 				try {
-					// preq seems to expect an decoded URI
+					// preq seems to expect a decoded URI
 					testCase.request.uri = decodeURIComponent( testCase.request.uri );
 					const res = await preq( testCase.request );
-					assert.status( res, testCase.response.status );
-					validateTestResponse( testCase, res );
+
+					assert.status( res, expRes.status );
+					validateTestResponse( res, expRes );
 				} catch ( err ) {
-					assert.status( err, testCase.response.status );
-					validateTestResponse( testCase, err );
+					assert.status( err, expRes.status );
+					validateTestResponse( err, expRes );
 				}
 			} );
 		} );
