@@ -67,10 +67,10 @@ describe( 'mapdataLoader', () => {
 		const req = { logger: { log: jest.fn() } };
 
 		expect( mapdataLoader( req, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
-			.resolves.toStrictEqual( { features: [], type: 'FeatureCollection' } );
+			.rejects.toThrow( 'Invalid mapdata response' );
 	} );
 
-	test.skip( 'handles API exception', async () => {
+	test( 'handles API exception', () => {
 		const error = 'mwapi-test-error';
 		const req = { logger: { log: jest.fn() } };
 		const mwApiExecute = jest.fn()
@@ -78,8 +78,8 @@ describe( 'mapdataLoader', () => {
 		const MWApi = jest.fn()
 			.mockReturnValue( { execute: mwApiExecute } );
 
-		expect( () => mapdataLoader( req, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
-			.toThrow( error );
+		expect( mapdataLoader( req, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
+			.rejects.toThrow( error );
 	} );
 
 	test( 'handles null mapdata', async () => {
