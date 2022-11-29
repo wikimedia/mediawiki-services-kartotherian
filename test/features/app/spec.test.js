@@ -269,18 +269,17 @@ describe( 'Swagger spec', () => {
 	describe( 'test spec x-amples', () => {
 		constructTests( spec ).forEach( ( testCase ) => {
 			it( testCase.title, async () => {
-				const expRes = testCase.response;
+				let res;
+
 				try {
 					// preq seems to expect a decoded URI
 					testCase.request.uri = decodeURIComponent( testCase.request.uri );
-					const res = await preq( testCase.request );
-
-					assert.status( res, expRes.status );
-					validateTestResponse( res, expRes );
+					res = await preq( testCase.request );
 				} catch ( err ) {
-					assert.status( err, expRes.status );
-					validateTestResponse( err, expRes );
+					res = err;
 				}
+
+				validateTestResponse( res, testCase.response );
 			} );
 		} );
 	} );
