@@ -16,8 +16,8 @@ describe( 'express app', () => {
 	it( 'should get robots.txt', () => preq.get( {
 		uri: `${server.config.uri}robots.txt`
 	}, 20000 ).then( ( res ) => {
-		assert.deepEqual( res.status, 200 );
-		assert.deepEqual( res.body, 'User-agent: *\nDisallow: /' );
+		assert.status( res, 200 );
+		assert.strictEqual( res.body, 'User-agent: *\nDisallow: /' );
 	} ) );
 
 	it( 'should set CORS headers', () => {
@@ -27,10 +27,10 @@ describe( 'express app', () => {
 		return preq.get( {
 			uri: `${server.config.uri}robots.txt`
 		} ).then( ( res ) => {
-			assert.deepEqual( res.status, 200 );
-			assert.deepEqual( res.headers[ 'access-control-allow-origin' ], '*' );
-			assert.deepEqual( !!res.headers[ 'access-control-allow-headers' ], true );
-			assert.deepEqual( !!res.headers[ 'access-control-expose-headers' ], true );
+			assert.status( res, 200 );
+			assert.strictEqual( res.headers[ 'access-control-allow-origin' ], '*' );
+			assert.isTrue( !!res.headers[ 'access-control-allow-headers' ] );
+			assert.isTrue( !!res.headers[ 'access-control-expose-headers' ] );
 		} );
 	}, 20000 );
 
@@ -38,13 +38,13 @@ describe( 'express app', () => {
 		uri: `${server.config.uri}robots.txt`
 	} ).then( ( res ) => {
 		const cspHeader = "default-src 'self'; object-src 'none'; media-src 'none'; style-src 'self'; script-src 'self'; frame-ancestors 'self'";
-		assert.deepEqual( res.status, 200 );
-		assert.deepEqual( res.headers[ 'x-xss-protection' ], '1; mode=block' );
-		assert.deepEqual( res.headers[ 'x-content-type-options' ], 'nosniff' );
-		assert.deepEqual( res.headers[ 'x-frame-options' ], 'SAMEORIGIN' );
-		assert.deepEqual( res.headers[ 'content-security-policy' ], cspHeader );
-		assert.deepEqual( res.headers[ 'x-content-security-policy' ], cspHeader );
-		assert.deepEqual( res.headers[ 'x-webkit-csp' ], cspHeader );
+		assert.status( res, 200 );
+		assert.strictEqual( res.headers[ 'x-xss-protection' ], '1; mode=block' );
+		assert.strictEqual( res.headers[ 'x-content-type-options' ], 'nosniff' );
+		assert.strictEqual( res.headers[ 'x-frame-options' ], 'SAMEORIGIN' );
+		assert.strictEqual( res.headers[ 'content-security-policy' ], cspHeader );
+		assert.strictEqual( res.headers[ 'x-content-security-policy' ], cspHeader );
+		assert.strictEqual( res.headers[ 'x-webkit-csp' ], cspHeader );
 	} ), 20000 );
 
 	it( 'should get static content gzipped', () => rp( {
@@ -55,7 +55,7 @@ describe( 'express app', () => {
 		resolveWithFullResponse: true
 	}, 20000 ).then( ( res ) => {
 		// check that the response is gzip-ed
-		assert.deepEqual( res.headers[ 'content-encoding' ], 'gzip', 'Expected gzipped contents!' );
+		assert.strictEqual( res.headers[ 'content-encoding' ], 'gzip', 'Expected gzipped contents!' );
 	} ) );
 
 	it( 'should get static content uncompressed', () => rp( {
@@ -66,6 +66,6 @@ describe( 'express app', () => {
 		resolveWithFullResponse: true
 	}, 20000 ).then( ( res ) => {
 		// check that the response is gzip-ed
-		assert.deepEqual( res.headers[ 'content-encoding' ], undefined, 'Did not expect gzipped contents!' );
+		assert.isUndefined( res.headers[ 'content-encoding' ], 'Did not expect gzipped contents!' );
 	} ) );
 } );

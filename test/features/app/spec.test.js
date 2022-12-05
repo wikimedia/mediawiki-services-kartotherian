@@ -140,12 +140,12 @@ function validateHeader( resHeaders, expHeaders ) {
 			`Header ${key} not found in response!`
 		);
 
-		assert.deepEqual( resHeaders[ key ], expHeaders[ key ], `${key} header mismatch!` );
+		assert.strictEqual( resHeaders[ key ], expHeaders[ key ], `${key} header mismatch!` );
 	} );
 }
 
 function validateTestResponse( res, expRes ) {
-	assert.deepEqual( res.status, expRes.status );
+	assert.status( res, expRes.status );
 	validateHeader( res.headers, expRes.headers );
 	validateBody( res.body, expRes.body );
 }
@@ -162,7 +162,7 @@ describe( 'Swagger spec', () => {
 		const res = await preq.get( `${baseUrl}?spec` );
 		assert.status( res, 200 );
 		assert.contentType( res, 'application/json' );
-		assert.notDeepEqual( res.body, undefined, 'No body received!' );
+		assert.notStrictEqual( res.body, undefined, 'No body received!' );
 	} );
 
 	describe( 'test spec x-amples', () => {
@@ -191,15 +191,15 @@ describe( 'Swagger spec', () => {
 	it( 'spec validation', () => {
 		// check the high-level attributes
 		[ 'info', 'swagger', 'paths' ].forEach( ( prop ) => {
-			assert.deepEqual( !!spec[ prop ], true, `No ${prop} field present!` );
+			assert.isTrue( !!spec[ prop ], `No ${prop} field present!` );
 		} );
 		// no paths - no love
-		assert.deepEqual( !!Object.keys( spec.paths ), true, 'No paths given in the spec!' );
+		assert.isTrue( !!Object.keys( spec.paths ), 'No paths given in the spec!' );
 		// now check each path
 		Object.keys( spec.paths ).forEach( ( pathStr ) => {
-			assert.deepEqual( !!pathStr, true, 'A path cannot have a length of zero!' );
+			assert.isTrue( !!pathStr, 'A path cannot have a length of zero!' );
 			const path = spec.paths[ pathStr ];
-			assert.deepEqual( !!Object.keys( path ), true, `No methods defined for path: ${pathStr}` );
+			assert.isTrue( !!Object.keys( path ), `No methods defined for path: ${pathStr}` );
 			Object.keys( path ).forEach( ( method ) => {
 				const mSpec = path[ method ];
 				if ( {}.hasOwnProperty.call( mSpec, 'x-monitor' ) && !mSpec[ 'x-monitor' ] ) {
