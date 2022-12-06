@@ -10,16 +10,7 @@ const fs = require( 'fs' );
 
 const validator = new OpenAPISchemaValidator( { version: 2 } );
 
-let spec = null;
-let baseUrl = null;
 const server = new Server();
-
-function isPng( buffer ) {
-	if ( !buffer || buffer.length < 8 ) {
-		return false;
-	}
-	return buffer.toString( 'binary', 0, 8 ) === '\x89PNG\r\n\x1A\n';
-}
 
 function validateExamples( pathStr, defParams, mSpec ) {
 	const uri = new URI( pathStr, {}, true );
@@ -53,145 +44,18 @@ function validateExamples( pathStr, defParams, mSpec ) {
 	return true;
 }
 
-function constructTestCase( title, path, method, request, response ) {
-	return {
-		title,
-		request: {
-			uri: ( baseUrl || 'http://localhost:6533/' ) + ( path[ 0 ] === '/' ? path.slice( 1 ) : path ),
-			method,
-			headers: request.headers || {},
-			query: request.query,
-			body: request.body,
-			followRedirect: false
-		},
-		response: {
-			status: response.status || 200,
-			headers: response.headers || {},
-			body: response.body
-		}
-	};
-}
-
-function constructTests( appSpec ) {
-	const ret = [];
-	const paths = appSpec.paths;
-	const defParams = appSpec[ 'x-default-params' ] || {};
-
-	Object.keys( paths ).forEach( ( pathStr ) => {
-		Object.keys( paths[ pathStr ] ).forEach( ( method ) => {
-			const p = paths[ pathStr ][ method ];
-			if ( {}.hasOwnProperty.call( p, 'x-monitor' ) && !p[ 'x-monitor' ] ) {
-				return;
-			}
-			const uri = new URI( pathStr, {}, true );
-			if ( !p[ 'x-amples' ] ) {
-				ret.push( constructTestCase(
-					pathStr,
-					uri.toString( { params: defParams } ),
-					method,
-					{},
-					{}
-				) );
-				return;
-			}
-			p[ 'x-amples' ].forEach( ( ex ) => {
-				ex.request = ex.request || {};
-				ret.push( constructTestCase(
-					ex.title,
-					uri.toString( {
-						params: Object.assign(
-							{},
-							defParams,
-							ex.request.params || {}
-						)
-					} ),
-					method,
-					ex.request,
-					ex.response || {}
-				) );
-			} );
-		} );
-	} );
-
-	return ret;
-}
-
-function validateBody( resBody, expBody ) {
-	if ( !expBody ) { return; }
-
-	assert.isTrue( !!resBody, 'Missing body' );
-
-	if ( Buffer.isBuffer( resBody ) ) {
-		assert.isTrue( resBody.length > 0 );
-		if ( expBody.type === 'png' ) {
-			assert.isTrue( isPng( resBody ) );
-		}
-		return;
-	}
-
-	if ( expBody.constructor !== resBody.constructor ) {
-		if ( expBody.constructor === String ) {
-			resBody = JSON.stringify( resBody );
-		} else {
-			resBody = JSON.parse( resBody );
-		}
-	}
-
-	assert.deepEqual( resBody, expBody );
-}
-
-function validateHeader( resHeaders, expHeaders ) {
-	if ( !expHeaders ) { return; }
-
-	assert.isTrue( !!resHeaders, 'Missing headers' );
-
-	Object.keys( expHeaders ).forEach( ( key ) => {
-		assert.isTrue(
-			{}.hasOwnProperty.call( resHeaders, key ),
-			`Header ${key} not found in response!`
-		);
-
-		assert.strictEqual( resHeaders[ key ], expHeaders[ key ], `${key} header mismatch!` );
-	} );
-}
-
-function validateTestResponse( res, expRes ) {
-	assert.status( res, expRes.status );
-	validateHeader( res.headers, expRes.headers );
-	validateBody( res.body, expRes.body );
-}
-
 describe( 'Swagger spec', () => {
+	const specYaml = yaml.safeLoad( fs.readFileSync( `${__dirname}/../../../spec.yaml` ) );
 	jest.setTimeout( 20000 );
-	spec = yaml.safeLoad( fs.readFileSync( `${__dirname}/../../../spec.yaml` ) );
 
 	beforeAll( () => server.start() );
 	afterAll( () => server.stop() );
 
-	it( 'get the spec', async () => {
-		baseUrl = server.config.uri;
-		const res = await preq.get( `${baseUrl}?spec` );
+	it( 'should be accessible ', async () => {
+		const res = await preq.get( `${server.config.uri}?spec` );
 		assert.status( res, 200 );
 		assert.contentType( res, 'application/json' );
 		assert.notStrictEqual( res.body, undefined, 'No body received!' );
-	} );
-
-	describe( 'test spec x-amples', () => {
-		constructTests( spec ).forEach( ( testCase ) => {
-			it( testCase.title, async () => {
-				let res;
-
-				try {
-					// preq seems to expect a decoded URI
-					testCase.request.uri = decodeURIComponent( testCase.request.uri );
-					res = await preq( testCase.request );
-				} catch ( err ) {
-					res = err;
-				}
-
-				validateTestResponse( res, testCase.response );
-			} );
-		} );
 	} );
 
 	it( 'should expose valid OpenAPI spec', () => preq.get( { uri: `${server.config.uri}?spec` } )
@@ -199,24 +63,24 @@ describe( 'Swagger spec', () => {
 			assert.deepEqual( { errors: [] }, validator.validate( res.body ), 'Spec must have no validation errors' );
 		} ) );
 
-	it( 'spec validation', () => {
+	it( 'should be valid', () => {
 		// check the high-level attributes
 		[ 'info', 'swagger', 'paths' ].forEach( ( prop ) => {
-			assert.isTrue( !!spec[ prop ], `No ${prop} field present!` );
+			assert.isTrue( !!specYaml[ prop ], `No ${prop} field present!` );
 		} );
 		// no paths - no love
-		assert.isTrue( !!Object.keys( spec.paths ), 'No paths given in the spec!' );
+		assert.isTrue( !!Object.keys( specYaml.paths ), 'No paths given in the spec!' );
 		// now check each path
-		Object.keys( spec.paths ).forEach( ( pathStr ) => {
+		Object.keys( specYaml.paths ).forEach( ( pathStr ) => {
 			assert.isTrue( !!pathStr, 'A path cannot have a length of zero!' );
-			const path = spec.paths[ pathStr ];
+			const path = specYaml.paths[ pathStr ];
 			assert.isTrue( !!Object.keys( path ), `No methods defined for path: ${pathStr}` );
 			Object.keys( path ).forEach( ( method ) => {
 				const mSpec = path[ method ];
 				if ( {}.hasOwnProperty.call( mSpec, 'x-monitor' ) && !mSpec[ 'x-monitor' ] ) {
 					return;
 				}
-				validateExamples( pathStr, spec[ 'x-default-params' ] || {}, mSpec[ 'x-amples' ] );
+				validateExamples( pathStr, specYaml[ 'x-default-params' ] || {}, mSpec[ 'x-amples' ] );
 			} );
 		} );
 	} );
