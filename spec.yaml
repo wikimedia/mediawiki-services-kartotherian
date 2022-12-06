@@ -33,6 +33,8 @@ paths:
             status: 200
             headers:
               content-type: image/png
+            body:
+              type: png
   # Tiles handler with scaling
   # /{src}/{z}/{x}/{y}@{scale}x.{format}:
   /osm-intl/11/828/655@1.5x.png:
@@ -53,6 +55,8 @@ paths:
             status: 200
             headers:
               content-type: image/png
+            body:
+              type: png
   # Source info
   # /{src}/info.json:
   /osm-intl/info.json:
@@ -90,6 +94,22 @@ paths:
               content-type: application/json; charset=utf-8
             body: {"detail":"Source info is not public","internalURI":"http://localhost:6533/private-info/info.json","internalMethod":"get"}
   # Maki icon markers (pushpins)
+  # /v4/marker/{base}-{size}-{symbol}+{color}.png:
+  /v4/marker/pin-m-fuel+ffffff.png:
+    get:
+      responses:
+        200:
+          description: Renders pushpin marker of a given color and size with an icon.
+      produces:
+        - image/png
+      x-amples:
+        - title: pushpin marker with an icon
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
   # /v4/marker/{base}-{size}-{symbol}+{color}@{scale}x.png:
   /v4/marker/pin-m-fuel+ffffff@2x.png:
     get:
@@ -107,30 +127,40 @@ paths:
             status: 200
             headers:
               content-type: image/png
-  # /v4/marker/{base}-{size}-{symbol}+{color}.png:
-  /v4/marker/pin-m-fuel+ffffff.png:
-    get:
-      responses:
-        200:
-          description: Renders pushpin marker of a given color and size with an icon.
-      produces:
-        - image/png
+            body:
+              type: png
   # /v4/marker/{base}-{size}+{color}.png:
   /v4/marker/pin-m+ffffff.png:
     get:
       responses:
         200:
-          description: Renders a pushpin marker of a given color and size withoun an icon
+          description: Renders a pushpin marker of a given color and size without an icon
       produces:
         - image/png
+      x-amples:
+        - title: pushpin marker without an icon
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
   # /v4/marker/{base}-{size}+{color}@{scale}x.png:
   /v4/marker/pin-m+ffffff@2x.png:
     get:
       responses:
         200:
-          description: Renders 2x scaled pushpin marker of a given color and size withoun an icon.
+          description: Renders 2x scaled pushpin marker of a given color and size without an icon.
       produces:
         - image/png
+      x-amples:
+        - title: scaled pushpin marker without an icon
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
   # Map snapshots
   # /img/{src},{z},{lat},{lon},{w}x{h}.{format}:
   /img/osm-intl,1,0.0,0.0,100x100.png:
@@ -150,6 +180,8 @@ paths:
             status: 200
             headers:
               content-type: image/png
+            body:
+              type: png
   # /img/{src},{z},{lat},{lon},{w}x{h}@{scale}x.{format}:
   /img/osm-intl,1,0.0,0.0,100x100@2x.png:
     get:
@@ -168,6 +200,8 @@ paths:
             status: 200
             headers:
               content-type: image/png
+            body:
+              type: png
   # geoline service
   # /geoline?getgeojson=1&ids={ids}:
   /geoline?getgeojson=1&ids=Q649:

@@ -14,6 +14,13 @@ let spec = null;
 let baseUrl = null;
 const server = new Server();
 
+function isPng( buffer ) {
+	if ( !buffer || buffer.length < 8 ) {
+		return false;
+	}
+	return buffer.toString( 'binary', 0, 8 ) === '\x89PNG\r\n\x1A\n';
+}
+
 function validateExamples( pathStr, defParams, mSpec ) {
 	const uri = new URI( pathStr, {}, true );
 
@@ -115,7 +122,11 @@ function validateBody( resBody, expBody ) {
 	assert.isTrue( !!resBody, 'Missing body' );
 
 	if ( Buffer.isBuffer( resBody ) ) {
-		resBody = resBody.toString();
+		assert.isTrue( resBody.length > 0 );
+		if ( expBody.type === 'png' ) {
+			assert.isTrue( isPng( resBody ) );
+		}
+		return;
 	}
 
 	if ( expBody.constructor !== resBody.constructor ) {
