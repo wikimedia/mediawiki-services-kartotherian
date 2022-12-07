@@ -1,0 +1,201 @@
+{
+	"/osm-intl/11/828/655.png": {
+		"title": "get a tile in the middle of the ocean, with overzoom",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
+	"/osm-intl/11/828/655@1.5x.png": {
+		"title": "default scaled tile",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
+	"/osm-intl/info.json": {
+		"title": "tile service info for osm-intl",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "application/json; charset=utf-8"
+			},
+			"body": {
+				"tilejson": "2.1.0",
+				"attribution": "<a href='https://www.openstreetmap.org/copyright' target='_blank'>&copy; OpenStreetMap</a> <a href='https://www.openstreetmap.org/fixthemap' target='_blank'>Improve this map</a>",
+				"bounds": [
+					-180,
+					-85.0511,
+					180,
+					85.0511
+				],
+				"center": [
+					-69.4336,
+					59.1309,
+					3
+				],
+				"format": "png8:m=h",
+				"maxzoom": 18,
+				"minzoom": 0,
+				"name": "osm-intl",
+				"scale": "1",
+				"source": "sourceref:///?ref=gen"
+			}
+		}
+	},
+	"/private-info/info.json": {
+		"title": "private tile service info for osm-intl",
+		"response": {
+			"status": 400,
+			"headers": {
+				"content-type": "application/json; charset=utf-8"
+			},
+			"body": {
+				"detail": "Source info is not public",
+				"internalURI": "http://localhost:6533/private-info/info.json",
+				"internalMethod": "get"
+			}
+		}
+	},
+	"/v4/marker/pin-m-fuel+ffffff.png": {
+		"title": "pushpin marker with an icon",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
+	"/v4/marker/pin-m-fuel+ffffff@2x.png": {
+		"title": "scaled pushpin marker with an icon",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
+	"/v4/marker/pin-m+ffffff.png": {
+		"title": "pushpin marker without an icon",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
+	"/v4/marker/pin-m+ffffff@2x.png": {
+		"title": "scaled pushpin marker without an icon",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
+	"/img/osm-intl,1,0.0,0.0,100x100.png": {
+		"title": "Small stiched static map",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
+	"/img/osm-intl,1,0.0,0.0,100x100@2x.png": {
+		"title": "Small stiched static map scaled",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
+	"/geoline?getgeojson=1&ids=Q649": {
+		"title": "get Moscow geojson",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "application/vnd.geo+json; charset=utf-8"
+			}
+		}
+	},
+	"/geoshape?getgeojson=1&ids=Q6414": {
+		"title": "get Lake Garda geojson",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "application/vnd.geo+json; charset=utf-8"
+			}
+		}
+	},
+	"/geopoint?getgeojson=1&ids=Q151356": {
+		"title": "get Berliner Fernsehturm geojson",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "application/vnd.geo+json; charset=utf-8"
+			},
+			"body": {
+				"type": "FeatureCollection",
+				"features": [
+					{
+						"type": "Feature",
+						"id": "Q151356",
+						"properties": {},
+						"geometry": {
+							"type": "Point",
+							"coordinates": [
+								13.409444444,
+								52.520833333
+							]
+						}
+					}
+				]
+			}
+		}
+	},
+	"/_info": {
+		"title": "get the service info",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "application/json; charset=utf-8"
+			},
+			"body": {
+				"name": "kartotherian",
+				"version": "2.0.0",
+				"description": "Kartotherian - a suite of map tile rendering and map serving software",
+				"home": "https://github.com/kartotherian/kartotherian"
+			}
+		}
+	}
+}
