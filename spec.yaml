@@ -12,9 +12,8 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0
 
 paths:
-  #  # Tiles handler
-  #  # /{src}/{z}/{x}/{y}.{format}:
-  /osm-intl/11/828/655.png:
+  # Tiles handler
+  /{src}/{z}/{x}/{y}.{format}:
     get:
       tags:
         - kartotherian
@@ -25,11 +24,11 @@ paths:
         description: Renders an image tile for the given source, zoom, and coordinates.
       produces:
         - image/png
+        - image/jpeg
         - application/json
         - application/x-protobuf
   # Tiles handler with scaling
-  # /{src}/{z}/{x}/{y}@{scale}x.{format}:
-  /osm-intl/11/828/655@1.5x.png:
+  /{src}/{z}/{x}/{y}@{scale}x.{format}:
     get:
       tags:
         - kartotherian
@@ -40,10 +39,10 @@ paths:
         description: Renders an image tile for the given source, zoom, and coordinates, with scaling.
       produces:
         - image/png
+        - image/jpeg
         - application/json
   # Source info
-  # /{src}/info.json:
-  /osm-intl/info.json:
+  /{src}/info.json:
     get:
       tags:
         - tileinfo
@@ -53,7 +52,6 @@ paths:
         200:
           description: Gets information about the osm-intl source
   # Private source info
-  # /{src}/info.json:
   /private-info/info.json:
     get:
       tags:
@@ -62,7 +60,7 @@ paths:
         400:
           description: Returns error describing that given tile source is private
       produces:
-        - application/json; charset=utf-8
+        - application/json
   # Maki icon markers (pushpins)
   # /v4/marker/{base}-{size}-{symbol}+{color}.png:
   /v4/marker/pin-m-fuel+ffffff.png:
@@ -100,8 +98,7 @@ paths:
       produces:
         - image/png
   # Map snapshots
-  # /img/{src},{z},{lat},{lon},{w}x{h}.{format}:
-  /img/osm-intl,1,0.0,0.0,100x100.png:
+  /img/{src},{z},{lat},{lon},{w}x{h}.{format}:
     get:
       tags:
         - kartotherian
@@ -112,8 +109,8 @@ paths:
           description: Renders requested map region as an image (static map snapshot)
       produces:
         - image/png
-  # /img/{src},{z},{lat},{lon},{w}x{h}@{scale}x.{format}:
-  /img/osm-intl,1,0.0,0.0,100x100@2x.png:
+        - image/jpeg
+  /img/{src},{z},{lat},{lon},{w}x{h}@{scale}x.{format}:
     get:
       tags:
         - kartotherian
@@ -124,9 +121,9 @@ paths:
           description: Renders requested map region as a scaled image (static map snapshot)
       produces:
         - image/png
+        - image/jpeg
   # geoline service
-  # /geoline?getgeojson=1&ids={ids}:
-  /geoline?getgeojson=1&ids=Q649:
+  /geoline?getgeojson=1&ids={ids}:
     get:
       tags:
         - kartotherian
@@ -134,12 +131,11 @@ paths:
         - geojson
       responses:
         200:
-          description: Returns a json representation of a given line
+          description: Returns a json representation of a given line from Wikidata item ids
       produces:
         - application/vnd.geo+json
   # geoshape service
-  # /geoshape?getgeojson=1&ids={ids}:
-  /geoshape?getgeojson=1&ids=Q6414:
+  /geoshape?getgeojson=1&ids={ids}:
     get:
       tags:
         - kartotherian
@@ -147,12 +143,11 @@ paths:
         - geojson
       responses:
         200:
-          description: Returns a json representation of a given shape
+          description: Returns a json representation of a given shape from Wikidata item ids
       produces:
         - application/vnd.geo+json
   # geopoint service
-  # /geopoint?getgeojson=1&ids={ids}:
-  /geopoint?getgeojson=1&ids=Q151356:
+  /geopoint?getgeojson=1&ids={ids}:
     get:
       tags:
         - kartotherian
@@ -160,7 +155,7 @@ paths:
         - geojson
       responses:
         200:
-          description: Retrievs the location of a Wikidata item and returns a json representation of point
+          description: Returns a json representation of a given point from Wikidata item ids
       produces:
         - application/vnd.geo+json
   # from routes/root.js
@@ -204,7 +199,7 @@ paths:
           description: Gets the name of the service
       x-monitor: false
       produces:
-        - application/json; charset=utf-8
+        - application/json
   /_info/version:
     get:
       tags:
@@ -215,7 +210,7 @@ paths:
           description: Gets the running version of the service
       x-monitor: false
       produces:
-        - application/json; charset=utf-8
+        - application/json
   /_info/home:
     get:
       tags:
