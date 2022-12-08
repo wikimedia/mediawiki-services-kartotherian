@@ -27,14 +27,6 @@ paths:
         - image/png
         - application/json
         - application/x-protobuf
-      x-amples:
-        - title: get a tile in the middle of the ocean, with overzoom
-          response:
-            status: 200
-            headers:
-              content-type: image/png
-            body:
-              type: png
   # Tiles handler with scaling
   # /{src}/{z}/{x}/{y}@{scale}x.{format}:
   /osm-intl/11/828/655@1.5x.png:
@@ -49,14 +41,6 @@ paths:
       produces:
         - image/png
         - application/json
-      x-amples:
-        - title: default scaled tile
-          response:
-            status: 200
-            headers:
-              content-type: image/png
-            body:
-              type: png
   # Source info
   # /{src}/info.json:
   /osm-intl/info.json:
@@ -68,13 +52,6 @@ paths:
       responses:
         200:
           description: Gets information about the osm-intl source
-      x-amples:
-        - title: tile service info for osm-intl
-          response:
-            status: 200
-            headers:
-              content-type: application/json; charset=utf-8
-            body: {"tilejson":"2.1.0","attribution":"<a href='https://www.openstreetmap.org/copyright' target='_blank'>&copy; OpenStreetMap</a> <a href='https://www.openstreetmap.org/fixthemap' target='_blank'>Improve this map</a>","bounds":[-180,-85.0511,180,85.0511],"center":[-69.4336,59.1309,3],"format":"png8:m=h","maxzoom":18,"minzoom":0,"name":"osm-intl","scale":"1","source":"sourceref:///?ref=gen"}
   # Private source info
   # /{src}/info.json:
   /private-info/info.json:
@@ -86,13 +63,6 @@ paths:
           description: Returns error describing that given tile source is private
       produces:
         - application/json; charset=utf-8
-      x-amples:
-        - title: private tile service info for osm-intl
-          response:
-            status: 400
-            headers:
-              content-type: application/json; charset=utf-8
-            body: {"detail":"Source info is not public","internalURI":"http://localhost:6533/private-info/info.json","internalMethod":"get"}
   # Maki icon markers (pushpins)
   # /v4/marker/{base}-{size}-{symbol}+{color}.png:
   /v4/marker/pin-m-fuel+ffffff.png:
@@ -102,14 +72,6 @@ paths:
           description: Renders pushpin marker of a given color and size with an icon.
       produces:
         - image/png
-      x-amples:
-        - title: pushpin marker with an icon
-          response:
-            status: 200
-            headers:
-              content-type: image/png
-            body:
-              type: png
   # /v4/marker/{base}-{size}-{symbol}+{color}@{scale}x.png:
   /v4/marker/pin-m-fuel+ffffff@2x.png:
     get:
@@ -121,14 +83,6 @@ paths:
           description: Renders 2x scaled pushpin marker of a given color and size with an icon.
       produces:
         - image/png
-      x-amples:
-        - title: scaled pushpin marker with an icon
-          response:
-            status: 200
-            headers:
-              content-type: image/png
-            body:
-              type: png
   # /v4/marker/{base}-{size}+{color}.png:
   /v4/marker/pin-m+ffffff.png:
     get:
@@ -137,14 +91,6 @@ paths:
           description: Renders a pushpin marker of a given color and size without an icon
       produces:
         - image/png
-      x-amples:
-        - title: pushpin marker without an icon
-          response:
-            status: 200
-            headers:
-              content-type: image/png
-            body:
-              type: png
   # /v4/marker/{base}-{size}+{color}@{scale}x.png:
   /v4/marker/pin-m+ffffff@2x.png:
     get:
@@ -153,14 +99,6 @@ paths:
           description: Renders 2x scaled pushpin marker of a given color and size without an icon.
       produces:
         - image/png
-      x-amples:
-        - title: scaled pushpin marker without an icon
-          response:
-            status: 200
-            headers:
-              content-type: image/png
-            body:
-              type: png
   # Map snapshots
   # /img/{src},{z},{lat},{lon},{w}x{h}.{format}:
   /img/osm-intl,1,0.0,0.0,100x100.png:
@@ -174,14 +112,6 @@ paths:
           description: Renders requested map region as an image (static map snapshot)
       produces:
         - image/png
-      x-amples:
-        - title: Small stiched static map
-          response:
-            status: 200
-            headers:
-              content-type: image/png
-            body:
-              type: png
   # /img/{src},{z},{lat},{lon},{w}x{h}@{scale}x.{format}:
   /img/osm-intl,1,0.0,0.0,100x100@2x.png:
     get:
@@ -194,14 +124,6 @@ paths:
           description: Renders requested map region as a scaled image (static map snapshot)
       produces:
         - image/png
-      x-amples:
-        - title: Small stiched static map scaled
-          response:
-            status: 200
-            headers:
-              content-type: image/png
-            body:
-              type: png
   # geoline service
   # /geoline?getgeojson=1&ids={ids}:
   /geoline?getgeojson=1&ids=Q649:
@@ -215,12 +137,6 @@ paths:
           description: Returns a json representation of a given line
       produces:
         - application/vnd.geo+json
-      x-amples:
-        - title: get Moscow geojson
-          response:
-            status: 200
-            headers:
-              content-type: application/vnd.geo+json; charset=utf-8
   # geoshape service
   # /geoshape?getgeojson=1&ids={ids}:
   /geoshape?getgeojson=1&ids=Q6414:
@@ -234,12 +150,6 @@ paths:
           description: Returns a json representation of a given shape
       produces:
         - application/vnd.geo+json
-      x-amples:
-        - title: get Lake Garda geojson
-          response:
-            status: 200
-            headers:
-              content-type: application/vnd.geo+json; charset=utf-8
   # geopoint service
   # /geopoint?getgeojson=1&ids={ids}:
   /geopoint?getgeojson=1&ids=Q151356:
@@ -253,13 +163,6 @@ paths:
           description: Retrievs the location of a Wikidata item and returns a json representation of point
       produces:
         - application/vnd.geo+json
-      x-amples:
-        - title: get Berliner Fernsehturm geojson
-          response:
-            status: 200
-            headers:
-              content-type: application/vnd.geo+json; charset=utf-8
-            body: {"type":"FeatureCollection","features":[{"type":"Feature","id":"Q151356","properties":{},"geometry":{"type":"Point","coordinates":[13.409444444,52.520833333]}}]}
   # from routes/root.js
   /robots.txt:
     get:
@@ -291,13 +194,6 @@ paths:
       x-monitor: true
       produces:
         - application/json
-      x-amples:
-        - title: get the service info
-          response:
-            status: 200
-            headers:
-              content-type: application/json; charset=utf-8
-            body: {"name":"kartotherian","version":"2.0.0","description":"Kartotherian - a suite of map tile rendering and map serving software","home":"https://github.com/kartotherian/kartotherian"}
   /_info/name:
     get:
       tags:
