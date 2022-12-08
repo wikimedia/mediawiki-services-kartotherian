@@ -3,7 +3,6 @@
 const preq = require( 'preq' );
 const assert = require( '../../utils/assert' );
 const Server = require( '../../utils/server' );
-const URI = require( 'swagger-router' ).URI;
 const pathTestsJson = require( './test-cases/path-test-provider.json' );
 
 const server = new Server();
@@ -15,15 +14,12 @@ function isPng( buffer ) {
 	return buffer.toString( 'binary', 0, 8 ) === '\x89PNG\r\n\x1A\n';
 }
 
-function constructTestCase( title, serverUri, path, request, response ) {
+function constructTestCase( title, serverUri, path, response ) {
 	return {
 		title,
 		request: {
 			uri: ( serverUri ) + ( path[ 0 ] === '/' ? path.slice( 1 ) : path ),
 			method: 'get',
-			headers: request.headers || {},
-			query: request.query,
-			body: request.body,
 			followRedirect: false
 		},
 		response: {
@@ -35,26 +31,17 @@ function constructTestCase( title, serverUri, path, request, response ) {
 }
 
 function constructTests( paths, serverUri ) {
-	const ret = [];
-
+	const tests = [];
 	Object.keys( paths ).forEach( ( pathStr ) => {
-		const uri = new URI( pathStr, {}, true );
 		const testCaseData = paths[ pathStr ];
-		testCaseData.request = testCaseData.request || {};
-		ret.push( constructTestCase(
+		tests.push( constructTestCase(
 			testCaseData.title,
 			serverUri,
-			uri.toString( {
-				params: Object.assign(
-					{},
-					testCaseData.request.params || {}
-				)
-			} ),
-			testCaseData.request,
+			pathStr,
 			testCaseData.response || {}
 		) );
 	} );
-	return ret;
+	return tests;
 }
 
 function validateBody( resBody, expBody ) {
@@ -114,8 +101,6 @@ describe( 'Integration tests', () => {
 			let res;
 
 			try {
-				// preq seems to expect a decoded URI
-				testCase.request.uri = decodeURIComponent( testCase.request.uri );
 				res = await preq( testCase.request );
 			} catch ( err ) {
 				res = err;
