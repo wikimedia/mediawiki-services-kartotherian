@@ -97,7 +97,7 @@
 				"minzoom": 0,
 				"name": "osm-intl",
 				"scale": "1",
-				"source": "sourceref:///?ref=gen"
+				"source": "sourceref:///?ref=babel"
 			}
 		}
 	},
