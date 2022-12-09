@@ -1,11 +1,7 @@
 'use strict';
 
-const mockMWApi = require( 'mwapi' );
 const { downloadMapdata: mapdataLoader } =
 	require( '../../../lib/snapshot/mapdataLoader' );
-
-// Intercept external services
-// const mockPreq = require('preq');
 
 describe( 'mapdataLoader', () => {
 	const groupId = '_1234';
@@ -26,7 +22,7 @@ describe( 'mapdataLoader', () => {
 			mpdlimit: 'max',
 			mpdgroups: groupId,
 			prop: 'mapdata',
-			revids: true
+			titles: pageTitle
 		};
 		const mockResponse = {
 			query: {
@@ -41,21 +37,18 @@ describe( 'mapdataLoader', () => {
 				]
 			}
 		};
-		// TODO: Could also test mwapi wiring in only one case, otherwise stash the
-		// mock response in clientData.
-		mockMWApi.prototype.execute = jest.fn( ( req ) => {
-			expect( req ).toStrictEqual( expectedRequest );
-			return { then: jest.fn( ( cb ) => cb( mockResponse ) ) };
-		} );
+		const mwApiExecute = jest.fn()
+			.mockResolvedValue( mockResponse );
+		const MWApi = jest.fn()
+			.mockReturnValue( { execute: mwApiExecute } );
 
-		await mapdataLoader( {}, 'https', 'api.test', pageTitle, true, groupId )
-			.then( ( geoJSON ) => {
-				expect( geoJSON ).toStrictEqual( mapdata );
-			} );
+		expect( mapdataLoader( {}, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
+			.resolves.toStrictEqual( mapdata );
+		expect( mwApiExecute ).toHaveBeenCalledWith( expectedRequest );
 	} );
 
 	// Page is missing, no GeoJSON present, or Kartographer mapdata API is disabled.
-	test( 'handles missing mapdata', async () => {
+	test( 'handles missing mapdata', () => {
 		const mockResponse = {
 			query: {
 				pages: [
@@ -67,26 +60,26 @@ describe( 'mapdataLoader', () => {
 				]
 			}
 		};
-		mockMWApi.prototype.execute = jest.fn( () => ( {
-			then: jest.fn( ( cb ) => cb( mockResponse ) )
-		} ) );
+		const mwApiExecute = jest.fn()
+			.mockResolvedValue( mockResponse );
+		const MWApi = jest.fn()
+			.mockReturnValue( { execute: mwApiExecute } );
 		const req = { logger: { log: jest.fn() } };
 
-		await mapdataLoader( req, 'https', 'api.test', pageTitle, true, groupId )
-			.then( ( geoJSON ) => {
-				expect( geoJSON ).toStrictEqual( { features: [], type: 'FeatureCollection' } );
-			} );
+		expect( mapdataLoader( req, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
+			.resolves.toStrictEqual( { features: [], type: 'FeatureCollection' } );
 	} );
 
-	test( 'handles API exception', async () => {
+	test.skip( 'handles API exception', async () => {
 		const error = 'mwapi-test-error';
 		const req = { logger: { log: jest.fn() } };
-		mockMWApi.prototype.execute = jest.fn( () => ( {
-			then: jest.fn( () => { throw new Error( error ); } )
-		} ) );
+		const mwApiExecute = jest.fn()
+			.mockRejectedValue( new Error( error ) );
+		const MWApi = jest.fn()
+			.mockReturnValue( { execute: mwApiExecute } );
 
-		expect( () => mapdataLoader( req, 'https', 'api.test', pageTitle, true, groupId ) )
-			.toThrowError( error );
+		expect( () => mapdataLoader( req, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
+			.toThrow( error );
 	} );
 
 	test( 'handles null mapdata', async () => {
@@ -104,11 +97,12 @@ describe( 'mapdataLoader', () => {
 				]
 			}
 		};
-		mockMWApi.prototype.execute = jest.fn( () => ( {
-			then: jest.fn( ( cb ) => cb( mockResponse ) )
-		} ) );
+		const mwApiExecute = jest.fn()
+			.mockResolvedValue( mockResponse );
+		const MWApi = jest.fn()
+			.mockReturnValue( { execute: mwApiExecute } );
 
-		expect( () => mapdataLoader( {}, 'https', 'api.test', pageTitle, true, groupId ) )
+		expect( mapdataLoader( {}, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
 			.rejects.toThrow( 'Bad GeoJSON - is null' );
 	} );
 } );
