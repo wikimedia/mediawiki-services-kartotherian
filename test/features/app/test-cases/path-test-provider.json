@@ -11,8 +11,56 @@
 			}
 		}
 	},
+	"/osm-intl/11/828/655.jpeg": {
+		"title": "get a tile in the middle of the ocean as jpeg",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/jpeg"
+			},
+			"body": {
+				"type": "jpeg"
+			}
+		}
+	},
+	"/osm-intl/11/828/655.svg": {
+		"title": "get a tile in the middle of the ocean as svg",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/svg+xml"
+			},
+			"body": {
+				"type": "svg"
+			}
+		}
+	},
+	"/osm-intl/11/828/655.json": {
+		"title": "get titledata from the middle of the ocean as json",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "application/json; charset=utf-8"
+			},
+			"body": {
+				"type": "json"
+			}
+		}
+	},
 	"/osm-intl/11/828/655@1.5x.png": {
-		"title": "default scaled tile",
+		"title": "get a tile in the middle of the ocean scaled",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
+	"/osm-intl/11/828/655.png?lang=de": {
+		"title": "get a tile in the middle of the ocean with custom language",
 		"response": {
 			"status": 200,
 			"headers": {
@@ -124,6 +172,18 @@
 			},
 			"body": {
 				"type": "png"
+			}
+		}
+	},
+	"/img/osm-intl,1,0.0,0.0,100x100.jpeg": {
+		"title": "Small stiched static map as jpeg",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/jpeg"
+			},
+			"body": {
+				"type": "jpeg"
 			}
 		}
 	},
