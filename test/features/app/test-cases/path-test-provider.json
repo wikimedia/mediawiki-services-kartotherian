@@ -71,6 +71,18 @@
 			}
 		}
 	},
+	"/osm/11/828/655.png": {
+		"title": "get a tile in the middle of the ocean without any language labels",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
 	"/osm-intl/info.json": {
 		"title": "tile service info for osm-intl",
 		"response": {
@@ -189,6 +201,18 @@
 	},
 	"/img/osm-intl,1,0.0,0.0,100x100@2x.png": {
 		"title": "Small stiched static map scaled",
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "image/png"
+			},
+			"body": {
+				"type": "png"
+			}
+		}
+	},
+	"/img/osm,1,0.0,0.0,100x100.png": {
+		"title": "Small stiched static map without any language labels",
 		"response": {
 			"status": 200,
 			"headers": {
