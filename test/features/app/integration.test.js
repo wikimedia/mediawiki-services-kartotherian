@@ -7,11 +7,22 @@ const pathTestsJson = require( './test-cases/path-test-provider.json' );
 
 const server = new Server();
 
-function isPng( buffer ) {
-	if ( !buffer || buffer.length < 8 ) {
-		return false;
-	}
-	return buffer.toString( 'binary', 0, 8 ) === '\x89PNG\r\n\x1A\n';
+function validatePng( buffer ) {
+	assert.isAtLeast( buffer.length, 8 );
+	assert.strictEqual( buffer.toString( 'binary', 0, 8 ), '\x89PNG\r\n\x1A\n' );
+}
+
+function validateJpeg( buffer ) {
+	assert.isAtLeast( buffer.length, 4 );
+	assert.strictEqual( buffer.toString( 'binary', 0, 4 ), '\xFF\xD8\xFF\xE0' );
+}
+
+function validateSvg( buffer ) {
+	assert.isAtLeast( buffer.length, 38 );
+	assert.strictEqual(
+		buffer.toString( 'binary', 0, 38 ),
+		'<?xml version="1.0" encoding="UTF-8"?>'
+	);
 }
 
 function constructTestCase( title, serverUri, path, response ) {
@@ -50,10 +61,24 @@ function validateBody( resBody, expBody ) {
 	assert.isTrue( !!resBody, 'Missing body' );
 
 	if ( Buffer.isBuffer( resBody ) ) {
-		assert.isTrue( resBody.length > 0 );
-		if ( expBody.type === 'png' ) {
-			assert.isTrue( isPng( resBody ) );
+		switch ( expBody.type ) {
+			case 'png':
+				validatePng( resBody );
+				break;
+			case 'jpeg':
+				validateJpeg( resBody );
+				break;
+			case 'svg':
+				validateSvg( resBody );
+				break;
+			default:
+				assert.isAbove( resBody.length, 0 );
 		}
+		return;
+	}
+
+	if ( expBody.type === 'json' ) {
+		assert.strictEqual( JSON.stringify( resBody ).substring( 0, 9 ), '[{"name":' );
 		return;
 	}
 
