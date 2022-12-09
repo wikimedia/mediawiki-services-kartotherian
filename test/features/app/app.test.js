@@ -1,24 +1,26 @@
 'use strict';
 
 const preq = require( 'preq' );
-const rp = require( 'request-promise' );
 const assert = require( '../../utils/assert' );
 const Server = require( '../../utils/server' );
 
-const server = new Server();
+describe( 'express app', function () {
 
-describe( 'express app', () => {
 	jest.setTimeout( 20000 );
+
+	const server = new Server();
 
 	beforeAll( () => server.start() );
 	afterAll( () => server.stop() );
 
-	it( 'should get robots.txt', () => preq.get( {
-		uri: `${server.config.uri}robots.txt`
-	}, 20000 ).then( ( res ) => {
-		assert.status( res, 200 );
-		assert.strictEqual( res.body, 'User-agent: *\nDisallow: /' );
-	} ) );
+	it( 'should get robots.txt', () => {
+		return preq.get( {
+			uri: `${server.config.uri}robots.txt`
+		} ).then( ( res ) => {
+			assert.deepEqual( res.status, 200 );
+			assert.deepEqual( res.body, 'User-agent: *\nDisallow: /' );
+		} );
+	} );
 
 	it( 'should set CORS headers', () => {
 		if ( server.config.service.conf.cors === false ) {
@@ -27,45 +29,52 @@ describe( 'express app', () => {
 		return preq.get( {
 			uri: `${server.config.uri}robots.txt`
 		} ).then( ( res ) => {
-			assert.status( res, 200 );
-			assert.strictEqual( res.headers[ 'access-control-allow-origin' ], '*' );
-			assert.isTrue( !!res.headers[ 'access-control-allow-headers' ] );
-			assert.isTrue( !!res.headers[ 'access-control-expose-headers' ] );
+			assert.deepEqual( res.status, 200 );
+			assert.deepEqual( res.headers[ 'access-control-allow-origin' ], '*' );
+			assert.deepEqual( !!res.headers[ 'access-control-allow-headers' ], true );
+			assert.deepEqual( !!res.headers[ 'access-control-expose-headers' ], true );
 		} );
-	}, 20000 );
+	} );
 
-	it( 'should set CSP headers', () => preq.get( {
-		uri: `${server.config.uri}robots.txt`
-	} ).then( ( res ) => {
-		const cspHeader = "default-src 'self'; object-src 'none'; media-src 'none'; style-src 'self'; script-src 'self'; frame-ancestors 'self'";
-		assert.status( res, 200 );
-		assert.strictEqual( res.headers[ 'x-xss-protection' ], '1; mode=block' );
-		assert.strictEqual( res.headers[ 'x-content-type-options' ], 'nosniff' );
-		assert.strictEqual( res.headers[ 'x-frame-options' ], 'SAMEORIGIN' );
-		assert.strictEqual( res.headers[ 'content-security-policy' ], cspHeader );
-		assert.strictEqual( res.headers[ 'x-content-security-policy' ], cspHeader );
-		assert.strictEqual( res.headers[ 'x-webkit-csp' ], cspHeader );
-	} ), 20000 );
+	it( 'should set CSP headers', () => {
+		if ( server.config.service.conf.csp === false ) {
+			return true;
+		}
+		return preq.get( {
+			uri: `${server.config.uri}robots.txt`
+		} ).then( ( res ) => {
+			assert.deepEqual( res.status, 200 );
+			assert.deepEqual( res.headers[ 'x-xss-protection' ], '1; mode=block' );
+			assert.deepEqual( res.headers[ 'x-content-type-options' ], 'nosniff' );
+			assert.deepEqual( res.headers[ 'x-frame-options' ], 'SAMEORIGIN' );
+			assert.deepEqual( res.headers[ 'content-security-policy' ], 'default-src \'self\'; object-src \'none\'; media-src \'none\'; img-src \'none\'; style-src \'none\'; base-uri \'self\'; frame-ancestors \'self\'' );
+		} );
+	} );
 
-	it( 'should get static content gzipped', () => rp( {
-		uri: `${server.config.uri}index.html`,
-		headers: {
-			'accept-encoding': 'gzip, deflate'
-		},
-		resolveWithFullResponse: true
-	}, 20000 ).then( ( res ) => {
-		// check that the response is gzip-ed
-		assert.strictEqual( res.headers[ 'content-encoding' ], 'gzip', 'Expected gzipped contents!' );
-	} ) );
+	it( 'should get static content gzipped', () => {
+		return preq.get( {
+			uri: `${server.config.uri}static/index.html`,
+			headers: {
+				'accept-encoding': 'gzip, deflate'
+			}
+		} ).then( ( res ) => {
+			assert.deepEqual( res.status, 200 );
+			// if there is no content-length, the reponse was gzipped
+			assert.deepEqual( res.headers[ 'content-length' ], undefined,
+				'Did not expect the content-length header!' );
+		} );
+	} );
 
-	it( 'should get static content uncompressed', () => rp( {
-		uri: `${server.config.uri}index.html`,
-		headers: {
-			'accept-encoding': ''
-		},
-		resolveWithFullResponse: true
-	}, 20000 ).then( ( res ) => {
-		// check that the response is gzip-ed
-		assert.isUndefined( res.headers[ 'content-encoding' ], 'Did not expect gzipped contents!' );
-	} ) );
+	it( 'should get static content uncompressed', () => {
+		return preq.get( {
+			uri: `${server.config.uri}static/index.html`,
+			headers: {
+				'accept-encoding': ''
+			}
+		} ).then( ( res ) => {
+			const contentEncoding = res.headers[ 'content-encoding' ];
+			assert.deepEqual( res.status, 200 );
+			assert.deepEqual( contentEncoding, undefined, 'Did not expect gzipped contents!' );
+		} );
+	} );
 } );

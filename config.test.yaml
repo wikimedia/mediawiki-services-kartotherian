@@ -117,3 +117,11 @@ services:
       #     - wikiversity.org
       #     - wikivoyage.org
       #     - wiktionary.org
+
+      # the template used for contacting the MW API
+      mwapi_req:
+        method: post
+        uri: https://{{domain}}/w/api.php
+        headers:
+          user-agent: "{{user-agent}}"
+        body: "{{ default(request.query, {}) }}"
