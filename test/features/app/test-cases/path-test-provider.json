@@ -42,9 +42,27 @@
 			"headers": {
 				"content-type": "application/json; charset=utf-8"
 			},
-			"body": {
-				"type": "json"
-			}
+			"body": [
+				{
+					"name": "water",
+					"extent": 4096,
+					"version": 2,
+					"features": [
+						{
+							"id": 183449,
+							"type": 3,
+							"properties": {},
+							"geometry": [ 9, 8704, 8172, 26, 0, 532, 9215, 0, 0, 531, 15 ]
+						},
+						{
+							"id": 183450,
+							"type": 3,
+							"properties": {},
+							"geometry": [ 9, 8704, 511, 26, 0, 8724, 9215, 0, 0, 8723, 15 ]
+						}
+					]
+				}
+			]
 		}
 	},
 	"/osm-intl/11/828/655@1.5x.png": {
@@ -93,17 +111,8 @@
 			"body": {
 				"tilejson": "2.1.0",
 				"attribution": "<a href='https://www.openstreetmap.org/copyright' target='_blank'>&copy; OpenStreetMap</a> <a href='https://www.openstreetmap.org/fixthemap' target='_blank'>Improve this map</a>",
-				"bounds": [
-					-180,
-					-85.0511,
-					180,
-					85.0511
-				],
-				"center": [
-					-69.4336,
-					59.1309,
-					3
-				],
+				"bounds": [ -180, -85.0511, 180, 85.0511 ],
+				"center": [ -69.4336, 59.1309, 3 ],
 				"format": "png8:m=h",
 				"maxzoom": 18,
 				"minzoom": 0,
@@ -257,10 +266,7 @@
 						"properties": {},
 						"geometry": {
 							"type": "Point",
-							"coordinates": [
-								13.409444444,
-								52.520833333
-							]
+							"coordinates": [ 13.409444444, 52.520833333 ]
 						}
 					}
 				]

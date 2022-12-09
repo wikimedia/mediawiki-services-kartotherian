@@ -77,11 +77,6 @@ function validateBody( resBody, expBody ) {
 		return;
 	}
 
-	if ( expBody.type === 'json' ) {
-		assert.strictEqual( JSON.stringify( resBody ).substring( 0, 9 ), '[{"name":' );
-		return;
-	}
-
 	if ( expBody.constructor !== resBody.constructor ) {
 		if ( expBody.constructor === String ) {
 			resBody = JSON.stringify( resBody );
