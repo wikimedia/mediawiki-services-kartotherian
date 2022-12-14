@@ -49,12 +49,12 @@ At this point, only "pin" is supported for the base. The color is a 3 digit or 6
 
 ## Very quick start
 
-```
+```shell
 git clone https://github.com/kartotherian/kartotherian.git  # Clone the repository
 cd kartotherian
 ```
 
-```
+```shell
 npm install
 node server.js -c config.external.yaml
 ```
@@ -156,12 +156,12 @@ Since sometimes not everything can be added as query parameters to the URI, ther
 Values can either be hardcoded as strings/numbers/booleans, or can be calculated on the fly.
 
 A simple source configuration to set up a tile storage as files in the ./vectors dir:
-```
+```yaml
 filestore:
     uri: file://./vectors
 ```
 The path can also be set via a parameter:
-```
+```yaml
 filestore:
     uri: file://
     pathname: ./vectors
@@ -169,7 +169,7 @@ filestore:
 The value does not have to be given in the source, but instead could be dynamically generated.
 For example, the `env` uses an environment variable, and the `var` generator pulls the value from the variable store.
 The variables are defined in a separate file(s), similar to sources.
-```
+```yaml
 filestore:
     uri: file://
     pathname: {env: KARTOTHERIAN_PATH}  # Uses an environment variable
@@ -178,7 +178,7 @@ filestore:
 ```
 
 More parameters can be set using `params` - a set of additional values to be set in URI:
-```
+```yaml
 oz:
   # "overzoom:" is a tile source that will attempt to get a tile from another source,
   # and if tile is missing, attempt to get a portion of the lower-zoom tile.
@@ -204,7 +204,7 @@ The `xml` parameter is used to load and alter XML for some sources like
 [tilelive-vector](https://github.com/mapbox/tilelive-vector) (Style VectorTile → PNG).
 The `xml` field must evaluate to the xml file path.
 
-```
+```yaml
 gen:                # The name of the source (could be referenced later)
   uri: bridge://    # Required - the URI used to construct the source
   xml:              # Init source with this xml instead of the URI's other parameters
@@ -222,7 +222,7 @@ gen:                # The name of the source (could be referenced later)
 ```
 
 * `xmlSetAttrs` - for xml, overrides the attributes of the root element with the new ones. For example, you may change the font directory of the `<Map>` element:
-```
+```yaml
 s2:
   uri: vector://
   xml:
@@ -232,7 +232,7 @@ s2:
     font-directory: {npmpath: ["osm-bright-fonts", "fonts/"]}
 ```
 * `xmlSetParams` - for xml, overrides the top level `<Parameters>` values with the new ones. For example, the `vector` source requires xml stylesheet to point to the proper source of PBFs:
-```
+```yaml
 s2:
   public: true
   uri: vector://
@@ -243,7 +243,7 @@ s2:
     source: {ref: gen}                          # set source parameter to the 'gen' source
 ```
 * `xmlLayers` - keep all non-layer data, but only keep those layers that are listed in this value (whitelist):
-```
+```yaml
 s2:
   public: true
   uri: vector://
@@ -253,7 +253,7 @@ s2:
   xmlLayers: ['landuse', 'road']                # Only include these layers when rendering
 ```
 * `xmlExceptLayers` - same as `xmlLayers`, but instead of whitelisting, blacklist (allow all except these):
-```
+```yaml
 s2:
   public: true
   uri: vector://
@@ -289,7 +289,7 @@ See https://github.com/kartotherian/kartotherian
 
 To configure, add `geoshapes` section to the kartotherian configuration with the following parameters:
 
-```
+```yaml
 geoshapes:
   host: localhost
   database: gis
@@ -305,7 +305,7 @@ geoshapes:
 Without this config block, the service will skip its loading
 
 Make sure to create a Postgres index, e.g.:
-```
+```sql
 CREATE INDEX planet_osm_polygon_wikidata
   ON planet_osm_polygon ((tags -> 'wikidata'))
   WHERE tags ? 'wikidata';
@@ -357,13 +357,13 @@ For Linux, installation via the instructions at https://nodejs.org/en/download/p
 ### Install other software dependencies
 
 On Ubuntu these can be installed with
-```
+```shell
 sudo apt-get install git unzip curl build-essential sqlite3 pkg-config libcairo2-dev libjpeg-dev libgif-dev libmapnik-dev
 ```
 
 ### Clone the repo and install npm dependencies
 
-```
+```shell
 git clone https://github.com/kartotherian/kartotherian.git
 cd kartotherian
 npm install
@@ -376,7 +376,7 @@ Set up osm-bright.tm2source as described in [its documentation.](https://github.
 osm-bright.tm2source is installed in `node_modules/osm-bright-source`
 
 ### Edit Kartotherian configuration - config.yaml
-```
+```yaml
 # 0 - one instance, 1+ - multi-instance with autorestart, ncpu - multi-instance, one per CPU
 num_workers: 0
 
@@ -399,7 +399,7 @@ Use one of the config files, or update them, and make a link config.yaml to it.
 
 ### Add Varnish caching layer (optional)
 Might require caching headers added to the source/config.
-```
+```shell
 # From https://www.varnish-cache.org/installation/debian
 sudo -Hi
 apt-get install apt-transport-https
@@ -430,7 +430,7 @@ Edit /etc/systemd/system/varnish.service - set proper listening port (80) and ca
 ExecStart=/usr/sbin/varnishd -a :80 -T localhost:6082 -f /etc/varnish/default.vcl -S /etc/varnish/secret -s malloc,4g
 ```
 In bash:
-```
+```shell
 systemctl daemon-reload  # because we changed the .service file
 systemctl restart varnish.service
 systemctl status varnish.service  # check the service started with the right params
@@ -438,7 +438,7 @@ varnishstat  # monitor varnish performance
 ```
 
 ### Run Karthotherian:
-```
+```shell
 npm start
 ```
 In browser, navigate to `http://localhost:6533/`.
@@ -447,7 +447,7 @@ In browser, navigate to `http://localhost:6533/`.
 
 In a lot of cases when there is an issue with node it helps to recreate the
 `node_modules` directory:
-```
+```shell
 rm -r node_modules
 npm install
 ```

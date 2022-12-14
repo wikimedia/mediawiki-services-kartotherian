@@ -34,7 +34,7 @@ with the following outline:
 
 Furthermore, it is assumed that you have initialised the deploy repository:
 
-```bash
+```shell
 $ cd ~/code/deploy
 $ git review -s
 $ touch README.md
@@ -74,7 +74,7 @@ build the npm module dependencies. The `_all` field denotes packages which
 should be installed regardless of the target distribution, but you can add
 other, distribution-specific package lists, e.g.:
 
-```javascript
+```json
 "deploy": {
   "target": "ubuntu",
   "node": "system",
@@ -101,13 +101,13 @@ repository**.
 The script needs to know where to find your local copy of the deploy repository.
 To that end, when in your source repository, run:
 
-```
+```shell
 git config deploy.dir /absolute/path/to/deploy/repo
 ```
 
 Using the aforementioned local outline, you would type:
 
-```
+```shell
 git config deploy.dir /home/YOU/code/deploy
 ```
 
@@ -115,7 +115,7 @@ The source repository is itself a submodule of the deploy repository. If its
 name as specified in `package.json`'s `name` field does not match the actual
 repository's name in Gerrit, run:
 
-```
+```shell
 git config deploy.name name_in_gerrit
 ```
 
@@ -125,7 +125,7 @@ repository. If, however, you do not use MediaWiki's Gerrit installation to host
 your repository, you can specify a different one using the `deploy.submodule`
 configuration directive by supplying the full remote reference URL:
 
-```
+```shell
 git config deploy.submodule https://github.com/your_team/repo_name
 ```
 
@@ -133,7 +133,7 @@ The deploy-repo builder script assumes the name of the remote to check out in
 the deploy repository is `origin`. An alternative name can be configured by
 invoking (in the source repository):
 
-```
+```shell
 git config deploy.remote deploy_repo_remote_name
 ```
 
@@ -142,7 +142,7 @@ git config deploy.remote deploy_repo_remote_name
 Before updating the deploy repository you need to make sure your configuration
 works as expected. To do that, in your source repository run:
 
-```
+```shell
 ./server.js docker-test
 ```
 
@@ -155,13 +155,13 @@ everything works as expected (and commit those changes).
 The final step is updating the deploy repository. First. make sure that your
 source repository has got the latest dependencies installed:
 
-```
+```shell
 rm -rf node_modules/ && npm install
 ```
 
 Update the deploy repository by running from the source repository:
 
-```
+```shell
 ./server.js build --deploy-repo
 ```
 
@@ -176,7 +176,7 @@ The script will:
 There is also a handy shortcut for sending the patch to Gerrit immediately. To
 do so, add the `--review` argument to the call:
 
-```
+```shell
 ./server.js build --deploy-repo --review
 ```
 
@@ -184,7 +184,7 @@ Note that if no changes were made to the source repository, the script aborts
 its execution. If, nevertheless, you need to rebuild the dependencies, you can
 do so using:
 
-```
+```shell
 ./server.js build --deploy-repo --force
 ```
 

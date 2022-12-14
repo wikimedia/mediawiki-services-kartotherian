@@ -12,14 +12,14 @@ used for managing and publishing modules.
 The template (and your future service) needs its dependencies to be present.
 Install them with:
 
-```
+```shell
 npm install
 ```
 
 Sometimes the configuration can get a bit messed up you may experience strange
 *npm*-related errors when running your service. The remedy is:
 
-```
+```shell
 rm -rf node_modules
 npm install
 ```
@@ -27,7 +27,7 @@ npm install
 If you need to add a dependency, this will install it and add it your
 `package.json`:
 
-```
+```shell
 npm install --save <name_of_module>
 ```
 
@@ -36,19 +36,19 @@ npm install --save <name_of_module>
 The template comes with some handy `npm` tasks. To start your service based on
 the configuration in `config.yaml`, use simply:
 
-```
+```shell
 npm start
 ```
 
 Starting unit tests is as easy as:
 
-```
+```shell
 npm test
 ```
 
 A code coverage utility is also available:
 
-```
+```shell
 npm run-script coverage
 ```
 
@@ -65,7 +65,7 @@ or [boot2docker](http://boot2docker.io/) in case of OSX/Windows hosts.
 
 To start your service in the container, execute:
 
-```
+```shell
 npm run-script docker-start
 ```
 
@@ -74,13 +74,13 @@ the full image and then starts the service.
 
 If you want to test your service instead, use:
 
-```
+```shell
 npm run-script docker-test
 ```
 
 Similarly, to run code coverage, run:
 
-```
+```shell
 npm run-script docker-cover
 ```
 
@@ -88,7 +88,7 @@ npm run-script docker-cover
 need to prefix the commands with `sudo`. If you are on a Ubuntu box, you may
 circumvent that by adding yourself to the `docker` group:
 
-```
+```shell
 sudo gpasswd -a <your_username> docker
 ```
 

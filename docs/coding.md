@@ -19,7 +19,7 @@ All of the routes are read from the [routes directory](../routes) and are
 automatically mounted on start-up. The first step is to create a new route file
 by copying the [route template](../routes/empty.js.template):
 
-```bash
+```shell
 $ cd routes
 $ cp empty.js.template people.js
 ```
