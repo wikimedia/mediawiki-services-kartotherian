@@ -28,8 +28,8 @@ with the following outline:
 
 ```
 ~/code/
-  |- your-service
-  -- deploy
+  ├─ your-service
+  └─ deploy
 ```
 
 Furthermore, it is assumed that you have initialised the deploy repository:

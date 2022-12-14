@@ -38,16 +38,16 @@ to reason about the API. As an example, consider
 
 ```
 /{domain}
-  -- /v1
-     |- /page
-     |  |- /title
-     |  |- /html
-     |  |- /data-parsoid
-     |  -- /revision
-     -- /transform
-        |- /html/to/wikitext
-        |- /wikitext/to/html
-        -- /html/to/html
+  └─ /v1
+     ├─ /page
+     │  ├─ /title
+     │  ├─ /html
+     │  ├─ /data-parsoid
+     │  └─ /revision
+     └─ /transform
+        ├─ /html/to/wikitext
+        ├─ /wikitext/to/html
+        └─ /html/to/html
 ```
 
 The API is grouped in two *sections* - `page` and `transform`. The former
