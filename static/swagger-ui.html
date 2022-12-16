@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Kartotherian API Documentation</title>
+    <link rel="stylesheet" type="text/css" href="?doc&path=./swagger-ui.css" />
+    <link rel="stylesheet" type="text/css" href="?doc&path=./index.css" />
+    <link rel="icon" type="image/png" href="?doc&path=./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="?doc&path=./favicon-16x16.png" sizes="16x16" />
+	<style>
+		/* Removes Swagger's image from the header bar */
+		.topbar-wrapper .link img {
+			display: none;
+		}
+		/* Adds the application's name in the header bar */
+		.topbar-wrapper .link::after {
+			content: "Kartotherian";
+		}
+		/* Removes input field and explore button from header bar */
+		.swagger-ui .topbar .download-url-wrapper {
+			display: none;
+		}
+		/* Modifies the font in the information area */
+		.swagger-ui .info li, .swagger-ui .info p, .swagger-ui .info table, .swagger-ui .info a {
+			font-size: 16px;
+			line-height: 1.4em;
+		}
+		/* Removes authorize button and section */
+		.scheme-container {
+			display: none
+		}
+	</style>
+  </head>
+
+  <body>
+    <div id="swagger-ui"></div>
+    <script src="?doc&path=./swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="?doc&path=./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script>
+		window.onload = function () {
+			window.ui = SwaggerUIBundle({
+				url: "/?spec",
+				dom_id: '#swagger-ui',
+				docExpansion: 'none',
+				defaultModelsExpandDepth: -1,
+				validatorUrl: null,
+				displayRequestDuration: true,
+				deepLinking: true,
+				presets: [
+					SwaggerUIBundle.presets.apis,
+					SwaggerUIStandalonePreset
+				],
+				plugins: [
+					SwaggerUIBundle.plugins.DownloadUrl
+				],
+				layout: "StandaloneLayout"
+			});
+		}
+	</script>
+  </body>
+</html>

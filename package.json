@@ -72,6 +72,8 @@
 		"preq": "^0.5.2",
 		"quadtile-index": "^0.0.6",
 		"service-runner": "^2.9.0",
+		"swagger-router": "^0.7.4",
+		"swagger-ui-dist": "^4.10.3",
 		"tilelive-http": "~0.13.0",
 		"tilelive-promise": "^2.0.0",
 		"tilelive-tmstyle": "0.8.0",

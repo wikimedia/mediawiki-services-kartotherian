@@ -7,11 +7,11 @@ const OpenAPISchemaValidator = require( 'openapi-schema-validator' ).default;
 const yaml = require( 'js-yaml' );
 const fs = require( 'fs' );
 
-const validator = new OpenAPISchemaValidator( { version: 2 } );
+const validator = new OpenAPISchemaValidator( { version: 3 } );
 
 const server = new Server();
 
-describe( 'Swagger spec', () => {
+describe( 'OpenAPI spec', () => {
 	const specYaml = yaml.safeLoad( fs.readFileSync( `${__dirname}/../../../spec.yaml` ) );
 	jest.setTimeout( 20000 );
 
@@ -27,12 +27,12 @@ describe( 'Swagger spec', () => {
 
 	it( 'should expose valid OpenAPI spec', () => preq.get( { uri: `${server.config.uri}?spec` } )
 		.then( ( res ) => {
-			assert.deepEqual( { errors: [] }, validator.validate( res.body ), 'Spec must have no validation errors' );
+			assert.deepEqual( validator.validate( res.body ), { errors: [] }, 'Spec must have no validation errors' );
 		} ) );
 
 	it( 'should be valid', () => {
 		// check the high-level attributes
-		[ 'info', 'swagger', 'paths' ].forEach( ( prop ) => {
+		[ 'info', 'openapi', 'paths' ].forEach( ( prop ) => {
 			assert.isTrue( !!specYaml[ prop ], `No ${prop} field present!` );
 		} );
 		// no paths - no love
