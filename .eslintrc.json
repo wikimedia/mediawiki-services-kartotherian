@@ -1,14 +1,25 @@
 {
 	"root": true,
-	"extends": "wikimedia/server",
-	"parserOptions": {
-		"ecmaVersion": 2018
-	},
+	"extends": [
+		"wikimedia/server",
+		"wikimedia/jsdoc"
+	],
 	"rules": {
+		"array-bracket-spacing": "off",
+		"camelcase": "off",
+		"computed-property-spacing": "off",
+		"no-multi-spaces": "off",
+		"no-undefined": "off",
 		"no-underscore-dangle": "off",
 		"max-statements-per-line": [ "error", { "max": 2 } ],
-		"camelcase": "off",
-
-		"jsdoc/no-undefined-types": "off"
-	}
+		"jsdoc/no-undefined-types": "off",
+		"es-x/no-symbol-prototype-description": "off",
+		"es-x/no-hashbang": "off"
+	},
+	"overrides": [
+		{
+			"files": [ "**/*.json", "**/*.jsonc" ],
+			"extends": "wikimedia/json"
+		}
+	]
 }
