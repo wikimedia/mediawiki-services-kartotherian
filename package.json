@@ -7,16 +7,17 @@
 	"main": "./app.js",
 	"scripts": {
 		"start": "service-runner",
-		"lint": "eslint . && stylelint **/*.css",
+		"lint": "eslint --max-warnings 0 . && stylelint **/*.css",
 		"lint:fix": "eslint --fix . && stylelint --fix **/*.css",
 		"test": "npm run lint && jest --maxWorkers=1",
 		"docker-start": "service-runner docker-start",
 		"docker-test": "service-runner docker-test",
+		"test-build": "service-runner docker-test && service-runner build --deploy-repo --force",
 		"coverage": "jest --coverage --maxWorkers=1"
 	},
 	"description": "Kartotherian - a suite of map tile rendering and map serving software",
 	"license": "Apache-2.0",
-	"repository": "kartotherian/kartotherian",
+	"repository": "wikimedia/mediawiki-services-kartotherian",
 	"bugs": "https://phabricator.wikimedia.org/tag/maps/",
 	"homepage": "https://github.com/kartotherian/kartotherian",
 	"keywords": [
