@@ -26,7 +26,7 @@ Kartotherian can serve vector and raster tiles in multiple formats and optional 
 * Supported formats include PNG ang JPEG, SVG, PBF vectors, and JSON (with `nogeo` and `summary` debug options)
 
 ### Static map images
-Kartotherian supports static image generation. Users may request a PNG or a JPEG snapshot image of any size, scaling, and zoom level:
+Kartotherian supports static image generation. Users may request a PNG or a JPEG snapshot image of any size, scaling (only those enabled in the source, e.g. `[1.5, 2]`), and zoom level:
 
     http://.../img/{source},{zoom},{lat},{lon},{width}x{height}[@{scale}x].{format}
 
@@ -35,6 +35,8 @@ Kartotherian supports static image generation. Users may request a PNG or a JPEG
 
     # the same but for higher DPI device with 1.5 scaling
     http://.../img/osm-intl,4,42,-3.14,800x600@1.5x.png
+
+* Note, that static images that include overlays like markers or geoshapes do only support 2x scaling.
 
 ### Info data
 Kartotherian can be used as a source of the PBF data for Mapbox studio. See info about style editing in  [osm-bright-source](https://github.com/kartotherian/osm-bright.tm2/blob/master/README.md). The info data is available at `http://.../{style}/pbfinfo.json` for pbf source, and `http://.../{style}/info.json` for the styled image source.

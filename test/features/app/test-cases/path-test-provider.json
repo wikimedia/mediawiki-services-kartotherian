@@ -208,7 +208,7 @@
 			}
 		}
 	},
-	"/img/osm-intl,1,0.0,0.0,100x100@2x.png": {
+	"/img/osm-intl,1,0.0,0.0,100x100@1.5x.png": {
 		"title": "Small stiched static map scaled",
 		"response": {
 			"status": 200,
