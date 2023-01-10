@@ -1,5 +1,9 @@
+# Limited local copy of tiles from wiki maps service
+local-pbf:
+  uri: file://./test/features/app/data/?filetype=pbf
+
 # Download tiles on the fly from wiki maps service
-gen:
+remote-pbf:
   uri: https://maps.wikimedia.org/osm-pbf/{z}/{x}/{y}.pbf
   setInfo:
     vector_layers:
@@ -19,7 +23,7 @@ gen:
 genall-tegola:
   uri: json2tags://
   params:
-    source: { ref: gen }
+    source: { ref: local-pbf }
     tag: name
 
 # OSM PBF source
@@ -82,4 +86,4 @@ private-info:
   yaml:
     npm: [ "@kartotherian/osm-bright-style", project.yml ]
   yamlSetParams:
-    source: { ref: gen }
+    source: { ref: local-pbf }
