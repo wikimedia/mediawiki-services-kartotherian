@@ -91,7 +91,6 @@
 		"@mapbox/sphericalmercator": "^1.2.0"
 	},
 	"devDependencies": {
-		"ajv": "^8.6.2",
 		"chai": "^4.3.6",
 		"eslint": "^7.32.0",
 		"eslint-config-wikimedia": "^0.20.0",
