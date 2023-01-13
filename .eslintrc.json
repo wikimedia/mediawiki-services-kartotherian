@@ -5,16 +5,10 @@
 		"wikimedia/jsdoc"
 	],
 	"rules": {
-		"array-bracket-spacing": "off",
 		"camelcase": "off",
-		"computed-property-spacing": "off",
-		"no-multi-spaces": "off",
-		"no-undefined": "off",
 		"no-underscore-dangle": "off",
 		"max-statements-per-line": [ "error", { "max": 2 } ],
-		"jsdoc/no-undefined-types": "off",
-		"es-x/no-symbol-prototype-description": "off",
-		"es-x/no-hashbang": "off"
+		"jsdoc/no-undefined-types": "off"
 	},
 	"overrides": [
 		{
