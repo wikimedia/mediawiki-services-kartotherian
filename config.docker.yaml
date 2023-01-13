@@ -107,7 +107,7 @@ services:
 
       allowedDomains:
         http:
-          # These are common development domains, matching subdomains such as dev.wiki.local.wmftest.net
+          # These are common dev domains, matching subdomains such as dev.wiki.local.wmftest.net
           - localhost
           - 127.0.0.1
           - wmflabs.org

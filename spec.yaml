@@ -48,7 +48,7 @@ paths:
         - maptiles
       responses:
         200:
-          description: Renders an image tile for the given source, zoom, and coordinates, with scaling.
+          description: Renders an image tile for the given source, zoom, and coords, with scaling.
           content:
             image/png:
               schema:
