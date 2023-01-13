@@ -97,8 +97,8 @@ describe( 'runWikidataQuery', () => {
 		};
 		const shape = new GeoShapes( { sparqlHeaders: { 'X-Test': 'yes' }, wikidataQueryService: uri } );
 		const returnedPromise = {
-			then: jest.fn( ( result ) => {
-				result( preqResult );
+			then: jest.fn( ( resultCallback ) => {
+				resultCallback( preqResult );
 			} )
 		};
 		mockPreq.get = jest.fn( () => returnedPromise );
@@ -155,8 +155,8 @@ describe( 'runWikidataQuery', () => {
 		};
 		const shape = new GeoShapes( { sparqlHeaders: {}, wikidataQueryService: true } );
 		const returnedPromise = {
-			then: jest.fn( ( result ) => {
-				result( preqResult );
+			then: jest.fn( ( resultCallback ) => {
+				resultCallback( preqResult );
 			} )
 		};
 		mockPreq.get = jest.fn( () => returnedPromise );
