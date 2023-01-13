@@ -20,8 +20,8 @@ logging:
 
 # Prometheus metrics reporter
 metrics:
- - type: prometheus
-   port: 9090
+  - type: prometheus
+    port: 9090
 # Statsd metrics reporter
 #  - type: statsd
 #    host: localhost
