@@ -102,7 +102,8 @@
 		"request-promise": "^4.2.2",
 		"stylelint": "^13.13.1",
 		"stylelint-config-wikimedia": "^0.11.1",
-		"swagger-router": "^0.7.4"
+		"swagger-router": "^0.7.4",
+		"tilelive-file": "^0.0.3"
 	},
 	"deploy": {
 		"node": "10.15.2",

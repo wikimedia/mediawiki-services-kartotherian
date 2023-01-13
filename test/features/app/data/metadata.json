@@ -1,0 +1,37 @@
+{
+	"vector_layers": [
+		{
+			"id": "landuse"
+		},
+		{
+			"id": "waterway"
+		},
+		{
+			"id": "water"
+		},
+		{
+			"id": "aeroway"
+		},
+		{
+			"id": "building"
+		},
+		{
+			"id": "road"
+		},
+		{
+			"id": "admin"
+		},
+		{
+			"id": "country_label"
+		},
+		{
+			"id": "place_label"
+		},
+		{
+			"id": "poi_label"
+		},
+		{
+			"id": "road_label"
+		}
+	]
+}

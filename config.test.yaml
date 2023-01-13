@@ -71,6 +71,7 @@ services:
       sources: sources.test.yaml
 
       modules:
+        - tilelive-file
         - tilelive-http
         - tilelive-tmstyle
         - ../lib/babel
