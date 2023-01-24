@@ -7,8 +7,8 @@ pipelines:
     blubberfile: blubber.yaml
     stages:
       - name: test
-      - name: production-kartotherian
-        build: production-kartotherian
+      - name: production
+        build: production
         publish:
           image:
             tags: [kartotherian]
