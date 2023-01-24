@@ -2,13 +2,10 @@
 actor User
 User -> MediaWiki: action=view
 MediaWiki -> Kartographer: wikitext with <mapframe>
-hnote over Kartographer: can decide to not add revid\n//$wgKartographerVersionedStaticMaps//
 Kartographer -> MediaWiki: <img> with revid in URL
 MediaWiki -> User: HTML
 User -> Kartotherian: image URL with revid
-hnote over Kartotherian: can decide to not forward revid\n//versioned_maps//
 Kartotherian -> Kartographer: geodata API request with revid
-hnote over Kartographer: can decide to ignore revid\n//$wgKartographerVersionedMapdata//
 Kartographer -> Kartotherian: GeoJSON
 Kartotherian -> User : .png
 @enduml
