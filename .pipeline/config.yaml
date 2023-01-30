@@ -3,7 +3,7 @@ pipelines:
     blubberfile: blubber.yaml
     stages:
       - name: test
-  kartotherian:
+  publish:
     blubberfile: blubber.yaml
     stages:
       - name: test
