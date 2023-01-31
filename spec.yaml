@@ -39,6 +39,22 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: Get a tile in the middle of the ocean, with overzoom
+          request:
+            params:
+              src: osm-intl
+              z: 11
+              x: 828
+              y: 655
+              format: png
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
+
   # Tiles handler with scaling
   /{src}/{z}/{x}/{y}@{scale}x.{format}:
     get:
@@ -62,6 +78,22 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: Get a scaled tile
+          request:
+            params:
+              src: osm-intl
+              z: 11
+              x: 828
+              y: 655
+              scale: 1.5
+              format: png
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
   # Source info
   /{src}/info.json:
     get:
@@ -75,6 +107,31 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: Get service info for osm-intl
+          request:
+            params:
+              src: osm-intl
+          response:
+            status: 200
+            headers:
+              content-type: application/json; charset=utf-8
+            body:
+              {
+                "tilejson": "2.1.0",
+                "attribution": '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia maps</a> | Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+                "bounds": [-180, -85.0511, 180, 85.0511],
+                "center": [-69.4336, 59.1309, 3],
+                "format": "png8:m=h",
+                "maxzoom": 19,
+                "minzoom": 0,
+                "name": "osm-intl",
+                "scale": "1",
+                "source": "sourceref:///?ref=babel",
+                "tiles":
+                  ["https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"],
+              }
+
   # Private source info
   /private-info/info.json:
     get:
@@ -88,6 +145,20 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false # keep this x-ample for testing purposes, source doesnt exist in prod
+      x-amples:
+        - title: private tile service info for osm-intl
+          response:
+            status: 400
+            headers:
+              content-type: application/json; charset=utf-8
+            body:
+              {
+                "detail": "Source info is not public",
+                "internalURI": "http://localhost:6533/private-info/info.json",
+                "internalMethod": "get",
+              }
+
   # Maki icon markers (pushpins)
   # /v4/marker/{base}-{size}-{symbol}+{color}.png:
   /v4/marker/pin-m-fuel+ffffff.png:
@@ -100,6 +171,14 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: Get pushpin marker with an icon
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
   # /v4/marker/{base}-{size}-{symbol}+{color}@{scale}x.png:
   /v4/marker/pin-m-fuel+ffffff@2x.png:
     get:
@@ -114,6 +193,14 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: Get scaled pushpin marker with an icon
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
   # /v4/marker/{base}-{size}+{color}.png:
   /v4/marker/pin-m+ffffff.png:
     get:
@@ -125,6 +212,14 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: pushpin marker without an icon
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
   # /v4/marker/{base}-{size}+{color}@{scale}x.png:
   /v4/marker/pin-m+ffffff@2x.png:
     get:
@@ -136,6 +231,14 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: scaled pushpin marker without an icon
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
   # Map snapshots
   /img/{src},{z},{lat},{lon},{w}x{h}.{format}:
     get:
@@ -155,6 +258,23 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: Small stiched static map
+          request:
+            params:
+              src: osm-intl
+              z: 1
+              lat: 0
+              lon: 0
+              w: 100
+              h: 100
+              format: png
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
   /img/{src},{z},{lat},{lon},{w}x{h}@{scale}x.{format}:
     get:
       tags:
@@ -173,6 +293,24 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: Small stiched static map scaled
+          request:
+            params:
+              src: osm-intl
+              z: 1
+              lat: 0
+              lon: 0
+              w: 100
+              h: 100
+              format: png
+              scale: 2
+          response:
+            status: 200
+            headers:
+              content-type: image/png
+            body:
+              type: png
   # geoline service
   /geoline?getgeojson=1&ids={ids}:
     get:
@@ -188,6 +326,15 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: get Moscow geojson
+          request:
+            params:
+              ids: Q649
+          response:
+            status: 200
+            headers:
+              content-type: application/vnd.geo+json; charset=utf-8
   # geoshape service
   /geoshape?getgeojson=1&ids={ids}:
     get:
@@ -203,6 +350,15 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: get Lake Garda geojson
+          request:
+            params:
+              ids: Q6414
+          response:
+            status: 200
+            headers:
+              content-type: application/vnd.geo+json; charset=utf-8
   # geopoint service
   /geopoint?getgeojson=1&ids={ids}:
     get:
@@ -218,6 +374,32 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-amples:
+        - title: get Berliner Fernsehturm geojson
+          request:
+            params:
+              ids: Q151356
+          response:
+            status: 200
+            headers:
+              content-type: application/vnd.geo+json; charset=utf-8
+            body:
+              {
+                "type": "FeatureCollection",
+                "features":
+                  [
+                    {
+                      "type": "Feature",
+                      "id": "Q151356",
+                      "properties": {},
+                      "geometry":
+                        {
+                          "type": "Point",
+                          "coordinates": [13.409444444, 52.520833333],
+                        },
+                    },
+                  ],
+              }
   # from routes/root.js
   /robots.txt:
     get:
@@ -254,7 +436,19 @@ paths:
               schema:
                 type: string
                 format: binary
-      x-monitor: true
+      x-amples:
+        - title: get the service info
+          response:
+            status: 200
+            headers:
+              content-type: application/json; charset=utf-8
+            body:
+              {
+                "name": "kartotherian",
+                "version": "2.0.0",
+                "description": "Kartotherian - a suite of map tile rendering and map serving software",
+                "home": "https://github.com/kartotherian/kartotherian",
+              }
   /_info/name:
     get:
       tags:
