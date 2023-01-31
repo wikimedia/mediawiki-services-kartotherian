@@ -39,6 +39,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: Get a tile in the middle of the ocean, with overzoom
           request:
@@ -78,6 +79,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: Get a scaled tile
           request:
@@ -171,6 +173,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: Get pushpin marker with an icon
           response:
@@ -193,6 +196,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: Get scaled pushpin marker with an icon
           response:
@@ -212,6 +216,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: pushpin marker without an icon
           response:
@@ -231,6 +236,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: scaled pushpin marker without an icon
           response:
@@ -258,6 +264,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: Small stiched static map
           request:
@@ -293,6 +300,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: Small stiched static map scaled
           request:
@@ -326,6 +334,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: get Moscow geojson
           request:
@@ -350,6 +359,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: get Lake Garda geojson
           request:
@@ -374,6 +384,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: false
       x-amples:
         - title: get Berliner Fernsehturm geojson
           request:
@@ -436,6 +447,7 @@ paths:
               schema:
                 type: string
                 format: binary
+      x-monitor: true
       x-amples:
         - title: get the service info
           response:
@@ -445,7 +457,7 @@ paths:
             body:
               {
                 "name": "kartotherian",
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "description": "Kartotherian - a suite of map tile rendering and map serving software",
                 "home": "https://github.com/kartotherian/kartotherian",
               }
