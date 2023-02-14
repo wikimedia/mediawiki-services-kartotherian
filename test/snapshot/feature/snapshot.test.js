@@ -45,26 +45,16 @@ beforeEach( () => mwapiExecute.mockClear() );
 // function wasn't called.
 
 describe( 'unversioned mapdata request', () => {
-	test( 'uses page title when revid parameter is absent', async () => {
-		await callSnapshot( { versioned_maps: false }, overlayQueryParams );
-		expect( mwapiExecute ).toHaveBeenCalledWith( unversionedRequest );
-	} );
-
-	test( 'versioned feature config doesn\'t affect legacy query', async () => {
-		await callSnapshot( { versioned_maps: true }, overlayQueryParams );
+	test( 'versioned feature doesn\'t affect legacy query', async () => {
+		await callSnapshot( {}, overlayQueryParams );
 		expect( mwapiExecute ).toHaveBeenCalledWith( unversionedRequest );
 	} );
 } );
 
 describe( 'versioned mapdata request', () => {
-	test( 'passes through revid parameter when versioned feature enabled', async () => {
-		await callSnapshot( { versioned_maps: true }, { revid: '123', ...overlayQueryParams } );
+	test( 'passes through revid parameter', async () => {
+		await callSnapshot( {}, { revid: '123', ...overlayQueryParams } );
 		expect( mwapiExecute ).toHaveBeenCalledWith( versionedRequest );
-	} );
-
-	test( 'ignores revid parameter when versioned feature disabled', async () => {
-		await callSnapshot( { versioned_maps: false }, { revid: '123', ...overlayQueryParams } );
-		expect( mwapiExecute ).toHaveBeenCalledWith( unversionedRequest );
 	} );
 } );
 
