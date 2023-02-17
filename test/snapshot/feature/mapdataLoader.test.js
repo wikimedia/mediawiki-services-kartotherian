@@ -105,4 +105,33 @@ describe( 'mapdataLoader', () => {
 		expect( mapdataLoader( {}, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
 			.rejects.toThrow( 'Bad GeoJSON - is null' );
 	} );
+
+	test( 'skips failed groups', () => {
+		const req = { logger: { log: jest.fn() } };
+		const mapdata = {
+			properties: {},
+			type: 'Feature'
+		};
+		const mockResponse = {
+			query: {
+				pages: [
+					{
+						pageid: pageId,
+						title: pageTitle,
+						mapdata: JSON.stringify( {
+							bad: null,
+							[ groupId ]: [ mapdata ]
+						} )
+					}
+				]
+			}
+		};
+		const mwApiExecute = jest.fn()
+			.mockResolvedValue( mockResponse );
+		const MWApi = jest.fn()
+			.mockReturnValue( { execute: mwApiExecute } );
+
+		expect( mapdataLoader( req, 'https', 'api.test', pageTitle, false, [ 'bad', groupId ], '', MWApi ) )
+			.resolves.toStrictEqual( mapdata );
+	} );
 } );
