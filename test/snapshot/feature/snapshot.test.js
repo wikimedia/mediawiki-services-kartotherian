@@ -24,7 +24,7 @@ const overlayQueryParams = {
 const unversionedRequest = {
 	action: 'query',
 	formatversion: '2',
-	mpdgroups: 'a|b',
+	mpdgroups: [ 'a', 'b' ],
 	mpdlimit: 'max',
 	prop: 'mapdata',
 	titles: 'Example'
@@ -33,7 +33,7 @@ const unversionedRequest = {
 const versionedRequest = {
 	action: 'query',
 	formatversion: '2',
-	mpdgroups: 'a|b',
+	mpdgroups: [ 'a', 'b' ],
 	mpdlimit: 'max',
 	prop: 'mapdata',
 	revids: '123'

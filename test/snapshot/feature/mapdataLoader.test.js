@@ -20,7 +20,7 @@ describe( 'mapdataLoader', () => {
 			action: 'query',
 			formatversion: '2',
 			mpdlimit: 'max',
-			mpdgroups: groupId,
+			mpdgroups: [ groupId ],
 			prop: 'mapdata',
 			titles: pageTitle
 		};
