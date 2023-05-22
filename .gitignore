@@ -1,6 +1,7 @@
 Dockerfile
 .idea/
 .vscode/
+.DS_Store
 
 coverage
 config.yaml
