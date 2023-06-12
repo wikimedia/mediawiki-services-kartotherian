@@ -1,0 +1,1 @@
+The font PBFs were generated using the scripts and source fonts from https://github.com/openmaptiles/fonts.
