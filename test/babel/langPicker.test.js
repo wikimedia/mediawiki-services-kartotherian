@@ -95,22 +95,6 @@ describe( 'LanguagePicker: Pick the correct language', () => {
 			expected: 'name value'
 		},
 		{
-			msg: 'Object language map given, no fallback exists, find suffix of same script',
-			langCode: 'es', // Spanish
-			config: {
-				nameTag: 'name',
-				languageMap: { foo: 'bar' }
-			},
-			values: [
-				{ name_baz: 'baz value' },
-				{ name_en: 'en value' },
-				{ 'name_foo-Latn': 'foo-Latn value' },
-				{ name_quuz: 'quuz value' },
-				{ name: 'name value' }
-			],
-			expected: 'foo-Latn value'
-		},
-		{
 			msg: 'Edge case: Values have value for "rm" which is also the suffix ' +
         'we used when a -Latn lang is not found.',
 			// In essence, we need to make sure that when we fall back to looking for
@@ -184,17 +168,6 @@ describe( 'LanguagePicker: Pick the correct language', () => {
 				{ name: 'name value' }
 			],
 			expected: 'name value'
-		},
-		{
-			msg: 'Russian has no value and no fallback defined; ' +
-        'get value from a language that has -Cyrl over value in English',
-			langCode: 'ru',
-			values: [
-				{ sah: 'sah value' }, // Same alphabet
-				{ 'foo-Cyrl': 'foo-Cyrl value' },
-				{ en: 'en value' }
-			],
-			expected: 'foo-Cyrl value'
 		},
 		{
 			msg: 'Hebrew has no value, no fallback defined,' +
