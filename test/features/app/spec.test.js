@@ -12,7 +12,7 @@ const validator = new OpenAPISchemaValidator( { version: 3 } );
 const server = new Server();
 
 describe( 'OpenAPI spec', () => {
-	const specYaml = yaml.safeLoad( fs.readFileSync( `${__dirname}/../../../spec.yaml` ) );
+	const specYaml = yaml.load( fs.readFileSync( `${__dirname}/../../../spec.yaml` ) );
 	jest.setTimeout( 20000 );
 
 	beforeAll( () => server.start() );

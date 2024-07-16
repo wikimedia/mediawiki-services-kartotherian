@@ -8,8 +8,8 @@ function test( opts, expected ) {
 	return () => {
 		const options = opts || {};
 		const loader = new YamlLoader( options, ( v ) => v );
-		const actual = loader.update( jsYaml.safeDump( options.yaml ) );
-		assert.strictEqual( actual, jsYaml.safeDump( expected ) );
+		const actual = loader.update( jsYaml.dump( options.yaml ) );
+		assert.strictEqual( actual, jsYaml.dump( expected ) );
 	};
 }
 

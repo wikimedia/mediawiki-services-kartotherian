@@ -81,7 +81,7 @@ services:
         - tilelive-http
         - ../lib/babel
         - ../lib/overzoom
-        - "@kartotherian/tilelive-vector"
+        - "@wikimedia/tilelive-vector"
         - "@mapbox/tilejson"
 
       requestHandlers:
