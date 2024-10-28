@@ -1,0 +1,6 @@
+[submodule "vendor/mapnik"]
+	path = vendor/mapnik
+	url = https://github.com/mapnik/mapnik.git
+[submodule "vendor/node-mapnik"]
+	path = vendor/node-mapnik
+	url = https://github.com/mapnik/node-mapnik.git

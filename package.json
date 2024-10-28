@@ -65,7 +65,7 @@
 		"language-scripts": "^1.0.2",
 		"leaflet": "^1.9.4",
 		"libxmljs": "1.0.11",
-		"mapnik": "~4.5.9",
+		"mapnik": "file:vendor/node-mapnik",
 		"mwapi": "^0.0.10",
 		"pbf": "^3.3.0",
 		"pg-promise": "^11.9.1",
@@ -86,8 +86,8 @@
 		"wd-type-parser": "^0.0.3"
 	},
 	"optionalDependencies": {
-		"bunyan-prettystream": "*",
-		"@mapbox/sphericalmercator": "^1.2.0"
+		"@mapbox/sphericalmercator": "^1.2.0",
+		"bunyan-prettystream": "*"
 	},
 	"devDependencies": {
 		"chai": "^5.1.1",

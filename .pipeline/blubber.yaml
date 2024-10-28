@@ -1,54 +1,90 @@
+# syntax=docker-registry.wikimedia.org/repos/releng/blubber:v0.17.0
 version: v4
-base: docker-registry.wikimedia.org/nodejs18-slim
-lives:
-  in: /srv/service
-runs:
-  environment:
-    APP_BASE_PATH: /srv/service
-    ICU_DATA: /srv/service/node_modules/mapnik/lib/binding/share/icu
-
+base: "docker-registry.wikimedia.org/nodejs20-slim:latest"
 variants:
-  build:
-    base: docker-registry.wikimedia.org/nodejs18-devel
-    apt: { packages: [
-      git,
-      build-essential,
-      pkg-config,
-      python3-dev,
-      fonts-dejavu,
-      libboost-filesystem-dev,
-      libboost-regex-dev,
-      libboost-system-dev,
-      libcairo2-dev,
-      libfreetype6-dev,
-      libgdal-dev,
-      libharfbuzz-dev,
-      libjpeg-dev,
-      libpng-dev,
-      libpq-dev,
-      libproj-dev,
-      libtiff-dev,
-      libwebp-dev,
-      libxml2-dev,
-      libmapbox-variant-dev,
-      libboost-program-options-dev,
-      libboost-thread-dev,
-      libmapnik-dev,
-      mapnik-utils,
-      mapnik-doc,
-      libmapnik3.1
-      ] }
-    node: { requirements: [.] }
-    copies: [local]
-    runs: { environment: { LINK: g++ } }
+  build-apt-dependencies:
+    apt:
+      packages:
+        - build-essential
+        - python3
+        - python3-dev
+        - git
+        - curl
+        - libboost-all-dev
+        - libharfbuzz-dev
+        - libtiff-dev
+        - libicu-dev
+        - zlib1g-dev
+        - libfreetype-dev
+        - libxml2-dev
+        - libpng-dev
+        - libwebp-dev
+        - libproj-dev
+        - libcairo2-dev
+        - libjpeg-dev
+        - libgdal-dev
+  mapnik-build:
+    includes:
+      - build-apt-dependencies
+    builders:
+      - custom:
+          requirements:
+            - source: .
+              destination: .
+          command:
+            - bash /srv/app/scripts/install-mapnik.sh
+  kartotherian-build-dev:
+    includes:
+      - mapnik-build
+    runs:
+      environment:
+        PATH: "$PATH:/opt/lib/mapnik/bin"
+    builders:
+      - node:
+          requirements:
+            - package.json
+            - package-lock.json
+            - vendor/node-mapnik/
+            - vendor/mapnik
+  kartotherian-build-prod:
+    includes:
+      - kartotherian-build-dev
+    builders:
+      - node:
+          env: production
   test:
-    includes: [build]
-    apt: { packages: [ca-certificates] }
-    entrypoint: [npm, test]
-  prep:
-    includes: [build]
-    node: { env: production }
+    includes:
+      - kartotherian-build-dev
+    runs:
+      environment:
+        LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/opt/lib/mapnik/lib"
+    entrypoint: ["npm", "run", "test"]
   production:
-    copies: [prep]
-    node: { env: production }
-    entrypoint: [node, server.js]
+    copies:
+      - from: kartotherian-build-prod
+        source: /srv/app
+        destination: /srv/app
+      - from: kartotherian-build-prod
+        source: /opt/lib/mapnik
+        destination: /opt/lib/mapnik
+    apt:
+      packages:
+        - libboost-all-dev
+        - libharfbuzz-dev
+        - libtiff-dev
+        - libicu-dev
+        - zlib1g-dev
+        - libfreetype-dev
+        - libxml2-dev
+        - libpng-dev
+        - libwebp-dev
+        - libproj-dev
+        - libcairo2-dev
+        - libjpeg-dev
+        - libgdal-dev
+    runs:
+      environment:
+        PATH: "$PATH:/opt/lib/mapnik/bin"
+        LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/opt/lib/mapnik/lib"
+    entrypoint:
+      - service-runner
