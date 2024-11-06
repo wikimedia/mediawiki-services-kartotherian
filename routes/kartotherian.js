@@ -14,6 +14,7 @@ function startup( app ) {
 		return server.init( {
 			core,
 			app,
+			// eslint-disable-next-line security/detect-non-literal-require
 			requestHandlers: app.conf.requestHandlers.map( ( rh ) => require( rh ) )
 		} );
 	} ).return(); // avoid app.js's default route initialization
@@ -23,6 +24,7 @@ startup.bootstrap = function bootstrap( app ) {
 	return Promise.try( () => {
 		core.init(
 			app, pathLib.resolve( __dirname, '..' ),
+			// eslint-disable-next-line security/detect-non-literal-require
 			( module ) => require( module ),
 			( module ) => require.resolve( module )
 		);

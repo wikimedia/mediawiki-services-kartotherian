@@ -25,7 +25,7 @@ babel.initKartotherian( core );
 
 describe( 'Tag recombination', () => {
 	function test2( file, opts, expected ) {
-		const path = pathLib.resolve( __dirname, 'data', `${file}.pbf` );
+		const path = pathLib.resolve( __dirname, 'data', `${ file }.pbf` );
 		let pbfData = fs.readFileSync( path );
 
 		return babel( {
@@ -58,7 +58,7 @@ describe( 'Tag recombination', () => {
 			assert.deepStrictEqual( result.headers, expectedHeaders );
 			if ( typeof expected === 'string' ) {
 				// Binary compare with the stored file
-				const expectedData = fs.readFileSync( pathLib.resolve( __dirname, 'data', `${expected}.pbf` ) );
+				const expectedData = fs.readFileSync( pathLib.resolve( __dirname, 'data', `${ expected }.pbf` ) );
 				assert.deepStrictEqual( resultData, expectedData );
 			} else if ( expected !== undefined ) {
 				// Object compare with the provided JSON

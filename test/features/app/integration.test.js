@@ -1,5 +1,4 @@
 'use strict';
-
 const preq = require( 'preq' );
 const assert = require( '../../utils/assert' );
 const Server = require( '../../utils/server' );
@@ -56,7 +55,9 @@ function constructTests( paths, serverUri ) {
 }
 
 function validateBody( resBody, expBody ) {
-	if ( !expBody ) { return; }
+	if ( !expBody ) {
+		return;
+	}
 
 	assert.isTrue( !!resBody, 'Missing body' );
 
@@ -89,17 +90,19 @@ function validateBody( resBody, expBody ) {
 }
 
 function validateHeader( resHeaders, expHeaders ) {
-	if ( !expHeaders ) { return; }
+	if ( !expHeaders ) {
+		return;
+	}
 
 	assert.isTrue( !!resHeaders, 'Missing headers' );
 
 	Object.keys( expHeaders ).forEach( ( key ) => {
 		assert.isTrue(
 			{}.hasOwnProperty.call( resHeaders, key ),
-			`Header ${key} not found in response!`
+			`Header ${ key } not found in response!`
 		);
 
-		assert.strictEqual( resHeaders[ key ], expHeaders[ key ], `${key} header mismatch!` );
+		assert.strictEqual( resHeaders[ key ], expHeaders[ key ], `${ key } header mismatch!` );
 	} );
 }
 

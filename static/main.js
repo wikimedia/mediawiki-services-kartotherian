@@ -1,27 +1,26 @@
 ( function ( location ) {
 	// Allow user to change style via the ?s=xxx URL parameter
 	// Uses "osm-intl" as the default style
-	var xhr,
-		matchStyle = location.search.match( /s=([^&/]*)/ ),
-		matchScale = location.search.match( /scale=([.0-9]*)/ ),
-		bracketDevicePixelRatio = function bracketDevicePixelRatio() {
-			var i, ratioScale,
-				brackets = [ 1, 1.3, 1.5, 2, 2.6, 3 ],
-				baseRatio = window.devicePixelRatio || 1;
+	const matchStyle = location.search.match( /s=([^&/]*)/ );
+	const bracketDevicePixelRatio = function bracketDevicePixelRatio() {
+		const brackets = [ 1, 1.3, 1.5, 2, 2.6, 3 ];
+		const baseRatio = window.devicePixelRatio || 1;
+		let i, ratioScale;
+		for ( i = 0; i < brackets.length; i++ ) {
+			ratioScale = brackets[ i ];
 
-			for ( i = 0; i < brackets.length; i++ ) {
-				ratioScale = brackets[ i ];
-
-				if ( ratioScale >= baseRatio || ( baseRatio - ratioScale ) < 0.1 ) {
-					return ratioScale;
-				}
+			if ( ratioScale >= baseRatio || ( baseRatio - ratioScale ) < 0.1 ) {
+				return ratioScale;
 			}
-			return brackets[ brackets.length - 1 ];
-		},
-		style = ( matchStyle && matchStyle[ 1 ] ) || 'osm-intl',
+		}
+		return brackets[ brackets.length - 1 ];
+	};
+	const style = ( matchStyle && matchStyle[ 1 ] ) || 'osm-intl';
+	const map = L.map( 'map' ).setView( [ 40.75, -73.96 ], 4 );
+
+	let matchScale = location.search.match( /scale=([.0-9]*)/ ),
 		scale = ( matchScale && parseFloat( matchScale[ 1 ] ) ) || bracketDevicePixelRatio(),
-		scalex = ( scale === 1 ) ? '' : ( scale + 'x' ),
-		map = L.map( 'map' ).setView( [ 40.75, -73.96 ], 4 );
+		scalex = ( scale === 1 ) ? '' : ( scale + 'x' );
 
 	// Create a map
 	map.attributionControl.setPrefix( '' );
@@ -34,11 +33,9 @@
 	 * @param {number} [config.maxzoom=18] Maximum zoom level
 	 */
 	function setupMap( config ) {
-		var layerSettings, defaultSettings,
-			query = '',
-			matchLang = location.search.match( /lang=([-_a-zA-Z]+)/ );
-
-		defaultSettings = {
+		const matchLang = location.search.match( /lang=([-_a-zA-Z]+)/ );
+		let query = '';
+		const defaultSettings = {
 			maxzoom: 18,
 
 			// TODO: This is UI text, and needs to be translatable.
@@ -50,7 +47,7 @@
 		}
 		config = config || {};
 
-		layerSettings = {
+		const layerSettings = {
 			maxZoom: config.maxzoom !== undefined ? config.maxzoom : defaultSettings.maxzoom,
 
 			// TODO: This is UI text, and needs to be translatable.
@@ -68,7 +65,7 @@
 		L.control.scale().addTo( map );
 
 		// Update the zoom level label
-		map.on( 'zoomend', function () {
+		map.on( 'zoomend', () => {
 			document.getElementById( 'zoom-level' ).innerHTML = 'Zoom Level: ' + map.getZoom();
 		} );
 
@@ -80,9 +77,9 @@
 	scale = ( matchScale && parseFloat( matchScale[ 1 ] ) ) || bracketDevicePixelRatio();
 	scalex = ( scale === 1 ) ? '' : ( '@' + scale + 'x' );
 
-	xhr = new XMLHttpRequest();
-	xhr.addEventListener( 'load', function () {
-		var config;
+	const req = new XMLHttpRequest();
+	req.addEventListener( 'load', function () {
+		let config;
 
 		try {
 			config = JSON.parse( this.responseText );
@@ -93,10 +90,10 @@
 		setupMap( config );
 
 	} );
-	xhr.addEventListener( 'error', function () {
+	req.addEventListener( 'error', () => {
 		setupMap( null );
 	} );
 
-	xhr.open( 'GET', '/' + style + '/info.json' );
-	xhr.send();
+	req.open( 'GET', '/' + style + '/info.json' );
+	req.send();
 }( window.location ) );

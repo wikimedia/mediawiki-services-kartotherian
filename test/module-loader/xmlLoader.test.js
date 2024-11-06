@@ -17,12 +17,12 @@ function xml( opts ) {
 	if ( options.source === undefined ) {
 		options.source = '<![CDATA[<a/>]]>';
 	}
-	const source = !options.source ? '' : `<Parameter name="source">${options.source}</Parameter>`;
+	const source = !options.source ? '' : `<Parameter name="source">${ options.source }</Parameter>`;
 
 	const layerOptional = options.excludeOptional ? '' : '<Layer name="layerOptional"><StyleName>Optional</StyleName></Layer>';
 
 	return `<?xml version="1.0" encoding="UTF-8"?>
-<Map srs="abc"${options.attrs || ''}><Parameters><Parameter name="attribution"><![CDATA[<a/>]]></Parameter>${source}</Parameters><Layer name="layerAlways"><StyleName>Always</StyleName></Layer>${layerOptional}</Map>
+<Map srs="abc"${ options.attrs || '' }><Parameters><Parameter name="attribution"><![CDATA[<a/>]]></Parameter>${ source }</Parameters><Layer name="layerAlways"><StyleName>Always</StyleName></Layer>${ layerOptional }</Map>
 `;
 }
 

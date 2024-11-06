@@ -119,20 +119,18 @@ paths:
             headers:
               content-type: application/json; charset=utf-8
             body:
-              {
-                "tilejson": "2.1.0",
-                "attribution": '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia maps</a> | Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
-                "bounds": [-180, -85.0511, 180, 85.0511],
-                "center": [-69.4336, 59.1309, 3],
-                "format": "png8:m=h",
-                "maxzoom": 19,
-                "minzoom": 0,
-                "name": "osm-intl",
-                "scale": "1",
-                "source": "sourceref:///?ref=babel",
-                "tiles":
-                  ["https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"],
-              }
+              tilejson: 2.1.0
+              attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia maps</a> | Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+              bounds: [ -180, -85.0511, 180, 85.0511 ]
+              center: [ -69.4336, 59.1309, 3 ]
+              format: "png8:m=h"
+              maxzoom: 19
+              minzoom: 0
+              name: osm-intl
+              scale: "1"
+              source: "sourceref:///?ref=babel"
+              tiles:
+                [ "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png" ]
 
   # Private source info
   /private-info/info.json:
@@ -155,11 +153,9 @@ paths:
             headers:
               content-type: application/json; charset=utf-8
             body:
-              {
-                "detail": "Source info is not public",
-                "internalURI": "http://localhost:6533/private-info/info.json",
-                "internalMethod": "get",
-              }
+              detail: Source info is not public
+              internalURI: "http://localhost:6533/private-info/info.json"
+              internalMethod: get
 
   # Maki icon markers (pushpins)
   # /v4/marker/{base}-{size}-{symbol}+{color}.png:
@@ -395,22 +391,15 @@ paths:
             headers:
               content-type: application/vnd.geo+json; charset=utf-8
             body:
-              {
-                "type": "FeatureCollection",
-                "features":
-                  [
-                    {
-                      "type": "Feature",
-                      "id": "Q151356",
-                      "properties": {},
-                      "geometry":
-                        {
-                          "type": "Point",
-                          "coordinates": [13.409444444, 52.520833333],
-                        },
-                    },
-                  ],
-              }
+              type: FeatureCollection
+              features:
+                - type: Feature
+                  id: Q151356
+                  properties: {}
+                  geometry:
+                    type: Point
+                    coordinates: [ 13.409444444, 52.520833333 ]
+
   # from routes/root.js
   /robots.txt:
     get:
@@ -455,12 +444,11 @@ paths:
             headers:
               content-type: application/json; charset=utf-8
             body:
-              {
-                "name": "kartotherian",
-                "version": "2.1.0",
-                "description": "Kartotherian - a suite of map tile rendering and map serving software",
-                "home": "https://github.com/kartotherian/kartotherian",
-              }
+              name: kartotherian
+              version: 2.1.0
+              description: Kartotherian - a suite of map tile rendering and map serving software
+              home: "https://github.com/kartotherian/kartotherian"
+
   /_info/name:
     get:
       tags:

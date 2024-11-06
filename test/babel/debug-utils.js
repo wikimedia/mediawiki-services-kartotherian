@@ -33,10 +33,12 @@ function sorter( obj ) {
 }
 
 exports.writeJson = function writeJson( path, obj ) {
+	// eslint-disable-next-line security/detect-non-literal-fs-filename
 	fs.writeFileSync( path, toCompactJson( sorter( obj ) ) );
 };
 
 exports.writePbf = function writePbf( path, data ) {
+	// eslint-disable-next-line security/detect-non-literal-fs-filename
 	fs.writeFileSync( path, toBuffer( data ), 'binary' );
 };
 
@@ -45,7 +47,9 @@ exports.decodeAndWrite = function decodeAndWrite( path, data ) {
 };
 
 exports.bufferEqual = function bufferEqual( buf1, buf2 ) {
-	if ( buf1.byteLength !== buf2.byteLength ) { return false; }
+	if ( buf1.byteLength !== buf2.byteLength ) {
+		return false;
+	}
 	const arr1 = new Int8Array( buf1 );
 	const arr2 = new Int8Array( buf2 );
 

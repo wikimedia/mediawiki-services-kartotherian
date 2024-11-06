@@ -8,7 +8,7 @@ const tileCodec = require( '../../lib/babel/tileCodec' );
 
 describe( 'PBF round-trip', () => {
 	function test( file, expectedData ) {
-		const path = pathLib.resolve( __dirname, 'data', `${file}.pbf` );
+		const path = pathLib.resolve( __dirname, 'data', `${ file }.pbf` );
 		const data = fs.readFileSync( path );
 		const dec = tileCodec.decodeTile( data );
 
@@ -17,7 +17,9 @@ describe( 'PBF round-trip', () => {
 		//     "layers": JSON.parse(fs.readFileSync(tmp)) } );
 		// require('./debug-utils').writeJson(path + '.decoded.json', dec);
 
-		if ( expectedData ) { assert.deepStrictEqual( dec, expectedData ); }
+		if ( expectedData ) {
+			assert.deepStrictEqual( dec, expectedData );
+		}
 		const enc = tileCodec.encodeTile( dec );
 		// require('./debug-utils').writePbf(path + '.out.pbf', enc);
 
