@@ -79,7 +79,7 @@
 		"tilelive-promise": "^2.0.0",
 		"tilelive-tmstyle": "0.8.0",
 		"to-regex-range": "^5.0.1",
-		"topojson-server": "^3.0.1",
+		"topojson-server": "^2.0.0",
 		"typedarray-to-buffer": "^4.0.0",
 		"underscore": "^1.13.7",
 		"uuid": "^10.0.0",
@@ -90,7 +90,7 @@
 		"bunyan-prettystream": "*"
 	},
 	"devDependencies": {
-		"chai": "^5.1.1",
+		"chai": "^4.5.0",
 		"eslint": "^8",
 		"eslint-config-wikimedia": "^0.28.2",
 		"extend": "^3.0.2",

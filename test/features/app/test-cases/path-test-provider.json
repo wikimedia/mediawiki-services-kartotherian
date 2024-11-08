@@ -28,7 +28,7 @@
 		"response": {
 			"status": 200,
 			"headers": {
-				"content-type": "image/svg+xml"
+				"content-type": "image/svg+xml; charset=utf-8"
 			},
 			"body": {
 				"type": "svg"
