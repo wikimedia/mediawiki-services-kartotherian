@@ -1,90 +1,88 @@
-# syntax=docker-registry.wikimedia.org/repos/releng/blubber:v0.17.0
+# syntax=docker-registry.wikimedia.org/repos/releng/blubber/buildkit:v0.21.0
 version: v4
-base: "docker-registry.wikimedia.org/nodejs20-slim:latest"
 variants:
-  build-apt-dependencies:
+  # Needed to be able to build the node-mapnik repo
+  # vendored from source in the Kartotherian repo.
+  # We use the mapnik base image that already contains
+  # a build of Mapnik 4 libs/binaries built from source.
+  kartotherian-build-dev:
+    base: docker-registry.wikimedia.org/mapnik:4.0.2-1
     apt:
       packages:
-        - build-essential
-        - python3
-        - python3-dev
-        - git
-        - curl
-        - libboost-all-dev
-        - libharfbuzz-dev
-        - libtiff-dev
-        - libicu-dev
-        - zlib1g-dev
-        - libfreetype-dev
-        - libxml2-dev
-        - libpng-dev
-        - libwebp-dev
-        - libproj-dev
-        - libcairo2-dev
-        - libjpeg-dev
-        - libgdal-dev
-  mapnik-build:
-    includes:
-      - build-apt-dependencies
+        - nodejs
+      sources:
+        - url: http://apt.wikimedia.org/wikimedia
+          distribution: bookworm-wikimedia
+          components: [thirdparty/node20]
+
     builders:
       - custom:
           requirements:
             - source: .
               destination: .
           command:
-            - bash /srv/app/scripts/install-mapnik.sh
-  kartotherian-build-dev:
-    includes:
-      - mapnik-build
-    runs:
-      environment:
-        PATH: "$PATH:/opt/lib/mapnik/bin"
-    builders:
+            - bash -c "/usr/bin/git submodule update --init --recursive"
       - node:
           requirements:
             - package.json
             - package-lock.json
             - vendor/node-mapnik/
-            - vendor/mapnik
+  # This variant copies from build-dev the node-mapnik repository,
+  # this time after npm-install, and hence ready to be used.
+  # It also copies the mapnik bin/include/lib artifacts that the Mapnik
+  # base image provides.
+  # It finally installs all the runtime dependencies (discarding the -dev
+  # packages that are not needed and redudant, security-wise).
   kartotherian-build-prod:
-    includes:
-      - kartotherian-build-dev
+    base: docker-registry.wikimedia.org/nodejs20-slim
+    apt:
+      packages:
+        - libboost-regex1.74.0-icu72
+        - libharfbuzz0b
+        - libtiff6
+        - libicu72
+        - zlib1g
+        - libfreetype6
+        - libxml2
+        - libpng16-16
+        - libwebp7
+        - libproj25
+        - libcairo2
+        - libjpeg62-turbo
+        - libgdal32
+        - libpq5
+        - libproj25
+        - libsqlite3-0
+        - libstdc++6
+        - libgcc-s1
+    copies:
+      - from: kartotherian-build-dev
+        source: /srv/app
+        destination: /srv/app
+      - from: kartotherian-build-dev
+        source: /srv/bin/*
+        destination: /usr/local/bin/
+      - from: kartotherian-build-dev
+        source: /srv/lib/*
+        destination: /usr/local/lib/
+      - from: kartotherian-build-dev
+        source: /srv/include/*
+        destination: /usr/local/include/
     builders:
       - node:
           env: production
   test:
     includes:
-      - kartotherian-build-dev
+      - kartotherian-build-prod
     runs:
       environment:
-        LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/opt/lib/mapnik/lib"
+        LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/usr/local/lib"
     entrypoint: ["npm", "run", "test"]
   production:
-    copies:
-      - from: kartotherian-build-prod
-        source: /srv/app
-        destination: /srv/app
-      - from: kartotherian-build-prod
-        source: /opt/lib/mapnik
-        destination: /opt/lib/mapnik
-    apt:
-      packages:
-        - libboost-all-dev
-        - libharfbuzz-dev
-        - libtiff-dev
-        - libicu-dev
-        - zlib1g-dev
-        - libfreetype-dev
-        - libxml2-dev
-        - libpng-dev
-        - libwebp-dev
-        - libproj-dev
-        - libcairo2-dev
-        - libjpeg-dev
-        - libgdal-dev
+    includes:
+      - kartotherian-build-prod
     runs:
       environment:
-        PATH: "$PATH:/opt/lib/mapnik/bin"
-        LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/opt/lib/mapnik/lib"
+        LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/usr/local/lib"
     entrypoint:
       - service-runner
