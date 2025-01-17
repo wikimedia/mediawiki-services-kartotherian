@@ -2,6 +2,7 @@
 
 const { downloadMapdata: mapdataLoader } =
 	require( '../../../lib/snapshot/mapdataLoader' );
+const { Template } = require( 'swagger-router' );
 
 describe( 'mapdataLoader', () => {
 	const groupId = '_1234';
@@ -19,6 +20,7 @@ describe( 'mapdataLoader', () => {
 		const expectedRequest = {
 			action: 'query',
 			formatversion: '2',
+			format: 'json',
 			mpdlimit: 'max',
 			mpdgroups: [ groupId ],
 			prop: 'mapdata',
@@ -37,14 +39,29 @@ describe( 'mapdataLoader', () => {
 				]
 			}
 		};
-		const mwApiExecute = jest.fn()
-			.mockResolvedValue( mockResponse );
-		const MWApi = jest.fn()
-			.mockReturnValue( { execute: mwApiExecute } );
 
-		expect( mapdataLoader( {}, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
-			.resolves.toStrictEqual( mapdata );
-		expect( mwApiExecute ).toHaveBeenCalledWith( expectedRequest );
+		const mwApiRequest = jest.fn().mockResolvedValue( { status: 200, body: mockResponse } );
+		const mockRequest = {
+			app: {
+				mwapi_tpl: new Template( {
+					method: 'POST',
+					uri: 'http://{{domain}}/w/api.php',
+					headers: '{{request.headers}}',
+					body: '{{ default(request.query, {}) }}'
+				} )
+			},
+			issueRequest: mwApiRequest,
+			headers: {}
+		};
+
+		expect(
+			mapdataLoader(
+				mockRequest, 'https', 'api.test', pageTitle, false, groupId, ''
+			)
+		).resolves.toStrictEqual( mapdata );
+		expect( mwApiRequest ).toHaveBeenCalledWith(
+			expect.objectContaining( { body: expectedRequest } )
+		);
 	} );
 
 	// Page is missing, no GeoJSON present, or Kartographer mapdata API is disabled.
@@ -60,26 +77,51 @@ describe( 'mapdataLoader', () => {
 				]
 			}
 		};
-		const mwApiExecute = jest.fn()
-			.mockResolvedValue( mockResponse );
-		const MWApi = jest.fn()
-			.mockReturnValue( { execute: mwApiExecute } );
-		const req = { logger: { log: jest.fn() } };
 
-		expect( mapdataLoader( req, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
-			.rejects.toThrow( 'Invalid mapdata response' );
+		const mwApiRequest = jest.fn().mockResolvedValue( { status: 200, body: mockResponse } );
+		const mockRequest = {
+			app: {
+				mwapi_tpl: new Template( {
+					method: 'POST',
+					uri: 'http://{{domain}}/w/api.php',
+					headers: '{{request.headers}}',
+					body: '{{ default(request.query, {}) }}'
+				} )
+			},
+			issueRequest: mwApiRequest,
+			headers: {},
+			logger: { log: jest.fn() }
+		};
+
+		expect(
+			mapdataLoader(
+				mockRequest, 'https', 'api.test', pageTitle, false, groupId, ''
+			)
+		).rejects.toThrow( 'Invalid mapdata response' );
 	} );
 
 	test( 'handles API exception', () => {
-		const error = 'mwapi-test-error';
-		const req = { logger: { log: jest.fn() } };
-		const mwApiExecute = jest.fn()
-			.mockRejectedValue( new Error( error ) );
-		const MWApi = jest.fn()
-			.mockReturnValue( { execute: mwApiExecute } );
+		const error = 'api-error';
+		const mwApiRequest = jest.fn().mockResolvedValue( { status: 500, body: error } );
+		const mockRequest = {
+			app: {
+				mwapi_tpl: new Template( {
+					method: 'POST',
+					uri: 'http://{{domain}}/w/api.php',
+					headers: '{{request.headers}}',
+					body: '{{ default(request.query, {}) }}'
+				} )
+			},
+			issueRequest: mwApiRequest,
+			headers: {},
+			logger: { log: jest.fn() }
+		};
 
-		expect( mapdataLoader( req, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
-			.rejects.toThrow( error );
+		expect(
+			mapdataLoader(
+				mockRequest, 'https', 'api.test', pageTitle, false, groupId, ''
+			)
+		).rejects.toThrow( '500: api_error' );
 	} );
 
 	test( 'handles null mapdata', async () => {
@@ -97,17 +139,30 @@ describe( 'mapdataLoader', () => {
 				]
 			}
 		};
-		const mwApiExecute = jest.fn()
-			.mockResolvedValue( mockResponse );
-		const MWApi = jest.fn()
-			.mockReturnValue( { execute: mwApiExecute } );
 
-		expect( mapdataLoader( {}, 'https', 'api.test', pageTitle, false, groupId, '', MWApi ) )
-			.rejects.toThrow( 'Bad GeoJSON - is null' );
+		const mwApiRequest = jest.fn().mockResolvedValue( { status: 200, body: mockResponse } );
+		const mockRequest = {
+			app: {
+				mwapi_tpl: new Template( {
+					method: 'POST',
+					uri: 'http://{{domain}}/w/api.php',
+					headers: '{{request.headers}}',
+					body: '{{ default(request.query, {}) }}'
+				} )
+			},
+			issueRequest: mwApiRequest,
+			headers: {},
+			logger: { log: jest.fn() }
+		};
+
+		expect(
+			mapdataLoader(
+				mockRequest, 'https', 'api.test', pageTitle, false, groupId, ''
+			)
+		).rejects.toThrow( 'Bad GeoJSON - is null' );
 	} );
 
 	test( 'skips failed groups', () => {
-		const req = { logger: { log: jest.fn() } };
 		const mapdata = {
 			properties: {},
 			type: 'Feature'
@@ -126,12 +181,26 @@ describe( 'mapdataLoader', () => {
 				]
 			}
 		};
-		const mwApiExecute = jest.fn()
-			.mockResolvedValue( mockResponse );
-		const MWApi = jest.fn()
-			.mockReturnValue( { execute: mwApiExecute } );
 
-		expect( mapdataLoader( req, 'https', 'api.test', pageTitle, false, [ 'bad', groupId ], '', MWApi ) )
-			.resolves.toStrictEqual( mapdata );
+		const mwApiRequest = jest.fn().mockResolvedValue( { status: 200, body: mockResponse } );
+		const mockRequest = {
+			app: {
+				mwapi_tpl: new Template( {
+					method: 'POST',
+					uri: 'http://{{domain}}/w/api.php',
+					headers: '{{request.headers}}',
+					body: '{{ default(request.query, {}) }}'
+				} )
+			},
+			issueRequest: mwApiRequest,
+			headers: {},
+			logger: { log: jest.fn() }
+		};
+
+		expect(
+			mapdataLoader(
+				mockRequest, 'https', 'api.test', pageTitle, false, [ 'bad', groupId ], ''
+			)
+		).resolves.toStrictEqual( mapdata );
 	} );
 } );

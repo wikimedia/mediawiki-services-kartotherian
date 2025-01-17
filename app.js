@@ -12,6 +12,7 @@ const packageInfo = require( './package.json' );
 const yaml = require( 'js-yaml' );
 const addShutdown = require( 'http-shutdown' );
 const path = require( 'path' );
+const apiUtil = require( './lib/api-util' );
 
 /**
  * Creates an express app and initialises it
@@ -65,7 +66,7 @@ function initApp( options ) {
 
 	// TODO: Integrate with newer API wrapper
 	// set up the request templates for the APIs
-	// apiUtil.setupApiTemplates( app );
+	apiUtil.setupApiTemplates( app );
 
 	// set up the spec
 	if ( !app.conf.spec ) {
@@ -114,6 +115,9 @@ function initApp( options ) {
 
 	// set up the user agent header string to use for requests
 	app.conf.user_agent = app.conf.user_agent || app.info.name;
+
+	// rewrite outgoing request URLs to localhost - T383710
+	app.conf.rewrite_local_service_url = app.conf.rewrite_local_service_url || true;
 
 	// disable the X-Powered-By header
 	app.set( 'x-powered-by', false );

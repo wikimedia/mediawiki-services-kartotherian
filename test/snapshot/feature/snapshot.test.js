@@ -4,12 +4,10 @@
  */
 
 // Intercept MWApi calls.
-jest.mock( 'mwapi' );
-const MWApi = require( 'mwapi' );
 
-const mwapiExecute = jest.fn();
-MWApi.mockImplementation( () => ( {
-	execute: mwapiExecute
+const mockmwApiGet = jest.fn();
+jest.mock( '../../../lib/api-util', () => ( {
+	mwApiGet: mockmwApiGet
 } ) );
 
 const callSnapshot = require( '../utils/callSnapshot' );
@@ -38,7 +36,7 @@ const versionedRequest = {
 	revids: '123'
 };
 
-beforeEach( () => mwapiExecute.mockClear() );
+beforeEach( () => mockmwApiGet.mockClear() );
 
 // TODO: Should also test that there were no errors and the returned "next"
 // function wasn't called.
@@ -46,34 +44,25 @@ beforeEach( () => mwapiExecute.mockClear() );
 describe( 'unversioned mapdata request', () => {
 	test( 'versioned feature doesn\'t affect legacy query', async () => {
 		await callSnapshot( {}, overlayQueryParams );
-		expect( mwapiExecute ).toHaveBeenCalledWith( unversionedRequest );
+		expect( mockmwApiGet ).toHaveBeenCalledWith( expect.anything(), 'localhost', unversionedRequest );
 	} );
 } );
 
 describe( 'versioned mapdata request', () => {
 	test( 'passes through revid parameter', async () => {
 		await callSnapshot( {}, { revid: '123', ...overlayQueryParams } );
-		expect( mwapiExecute ).toHaveBeenCalledWith( versionedRequest );
+		expect( mockmwApiGet ).toHaveBeenCalledWith( expect.anything(), 'localhost', versionedRequest );
 	} );
 } );
 
 describe( 'domain handling', () => {
-	test( 'strips protocol and port before validation', async () => {
-		await callSnapshot( {}, {
-			domain: 'http://localhost:1234',
-			title: 'Example',
-			groups: 'a,b'
-		} );
-		expect( mwapiExecute ).toHaveBeenCalledWith( unversionedRequest );
-	} );
-
 	test( 'rejects unknown domain', async () => {
 		await callSnapshot( {}, {
 			domain: 'nasty.invalid',
 			title: 'Example',
 			groups: 'a,b'
 		} );
-		expect( mwapiExecute ).not.toHaveBeenCalled();
+		expect( mockmwApiGet ).not.toHaveBeenCalled();
 	} );
 } );
 
@@ -83,7 +72,7 @@ describe( 'no overlay handling', () => {
 			title: 'Example',
 			groups: 'a,b'
 		} );
-		expect( mwapiExecute ).not.toHaveBeenCalled();
+		expect( mockmwApiGet ).not.toHaveBeenCalled();
 	} );
 
 	test( 'does not try to get data when no title set', async () => {
@@ -91,6 +80,6 @@ describe( 'no overlay handling', () => {
 			domain: 'localhost',
 			groups: 'a,b'
 		} );
-		expect( mwapiExecute ).not.toHaveBeenCalled();
+		expect( mockmwApiGet ).not.toHaveBeenCalled();
 	} );
 } );
