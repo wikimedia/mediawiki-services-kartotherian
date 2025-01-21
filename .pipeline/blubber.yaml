@@ -60,13 +60,13 @@ variants:
         source: /srv/app
         destination: /srv/app
       - from: kartotherian-build-dev
-        source: /srv/bin/*
+        source: /srv/bin/.
         destination: /usr/local/bin/
       - from: kartotherian-build-dev
-        source: /srv/lib/*
+        source: /srv/lib/.
         destination: /usr/local/lib/
       - from: kartotherian-build-dev
-        source: /srv/include/*
+        source: /srv/include/.
         destination: /usr/local/include/
     builders:
       - node:
