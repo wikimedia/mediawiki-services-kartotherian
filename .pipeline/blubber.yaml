@@ -6,7 +6,7 @@ variants:
   # We use the mapnik base image that already contains
   # a build of Mapnik 4 libs/binaries built from source.
   kartotherian-build-dev:
-    base: docker-registry.wikimedia.org/mapnik:4.0.2-1
+    base: docker-registry.wikimedia.org/mapnik:4.0.2-2
     apt:
       packages:
         - nodejs
