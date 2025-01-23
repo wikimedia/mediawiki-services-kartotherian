@@ -55,6 +55,8 @@ variants:
         - libsqlite3-0
         - libstdc++6
         - libgcc-s1
+        - fonts-dejavu
+        - fonts-noto
     copies:
       - from: kartotherian-build-dev
         source: /srv/app
