@@ -57,6 +57,8 @@ variants:
         - libgcc-s1
         - fonts-dejavu
         - fonts-noto
+        - fonts-noto-cjk
+        - fonts-noto-unhinted
     copies:
       - from: kartotherian-build-dev
         source: /srv/app
