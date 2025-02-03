@@ -268,8 +268,9 @@ describe( 'expandProperties', () => {
 			}
 		};
 		mockPreq.post = jest.fn( () => Promise.resolve( preqResult ) );
-		const apiUrl = 'https://api.test';
-		const shape = new GeoShapes( { mwapi: apiUrl } );
+		const uri = 'https://api.test';
+		const headers = { Host: 'test.wikipedia.org', 'User-Agent': 'test' };
+		const shape = new GeoShapes( { mw_api: { uri, headers } } );
 
 		const cleanProperties = await shape._expandProperties( rawProperties );
 
@@ -280,8 +281,8 @@ describe( 'expandProperties', () => {
 				formatversion: 2,
 				text: JSON.stringify( rawGeoJsonWithFakeGeometry )
 			},
-			headers: undefined,
-			uri: apiUrl
+			headers: headers,
+			uri: uri
 		} );
 		expect( cleanProperties ).toStrictEqual( expectedProperties );
 	} );

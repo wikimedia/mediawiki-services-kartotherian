@@ -95,6 +95,11 @@ services:
         # temporary feature flag for geopoints
         enableGeopoints: true
         coordinatePredicateId: wdt:P625
+        mw_api:
+          uri: "https://dyna.wikimedia.org/w/api.php"
+          headers:
+            Host: en.wikipedia.org
+            User-Agent: "kartotherian/geoshapes/tests (https://www.mediawiki.org/wiki/Content_Transform_Team)"
 
       # allowedDomains:
       #   http:
