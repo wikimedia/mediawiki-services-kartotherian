@@ -59,6 +59,7 @@ variants:
         - fonts-noto
         - fonts-noto-cjk
         - fonts-noto-unhinted
+        - libjemalloc2
     copies:
       - from: kartotherian-build-dev
         source: /srv/app
@@ -81,6 +82,7 @@ variants:
     runs:
       environment:
         LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/usr/local/lib"
+        LD_PRELOAD: "$LD_PRELOAD:/usr/lib/x86_64-linux-gnu/libjemalloc.so.2"
     entrypoint: ["npm", "run", "test"]
   production:
     includes:
@@ -88,5 +90,7 @@ variants:
     runs:
       environment:
         LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/usr/local/lib"
+        # See https://phabricator.wikimedia.org/T386926#10624612
+        LD_PRELOAD: "$LD_PRELOAD:/usr/lib/x86_64-linux-gnu/libjemalloc.so.2"
     entrypoint:
       - service-runner
