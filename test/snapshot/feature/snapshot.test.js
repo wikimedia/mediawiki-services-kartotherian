@@ -23,6 +23,7 @@ const unversionedRequest = {
 	formatversion: '2',
 	mpdgroups: [ 'a', 'b' ],
 	mpdlimit: 'max',
+	mpdparser: 'legacy',
 	prop: 'mapdata',
 	titles: 'Example'
 };
@@ -32,6 +33,7 @@ const versionedRequest = {
 	formatversion: '2',
 	mpdgroups: [ 'a', 'b' ],
 	mpdlimit: 'max',
+	mpdparser: 'legacy',
 	prop: 'mapdata',
 	revids: '123'
 };

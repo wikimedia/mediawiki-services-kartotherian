@@ -23,6 +23,7 @@ describe( 'mapdataLoader', () => {
 			format: 'json',
 			mpdlimit: 'max',
 			mpdgroups: [ groupId ],
+			mpdparser: 'legacy',
 			prop: 'mapdata',
 			titles: pageTitle
 		};
