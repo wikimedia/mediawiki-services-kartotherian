@@ -1,5 +1,5 @@
-# syntax=docker-registry.wikimedia.org/repos/releng/blubber/buildkit:v0.21.0
-# dummy date of last forced rebuild: 2025-12-16
+# syntax=docker-registry.wikimedia.org/repos/releng/blubber/buildkit:v1.8.0
+# dummy date of last forced rebuild: 2026-06-03
 version: v4
 variants:
   # Needed to be able to build the node-mapnik repo
@@ -15,12 +15,9 @@ variants:
         - url: http://apt.wikimedia.org/wikimedia
           distribution: bookworm-wikimedia
           components: [thirdparty/node20]
-
     builders:
       - custom:
-          requirements:
-            - source: .
-              destination: .
+          requirements: [.]
           command:
             - bash -c "/usr/bin/git submodule update --init --recursive"
       - node:
