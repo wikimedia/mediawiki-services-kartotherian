@@ -54,28 +54,36 @@ describe( 'snapshot utils', () => {
 
 	[
 		{
-			name: 'fails on null',
+			name: 'skips null with warning',
 			input: [ null ],
-			error: 'Bad GeoJSON - is null'
+			warning: 'Bad GeoJSON - is null'
 		},
 		{
-			name: 'fails on unknown input',
+			name: 'skips unknown input with warning',
 			input: [ 'foo' ],
-			error: 'Bad GeoJSON - unknown javascript type "string"'
+			warning: 'Bad GeoJSON - unknown javascript type "string"'
 		},
 		{
-			name: 'fails on missing structure',
+			name: 'skips missing structure with warning',
 			input: [ {} ],
-			error: 'Bad GeoJSON - object has no "type" property'
+			warning: 'Bad GeoJSON - object has no "type" property'
 		},
 		{
-			name: 'fails on bad "type"',
+			name: 'skips bad "type" with warning',
 			input: [ { type: 'Foo' } ],
-			error: 'Bad GeoJSON - unknown "type" property "Foo"'
+			warning: 'Bad GeoJSON - unknown "type" property "Foo"'
+		},
+		{
+			name: 'skips ExternalData with warning',
+			input: [ { type: 'ExternalData', service: 'geoshape', ids: 'Q6298716' } ],
+			warning: 'Bad GeoJSON - unknown "type" property "ExternalData"'
 		}
-	].forEach( ( { name, input, error } ) => {
+	].forEach( ( { name, input, warning } ) => {
 		test( name, () => {
-			expect( () => unrollGeoJSON( input ) ).toThrow( error );
+			const logged = [];
+			const result = unrollGeoJSON( input, ( level, msg ) => logged.push( { level, msg } ) );
+			expect( result ).toStrictEqual( [] );
+			expect( logged ).toStrictEqual( [ { level: 'warn', msg: warning } ] );
 		} );
 	} );
 } );

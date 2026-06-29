@@ -142,6 +142,7 @@ describe( 'mapdataLoader', () => {
 		};
 
 		const mwApiRequest = jest.fn().mockResolvedValue( { status: 200, body: mockResponse } );
+		const logger = { log: jest.fn() };
 		const mockRequest = {
 			app: {
 				mwapi_tpl: new Template( {
@@ -153,14 +154,15 @@ describe( 'mapdataLoader', () => {
 			},
 			issueRequest: mwApiRequest,
 			headers: {},
-			logger: { log: jest.fn() }
+			logger
 		};
 
-		expect(
+		await expect(
 			mapdataLoader(
 				mockRequest, 'https', 'api.test', pageTitle, false, groupId, ''
 			)
-		).rejects.toThrow( 'Bad GeoJSON - is null' );
+		).resolves.toStrictEqual( { type: 'FeatureCollection', features: [] } );
+		expect( logger.log ).toHaveBeenCalledWith( 'warn', 'Bad GeoJSON - is null' );
 	} );
 
 	test( 'skips failed groups', () => {
