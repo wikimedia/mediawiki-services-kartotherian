@@ -68,13 +68,13 @@ variants:
         destination: /srv/app
       - from: kartotherian-build-dev
         source: /srv/bin/.
-        destination: /usr/local/bin/
+        destination: /srv/bin/
       - from: kartotherian-build-dev
         source: /srv/lib/.
-        destination: /usr/local/lib/
+        destination: /srv/lib/
       - from: kartotherian-build-dev
         source: /srv/include/.
-        destination: /usr/local/include/
+        destination: /srv/include/
     builders:
       - node:
           env: production
@@ -83,7 +83,7 @@ variants:
       - kartotherian-build-prod
     runs:
       environment:
-        LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/usr/local/lib"
+        LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/srv/lib"
         LD_PRELOAD: "$LD_PRELOAD:/usr/lib/x86_64-linux-gnu/libjemalloc.so.2"
     entrypoint: ["npm", "run", "test"]
   production:
@@ -91,7 +91,7 @@ variants:
       - kartotherian-build-prod
     runs:
       environment:
-        LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/usr/local/lib"
+        LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/srv/lib"
         # See https://phabricator.wikimedia.org/T386926#10624612
         LD_PRELOAD: "$LD_PRELOAD:/usr/lib/x86_64-linux-gnu/libjemalloc.so.2"
     entrypoint:
